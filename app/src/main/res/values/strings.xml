@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TimetableMobile</string>
+    <string name="app_name">PurrTime</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
 </resources>
