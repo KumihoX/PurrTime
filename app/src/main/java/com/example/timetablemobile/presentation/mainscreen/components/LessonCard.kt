@@ -15,8 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.timetablemobile.ui.theme.MainGreen
+import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
+import com.example.timetablemobile.ui.theme.MainGreen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
@@ -33,19 +34,24 @@ fun LessonCard() {
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
+                .wrapContentHeight()
                 .padding(end = 8.dp),
             backgroundColor = Color.White
         ) {
             Row(horizontalArrangement = Arrangement.Start) {
                 Box(
                     Modifier
-                        .defaultMinSize(12.dp, 120.dp)
-                        .clip(RoundedCornerShape(8.dp, 0.dp,0.dp, 8.dp))
                         .background(IndividualLessonColor)
+                        .height(IntrinsicSize.Min)
+                        .width(12.dp)
+                        .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
                 )
 
                 Column(
-                    Modifier.padding(8.dp, 16.dp)
+                    Modifier
+                        .padding(8.dp, 16.dp)
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                 ) {
                     Text(
                         text = "Название предмета",
@@ -55,8 +61,12 @@ fun LessonCard() {
                         textAlign = TextAlign.Start
                     )
 
-                    Column() {
-
+                    Column(
+                        Modifier.padding(top = 8.dp)
+                    ) {
+                        IconListElement(textValue = "преподаватель", icon = R.drawable.badge)
+                        IconListElement(textValue = "аудитория", icon = R.drawable.meeting_room)
+                        IconListElement(textValue = "группы", icon = R.drawable.group)
                     }
                 }
             }
