@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TimetableMobile</string>
+    <string name="which_schedule_want_to_see">Чьё расписание хотите просмотреть?</string>
 </resources>
