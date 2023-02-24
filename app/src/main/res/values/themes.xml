@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Theme.TimetableMobile" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/main_green</item>
+        <item name="android:statusBarColor">@color/dark_green</item>
     </style>
 
     <style name="Theme.TimetableMobile.Starting" parent="Theme.SplashScreen">

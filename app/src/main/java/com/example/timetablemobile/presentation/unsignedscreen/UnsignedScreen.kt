@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation.unsigned_screen
+package com.example.timetablemobile.presentation.unsignedscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
