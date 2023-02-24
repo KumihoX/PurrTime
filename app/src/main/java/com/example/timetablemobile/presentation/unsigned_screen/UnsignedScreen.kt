@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation
+package com.example.timetablemobile.presentation.unsigned_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
+import com.example.timetablemobile.presentation.ScheduleOption
 
 @Preview(showBackground = true)
 @Composable
@@ -46,9 +47,9 @@ fun UnsignedScreen() {
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp)
         ) {
-            ScheduleOption(name = stringResource(R.string.groups))
-            ScheduleOption(name = stringResource(R.string.teachers))
-            ScheduleOption(name = stringResource(R.string.classrooms))
+            ScheduleOption(name = stringResource(R.string.group))
+            ScheduleOption(name = stringResource(R.string.teacher))
+            ScheduleOption(name = stringResource(R.string.classroom))
         }
     }
 }
