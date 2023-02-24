@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation.main_screen
+package com.example.timetablemobile.presentation.mainscreen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,12 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.timetablemobile.ui.theme.Green
+import com.example.timetablemobile.ui.theme.MainGreen
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -48,9 +47,17 @@ fun LessonCard() {
                 Column(
                     Modifier.padding(8.dp, 16.dp)
                 ) {
-                    Text(text = "Английский язык")
-                    Text(text = "Английский язык")
-                    Text(text = "Английский язык")
+                    Text(
+                        text = "Название предмета",
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Start
+                    )
+
+                    Column() {
+
+                    }
                 }
             }
         }
@@ -60,7 +67,7 @@ fun LessonCard() {
                 .padding(bottom = 8.dp)
                 .wrapContentSize()
                 .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
-                .background(Green)
+                .background(MainGreen)
                 .align(Alignment.BottomEnd),
             contentAlignment = Alignment.Center
         ) {
