@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.timetablemobile.presentation.signinscreen.SignInScreen
 import com.example.timetablemobile.ui.theme.TimetableMobileTheme
 
 class MainActivity : ComponentActivity() {

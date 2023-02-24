@@ -1,4 +1,4 @@
-package com.example.timetablemobile.signInScreen
+package com.example.timetablemobile.presentation.signinscreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -17,7 +17,6 @@ import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.theme.DarkGreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -144,7 +143,7 @@ fun LogIn(viewModel: SignInViewModel) {
     ) {
         Text(
             stringResource(R.string.sign_in),
-            //fontFamily = IBM,
+            style = MaterialTheme.typography.body2,
             fontWeight = FontWeight.Medium,
             letterSpacing = 0.5.sp,
             fontSize = 16.sp
@@ -164,7 +163,7 @@ fun WithoutAuth(viewModel: SignInViewModel) {
         Text(
             stringResource(R.string.without_auth),
             color = DarkGreen,
-            //fontFamily = IBM,
+            style = MaterialTheme.typography.body2,
             fontWeight = FontWeight.Medium,
             letterSpacing = 0.5.sp,
             fontSize = 16.sp

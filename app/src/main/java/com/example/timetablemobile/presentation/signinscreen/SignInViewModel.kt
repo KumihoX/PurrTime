@@ -1,4 +1,4 @@
-package com.example.timetablemobile.signInScreen
+package com.example.timetablemobile.presentation.signinscreen
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
