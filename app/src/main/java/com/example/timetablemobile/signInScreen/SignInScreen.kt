@@ -1,10 +1,8 @@
 package com.example.timetablemobile.signInScreen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -19,6 +17,9 @@ import com.example.timetablemobile.ui.theme.DarkGreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun SignInScreen () {
@@ -32,21 +33,20 @@ fun SignInScreen () {
         verticalArrangement = Arrangement.Top
     ) {
         Logo()
-        LoginField(viewModel)
-        PasswordField(viewModel)
+        LoginField(viewModel = viewModel)
+        PasswordField(viewModel = viewModel)
     }
 
-    /*Column(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(16.dp, 0.dp, 16.dp, 0.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
-        Logo()
-        LoginField(viewModel)
-        PasswordField(viewModel)
-    }*/
+        LogIn(viewModel = viewModel)
+        WithoutAuth(viewModel = viewModel)
+    }
 }
 
 @Composable
@@ -116,4 +116,51 @@ fun PasswordField(viewModel: SignInViewModel) {
             focusedBorderColor = DarkGreen
         )
     )
+}
+
+@Composable
+fun LogIn(viewModel: SignInViewModel) {
+    Button(
+        onClick = { /*TODO*/ },
+        enabled = true,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = DarkGreen,
+            contentColor = White,
+            disabledBackgroundColor = White,
+            disabledContentColor = DarkGreen
+        ),
+        shape = RoundedCornerShape(4.dp),
+        border = BorderStroke(1.dp, DarkGreen),
+        modifier = Modifier
+            .height(44.dp)
+            .fillMaxWidth()
+    ) {
+        Text(
+            stringResource(R.string.sign_in),
+            //fontFamily = IBM,
+            fontWeight = FontWeight.Medium,
+            letterSpacing = 0.5.sp,
+            fontSize = 16.sp
+        )
+    }
+}
+
+@Composable
+fun WithoutAuth(viewModel: SignInViewModel) {
+    TextButton(
+        onClick = { /*TODO*/ },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp, 8.dp, 0.dp, 16.dp)
+
+    ) {
+        Text(
+            stringResource(R.string.without_auth),
+            color = DarkGreen,
+            //fontFamily = IBM,
+            fontWeight = FontWeight.Medium,
+            letterSpacing = 0.5.sp,
+            fontSize = 16.sp
+        )
+    }
 }

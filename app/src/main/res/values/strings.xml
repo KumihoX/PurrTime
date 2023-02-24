@@ -2,4 +2,6 @@
     <string name="app_name">PurrTime</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="without_auth">Продолжить без входа</string>
 </resources>
