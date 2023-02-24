@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
-import com.example.timetablemobile.ui.theme.DarkGreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.sp
+import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
 fun SignInScreen () {
@@ -74,18 +74,18 @@ fun LoginField(viewModel: SignInViewModel) {
             Text(
                 stringResource(R.string.login),
                 style = MaterialTheme.typography.body2,
-                color = DarkGreen
+                color = MainGreen
             )
         },
         enabled = true,
         shape = RoundedCornerShape(8.dp),
         singleLine = true,
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = DarkGreen,
-            placeholderColor = DarkGreen,
-            cursorColor = DarkGreen,
-            textColor = DarkGreen,
-            focusedBorderColor = DarkGreen
+            unfocusedBorderColor = MainGreen,
+            placeholderColor = MainGreen,
+            cursorColor = MainGreen,
+            textColor = MainGreen,
+            focusedBorderColor = MainGreen
         )
     )
 }
@@ -104,7 +104,7 @@ fun PasswordField(viewModel: SignInViewModel) {
             Text(
                 stringResource(R.string.password),
                 style = MaterialTheme.typography.body2,
-                color = DarkGreen
+                color = MainGreen
             )
         },
         visualTransformation = PasswordVisualTransformation(),
@@ -115,11 +115,11 @@ fun PasswordField(viewModel: SignInViewModel) {
         shape = RoundedCornerShape(8.dp),
         singleLine = true,
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = DarkGreen,
-            placeholderColor = DarkGreen,
-            cursorColor = DarkGreen,
-            textColor = DarkGreen,
-            focusedBorderColor = DarkGreen
+            unfocusedBorderColor = MainGreen,
+            placeholderColor = MainGreen,
+            cursorColor = MainGreen,
+            textColor = MainGreen,
+            focusedBorderColor = MainGreen
         )
     )
 }
@@ -130,13 +130,13 @@ fun LogIn(viewModel: SignInViewModel) {
         onClick = { /*TODO*/ },
         enabled = true,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = DarkGreen,
+            backgroundColor = MainGreen,
             contentColor = White,
             disabledBackgroundColor = White,
-            disabledContentColor = DarkGreen
+            disabledContentColor = MainGreen
         ),
         shape = RoundedCornerShape(4.dp),
-        border = BorderStroke(1.dp, DarkGreen),
+        border = BorderStroke(1.dp, MainGreen),
         modifier = Modifier
             .height(44.dp)
             .fillMaxWidth()
@@ -162,7 +162,7 @@ fun WithoutAuth(viewModel: SignInViewModel) {
     ) {
         Text(
             stringResource(R.string.without_auth),
-            color = DarkGreen,
+            color = MainGreen,
             style = MaterialTheme.typography.body2,
             fontWeight = FontWeight.Medium,
             letterSpacing = 0.5.sp,

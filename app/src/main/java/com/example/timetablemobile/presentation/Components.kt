@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.timetablemobile.ui.theme.Green
+import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
 fun ScheduleOption(name: String) {
@@ -21,7 +21,7 @@ fun ScheduleOption(name: String) {
             .wrapContentHeight()
             .padding(vertical = 8.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Green,
+            backgroundColor = MainGreen,
             contentColor = Color.White
         ),
         contentPadding = PaddingValues(8.dp, 12.dp)
