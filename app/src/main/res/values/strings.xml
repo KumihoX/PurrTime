@@ -8,4 +8,5 @@
     <string name="password">Пароль</string>
     <string name="sign_in">Войти</string>
     <string name="without_auth">Продолжить без входа</string>
+    <string name="invalidEmailMessage">Вы ввели неккоректный email</string>
 </resources>

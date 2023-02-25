@@ -36,7 +36,7 @@ class SignInViewModel @Inject constructor(
         loginIsCorrect()
         _fieldsState.value = !(login.value.isNullOrEmpty()
                 || password.value.isNullOrEmpty()
-                || _correct.value)
+                || !_correct.value)
     }
 
     private fun loginIsCorrect() {

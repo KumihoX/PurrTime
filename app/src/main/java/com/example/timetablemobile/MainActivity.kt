@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreen
 import com.example.timetablemobile.ui.theme.TimetableMobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,6 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TimetableMobileTheme {
+                SignInScreen()
             }
         }
     }
