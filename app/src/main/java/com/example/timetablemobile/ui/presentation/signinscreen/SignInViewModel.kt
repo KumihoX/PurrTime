@@ -2,6 +2,7 @@ package com.example.timetablemobile.ui.presentation.signinscreen
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.timetablemobile.common.Resource
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase
 ): ViewModel() {
     private val _state = mutableStateOf(SignInState())

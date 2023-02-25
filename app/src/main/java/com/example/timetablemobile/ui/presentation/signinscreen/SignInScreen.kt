@@ -26,8 +26,9 @@ import com.example.timetablemobile.ui.theme.MainGreen
 import com.example.timetablemobile.ui.theme.Red
 
 @Composable
-fun SignInScreen () {
-    val viewModel: SignInViewModel = viewModel()
+fun SignInScreen (
+    viewModel: SignInViewModel = viewModel()
+) {
 
     Column(
         modifier = Modifier
