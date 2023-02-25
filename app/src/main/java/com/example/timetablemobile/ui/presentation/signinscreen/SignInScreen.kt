@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation.signinscreen
+package com.example.timetablemobile.ui.presentation.signinscreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -126,9 +126,10 @@ fun PasswordField(viewModel: SignInViewModel) {
 
 @Composable
 fun LogIn(viewModel: SignInViewModel) {
+    val buttonState: Boolean by remember { viewModel.fieldsState }
     Button(
-        onClick = { /*TODO*/ },
-        enabled = true,
+        onClick = { viewModel.login },
+        enabled = buttonState,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MainGreen,
             contentColor = White,
