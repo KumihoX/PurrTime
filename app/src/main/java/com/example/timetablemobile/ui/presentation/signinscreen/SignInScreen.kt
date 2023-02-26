@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation.signinscreen
+package com.example.timetablemobile.ui.presentation.signinscreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -20,12 +20,15 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.timetablemobile.ui.theme.MainGreen
+import com.example.timetablemobile.ui.theme.Red
 
 @Composable
-fun SignInScreen () {
-    val viewModel: SignInViewModel = viewModel()
+fun SignInScreen (
+    viewModel: SignInViewModel = viewModel()
+) {
 
     Column(
         modifier = Modifier
@@ -63,13 +66,14 @@ fun Logo() {
 @Composable
 fun LoginField(viewModel: SignInViewModel) {
     val login: String by remember { viewModel.login }
+    val correct: Boolean by remember { viewModel.correct }
 
     OutlinedTextField(
         value = login,
         onValueChange = {viewModel.onLoginChange(it)},
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 0.dp, 0.dp, 16.dp),
+            .padding(0.dp, 0.dp, 0.dp, 4.dp),
         placeholder = {
             Text(
                 stringResource(R.string.login),
@@ -77,6 +81,7 @@ fun LoginField(viewModel: SignInViewModel) {
                 color = MainGreen
             )
         },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         enabled = true,
         shape = RoundedCornerShape(8.dp),
         singleLine = true,
@@ -88,6 +93,22 @@ fun LoginField(viewModel: SignInViewModel) {
             focusedBorderColor = MainGreen
         )
     )
+    if (!correct) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 0.dp, 0.dp, 16.dp),
+            text = stringResource(R.string.invalidEmailMessage),
+            color = Red,
+            style = MaterialTheme.typography.caption,
+            textAlign = TextAlign.Start
+        )
+    }
+    else {
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp, 0.dp, 0.dp, 12.dp))
+    }
 }
 
 @Composable
@@ -126,9 +147,10 @@ fun PasswordField(viewModel: SignInViewModel) {
 
 @Composable
 fun LogIn(viewModel: SignInViewModel) {
+    val buttonState: Boolean by remember { viewModel.fieldsState }
     Button(
-        onClick = { /*TODO*/ },
-        enabled = true,
+        onClick = { viewModel.login },
+        enabled = buttonState,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MainGreen,
             contentColor = White,

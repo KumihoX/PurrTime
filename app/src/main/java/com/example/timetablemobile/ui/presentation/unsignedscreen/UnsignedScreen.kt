@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation.unsignedscreen
+package com.example.timetablemobile.ui.presentation.unsignedscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
-import com.example.timetablemobile.presentation.ScheduleOption
+import com.example.timetablemobile.ui.presentation.ScheduleOption
 
 @Preview(showBackground = true)
 @Composable

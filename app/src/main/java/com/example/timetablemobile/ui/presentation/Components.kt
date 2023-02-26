@@ -1,4 +1,4 @@
-package com.example.timetablemobile.presentation
+package com.example.timetablemobile.ui.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
