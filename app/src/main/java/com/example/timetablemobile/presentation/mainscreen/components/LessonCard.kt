@@ -3,19 +3,20 @@ package com.example.timetablemobile.presentation.mainscreen.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
+import com.example.timetablemobile.ui.theme.Gray
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
 import com.example.timetablemobile.ui.theme.MainGreen
 
@@ -25,67 +26,72 @@ import com.example.timetablemobile.ui.theme.MainGreen
 fun LessonCard() {
     Box(
         Modifier
-            .padding(4.dp, 8.dp)
-            .fillMaxWidth()
             .wrapContentHeight()
+            .fillMaxWidth()
+            .padding(4.dp, 8.dp)
     ) {
         Card(
             onClick = { /*TODO*/ },
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(end = 8.dp),
-            backgroundColor = Color.White
+                .padding(end = 8.dp)
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(8.dp)
+                ),
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(8.dp),
+            elevation = 4.dp
         ) {
-            Row(horizontalArrangement = Arrangement.Start) {
+            Row(
+                Modifier.fillMaxWidth().wrapContentHeight()
+            ) {
                 Box(
                     Modifier
-                        .background(IndividualLessonColor)
-                        .height(IntrinsicSize.Min)
                         .width(12.dp)
+                        //.fillMaxHeight()
+                        .background(IndividualLessonColor)
                         .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
                 )
 
                 Column(
-                    Modifier
-                        .padding(8.dp, 16.dp)
-                        .fillMaxWidth()
-                        .wrapContentHeight()
+                    Modifier.padding(8.dp, 16.dp).wrapContentHeight()
                 ) {
                     Text(
                         text = "Название предмета",
-                        modifier = Modifier
-                            .fillMaxWidth(),
                         style = MaterialTheme.typography.body1,
                         textAlign = TextAlign.Start
                     )
 
-                    Column(
-                        Modifier.padding(top = 8.dp)
-                    ) {
-                        IconListElement(textValue = "преподаватель", icon = R.drawable.badge)
-                        IconListElement(textValue = "аудитория", icon = R.drawable.meeting_room)
-                        IconListElement(textValue = "группы", icon = R.drawable.group)
-                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    IconListElement(textValue = "преподаватель", icon = R.drawable.badge)
+                    IconListElement(textValue = "аудитория", icon = R.drawable.meeting_room)
+                    IconListElement(textValue = "группы", icon = R.drawable.group)
                 }
             }
         }
 
-        Box(
+        Card(
             Modifier
-                .padding(bottom = 8.dp)
                 .wrapContentSize()
-                .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
-                .background(MainGreen)
-                .align(Alignment.BottomEnd),
-            contentAlignment = Alignment.Center
+                .padding(bottom = 8.dp)
+                .align(Alignment.BottomEnd)
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp),
+                    clip = false
+                ),
+            backgroundColor = MainGreen,
+            shape = RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp),
+            elevation = 4.dp
         ) {
             Text(
                 text = "8:45 - 10:20",
                 modifier = Modifier
-                    .padding(8.dp)
-                    .wrapContentSize(),
+                    .wrapContentSize()
+                    .padding(8.dp),
                 style = MaterialTheme.typography.body1,
                 color = Color.White,
                 textAlign = TextAlign.Center

@@ -1,9 +1,6 @@
 package com.example.timetablemobile.presentation.mainscreen.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,8 +18,7 @@ import com.example.timetablemobile.ui.theme.Gray
 @Composable
 fun IconListElement(textValue: String, icon: Int) {
     Row(
-        Modifier
-            .fillMaxWidth(),
+        Modifier.wrapContentHeight(),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
