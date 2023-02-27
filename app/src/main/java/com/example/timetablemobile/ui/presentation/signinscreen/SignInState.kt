@@ -12,3 +12,4 @@ sealed interface SignInScreenState {
 
     data class Error(val error: String) : SignInScreenState
 }
+

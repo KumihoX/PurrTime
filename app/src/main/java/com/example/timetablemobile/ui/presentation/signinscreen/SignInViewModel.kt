@@ -75,4 +75,3 @@ class SignInViewModel @Inject constructor(
         checkingFields()
     }
 }
-

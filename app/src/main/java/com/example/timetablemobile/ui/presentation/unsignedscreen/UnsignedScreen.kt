@@ -14,7 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
-import com.example.timetablemobile.ui.presentation.ScheduleOption
+import com.example.timetablemobile.ui.presentation.unsignedscreen.components.ScheduleOption
+
 
 @Preview(showBackground = true)
 @Composable

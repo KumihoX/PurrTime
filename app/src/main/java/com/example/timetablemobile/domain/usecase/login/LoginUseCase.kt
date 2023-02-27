@@ -15,4 +15,3 @@ class LoginUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(userData: LoginDto): TokenResponse = repository.login(userData)
 }
-
