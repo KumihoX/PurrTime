@@ -36,6 +36,7 @@ class SignInViewModel @Inject constructor(
     private val _fieldsState = mutableStateOf(false)
     var fieldsState: State<Boolean> = _fieldsState
 
+
     private fun checkingFields() {
         _fieldsState.value = !(login.value.isNullOrEmpty()
                 || password.value.isNullOrEmpty())
