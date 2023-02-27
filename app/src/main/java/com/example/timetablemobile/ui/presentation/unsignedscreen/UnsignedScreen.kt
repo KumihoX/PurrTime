@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.presentation.unsignedscreen.components.ScheduleOption
 
+
 @Preview(showBackground = true)
 @Composable
 fun UnsignedScreen() {

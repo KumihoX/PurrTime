@@ -1,9 +1,15 @@
 package com.example.timetablemobile.ui.presentation.signinscreen
-
 import com.example.timetablemobile.data.remote.dto.TokenResponse
 
-data class SignInState(
-    val isLoading: Boolean = false,
-    val token: TokenResponse? = null,
-    val error: String = ""
-)
+
+sealed interface SignInScreenState {
+
+    object Initial : SignInScreenState
+
+    object Loading : SignInScreenState
+
+    data class Content(val token: TokenResponse) : SignInScreenState
+
+    data class Error(val error: String) : SignInScreenState
+}
+

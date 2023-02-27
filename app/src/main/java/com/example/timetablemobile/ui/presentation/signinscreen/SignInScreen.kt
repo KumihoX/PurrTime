@@ -149,7 +149,7 @@ fun PasswordField(viewModel: SignInViewModel) {
 fun LogIn(viewModel: SignInViewModel) {
     val buttonState: Boolean by remember { viewModel.fieldsState }
     Button(
-        onClick = { viewModel.login },
+        onClick = { viewModel.login() },
         enabled = buttonState,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MainGreen,
