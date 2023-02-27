@@ -13,16 +13,6 @@ import javax.inject.Inject
 class LoginUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
-    operator fun invoke(userData: LoginDto): Flow<Resource<TokenResponse>> = flow {
-        try {
-            emit(Resource.Loading())
-            val token = repository.login(userData)
-            emit(Resource.Success(token))
-
-        } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection"))
-        }
-    }
+    suspend operator fun invoke(userData: LoginDto): TokenResponse = repository.login(userData)
 }
+

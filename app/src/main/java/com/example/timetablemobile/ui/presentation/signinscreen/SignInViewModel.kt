@@ -1,5 +1,6 @@
 package com.example.timetablemobile.ui.presentation.signinscreen
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -10,8 +11,10 @@ import com.example.timetablemobile.data.remote.dto.LoginDto
 import com.example.timetablemobile.data.remote.dto.TokenResponse
 import com.example.timetablemobile.domain.usecase.login.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,8 +22,8 @@ class SignInViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase
 ): ViewModel() {
-    private val _state = mutableStateOf(SignInState())
-    var state: State<SignInState> = _state
+    private val _state: MutableState<SignInScreenState> = mutableStateOf(SignInScreenState.Initial)
+    var state: State<SignInScreenState> = _state
 
     private val _login = mutableStateOf("")
     var login: State<String> = _login
@@ -35,15 +38,9 @@ class SignInViewModel @Inject constructor(
     var fieldsState: State<Boolean> = _fieldsState
 
     private fun checkingFields() {
-        loginIsCorrect()
         _fieldsState.value = !(login.value.isNullOrEmpty()
                 || password.value.isNullOrEmpty()
                 || !_correct.value)
-    }
-
-    private fun loginIsCorrect() {
-        _correct.value =
-            _login.value.let { android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches() } == true
     }
 
     fun login() {
@@ -53,22 +50,20 @@ class SignInViewModel @Inject constructor(
             password = _password.value
         )
 
-        loginUseCase(userData).onEach { result ->
-            when(result) {
-                is Resource.Success -> {
-                    _state.value = SignInState(token = result.data)
-                }
-                is Resource.Error -> {
-                    _state.value = SignInState(
-                        error = result.message ?: "An unexpected error occured"
-                    )
-                }
-                is Resource.Loading -> {
-                    _state.value = SignInState(isLoading = true)
-                }
+        viewModelScope.launch {
+            _state.value = SignInScreenState.Loading
+
+            try {
+                val token = loginUseCase(userData)
+                _state.value = SignInScreenState.Content(token)
+            } catch (rethrow: CancellationException) {
+                throw rethrow
+            } catch (ex: Exception) {
+                _state.value = SignInScreenState.Error(ex.message ?: "An unexpected error occurred")
             }
-        }.launchIn(viewModelScope)
+        }
     }
+
 
     fun onLoginChange(newLogin: String) {
         _login.value = newLogin
@@ -80,3 +75,4 @@ class SignInViewModel @Inject constructor(
         checkingFields()
     }
 }
+
