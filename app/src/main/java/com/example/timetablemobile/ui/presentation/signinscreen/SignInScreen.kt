@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
@@ -22,35 +21,49 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.theme.MainGreen
 import com.example.timetablemobile.ui.theme.Red
 
 @Composable
 fun SignInScreen (
-    viewModel: SignInViewModel = viewModel()
+    navController: NavController,
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.value
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp, 0.dp, 16.dp, 0.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        Logo()
-        LoginField(viewModel = viewModel)
-        PasswordField(viewModel = viewModel)
-    }
+    Box(modifier = Modifier.fillMaxSize())
+    {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp, 0.dp, 16.dp, 0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Logo()
+            LoginField(viewModel = viewModel)
+            PasswordField(viewModel = viewModel)
+        }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp, 0.dp, 16.dp, 0.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        LogIn(viewModel = viewModel)
-        WithoutAuth(viewModel = viewModel)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp, 0.dp, 16.dp, 0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            LogIn(viewModel = viewModel)
+            WithoutAuth(navController = navController)
+        }
+
+        if (state.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
     }
 }
 
@@ -174,9 +187,11 @@ fun LogIn(viewModel: SignInViewModel) {
 }
 
 @Composable
-fun WithoutAuth(viewModel: SignInViewModel) {
+fun WithoutAuth(navController: NavController) {
     TextButton(
-        onClick = { /*TODO*/ },
+        onClick = {
+                  navController.navigate(Screen.UnsignedScreen.route)
+                  },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 8.dp, 0.dp, 16.dp)

@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase
 ): ViewModel() {
     private val _state = mutableStateOf(SignInState())
@@ -33,6 +33,7 @@ class SignInViewModel @Inject constructor(
 
     private val _fieldsState = mutableStateOf(false)
     var fieldsState: State<Boolean> = _fieldsState
+
 
     private fun checkingFields() {
         loginIsCorrect()
