@@ -10,13 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
-import com.example.timetablemobile.ui.theme.Gray
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
 import com.example.timetablemobile.ui.theme.MainGreen
 
@@ -33,8 +30,7 @@ fun LessonCard() {
         Card(
             onClick = { /*TODO*/ },
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+                .wrapContentSize()
                 .padding(end = 8.dp)
                 .shadow(
                     elevation = 4.dp,
@@ -45,18 +41,18 @@ fun LessonCard() {
             elevation = 4.dp
         ) {
             Row(
-                Modifier.fillMaxWidth().wrapContentHeight()
+                Modifier.fillMaxWidth().height(IntrinsicSize.Max)
             ) {
                 Box(
                     Modifier
                         .width(12.dp)
-                        //.fillMaxHeight()
+                        .fillMaxHeight()
                         .background(IndividualLessonColor)
                         .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
                 )
 
                 Column(
-                    Modifier.padding(8.dp, 16.dp).wrapContentHeight()
+                    Modifier.padding(8.dp, 16.dp).fillMaxSize()
                 ) {
                     Text(
                         text = "Название предмета",

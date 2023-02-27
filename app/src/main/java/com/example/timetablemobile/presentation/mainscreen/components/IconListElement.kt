@@ -18,13 +18,14 @@ import com.example.timetablemobile.ui.theme.Gray
 @Composable
 fun IconListElement(textValue: String, icon: Int) {
     Row(
-        Modifier.wrapContentHeight(),
+        //Modifier.wrapContentHeight(),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(icon),
             contentDescription = null,
+            Modifier.requiredSize(24.dp),
             tint = Gray
         )
 
