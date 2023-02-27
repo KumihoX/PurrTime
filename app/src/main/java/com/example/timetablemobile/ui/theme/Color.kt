@@ -11,4 +11,12 @@ val Gray = Color(0xFF696969)
 
 val MainGreen = Color(0xFF00615D)
 
+val LectionColor = Color(0xFFE89005)
+val SeminarColor = Color(0xFF8762C9)
+val PracticeColor = Color(0xFF456ACF)
+val LabColor = Color(0xFF4D9DB3)
 val IndividualLessonColor = Color(0xFF099D84)
+val ContactWorkColor = Color(0xFF988F2A)
+val ControlWorkColor = Color(0xFFAD182D)
+val ConsultationColor = Color(0xFFE15F5F)
+val BookingColor = Color(0xFFBEBBBB)

@@ -9,4 +9,14 @@
     <string name="sign_in">Войти</string>
     <string name="without_auth">Продолжить без входа</string>
     <string name="invalidEmailMessage">Вы ввели неккоректный email</string>
+    <string name="lection">Лекция</string>
+    <string name="seminar">Семинар</string>
+    <string name="practice">Практическое занятие</string>
+    <string name="lab">Лабораторная</string>
+    <string name="individual_lesson">Индивидуальное занятие</string>
+    <string name="contact_work">Иная контактная работа (сопровождение работы в ЭУК)</string>
+    <string name="control_work">Контрольное мероприятие</string>
+    <string name="consultation">Консультация</string>
+    <string name="booking">Бронь</string>
+    <string name="what_do_the_colors_mean">Что означают цвета?</string>
 </resources>
