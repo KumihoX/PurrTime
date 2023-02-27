@@ -51,6 +51,7 @@ fun LessonCard() {
                         .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
                 )
 
+                /* TODO: сюда данные из ViewModel подгружать */
                 Column(
                     Modifier.padding(8.dp, 16.dp).fillMaxSize()
                 ) {
