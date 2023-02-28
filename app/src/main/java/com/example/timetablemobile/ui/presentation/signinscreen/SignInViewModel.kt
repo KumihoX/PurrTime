@@ -6,10 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.timetablemobile.common.Resource
 import com.example.timetablemobile.data.remote.dto.LoginDto
 import com.example.timetablemobile.data.remote.dto.TokenResponse
 import com.example.timetablemobile.domain.usecase.login.LoginUseCase
+import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.launchIn
@@ -39,7 +41,7 @@ class SignInViewModel @Inject constructor(
                 || password.value.isNullOrEmpty())
     }
 
-    fun login() {
+    fun login(navController: NavController) {
 
         val userData = LoginDto(
             login = _login.value,
@@ -52,6 +54,7 @@ class SignInViewModel @Inject constructor(
             try {
                 val token = loginUseCase(userData)
                 _state.value = SignInScreenState.Content(token)
+                navController.navigate(Screen.MainScreen.route)
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {

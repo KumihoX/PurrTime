@@ -1,0 +1,289 @@
+package com.example.timetablemobile.ui.presentation.mainscreen
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.example.timetablemobile.R
+import com.example.timetablemobile.ui.theme.*
+import java.text.SimpleDateFormat
+import java.util.*
+
+@Composable
+fun MainScreen() {
+    var day by remember { mutableStateOf(Date()) }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(LightGray)
+    )
+    {
+        TopBar(onSelectedDayChange = { day = it })
+    }
+}
+
+@Composable
+fun TopBar(
+    onSelectedDayChange: (Date) -> Unit,
+) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .background(White)
+    )
+    {
+        val calendar = Calendar.getInstance(Locale.getDefault())
+        var selectedDate by rememberSaveable { mutableStateOf(calendar.time) }
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        var currentDate by rememberSaveable { mutableStateOf(calendar.time) }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(start = 16.dp, end = 16.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(top = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Exit()
+                Info(currentDate = currentDate)
+                Help()
+            }
+            WeekScrollableElement(
+                selectedDate = selectedDate,
+                currentDate = currentDate,
+                onSelectDay = { day ->
+                    calendar.time = day
+                    selectedDate = day
+                    onSelectedDayChange(day)
+                },
+                onNextWeekClicked = {
+                    calendar.time = it
+                    currentDate = it
+                },
+                onPrevWeekClicked = {
+                    calendar.time = it
+                    currentDate = it
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun Exit() {
+    Image(
+        painter = painterResource(R.drawable.logout),
+        contentDescription = "Выход из аккаунта"
+    )
+}
+
+@Composable
+fun Info(
+    currentDate: Date
+) {
+    val monthName = getMonthName(currentDate).replaceFirstChar { it.uppercase() }
+    val yearName = getYear4Letters(currentDate)
+    Column(
+        modifier = Modifier.wrapContentSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Группа 972103",
+            style = MaterialTheme.typography.h5,
+            color = Black,
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = "$monthName $yearName",
+            style = MaterialTheme.typography.subtitle1,
+            color = Gray,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun Help() {
+    Image(
+        painter = painterResource(R.drawable.help),
+        contentDescription = "Выход из аккаунта"
+    )
+}
+
+@Composable
+fun WeekScrollableElement(
+    selectedDate: Date,
+    currentDate: Date,
+    onSelectDay: (Date) -> Unit,
+    onNextWeekClicked: (firstDayDate: Date) -> Unit,
+    onPrevWeekClicked: (firstDayDate: Date) -> Unit
+) {
+    WeekDays(
+        firstDayDate = currentDate,
+        selectedDate = selectedDate,
+        onSelectDay = onSelectDay,
+        onNextWeekClicked = onNextWeekClicked,
+        onPrevWeekClicked = onPrevWeekClicked
+    )
+}
+
+@Composable
+fun WeekDays(
+    modifier: Modifier = Modifier,
+    firstDayDate: Date,
+    selectedDate: Date,
+    onSelectDay: (Date) -> Unit,
+    onNextWeekClicked: (firstDayDate: Date) -> Unit,
+    onPrevWeekClicked: (firstDayDate: Date) -> Unit
+) {
+
+    val weekFinalDays = getFutureDates(6, Calendar.getInstance().apply { time = firstDayDate })
+    val interactionSource = remember { MutableInteractionSource() }
+    val weekFinalDate = weekFinalDays.last()
+
+    Row(
+        modifier
+            .fillMaxWidth()
+            .padding(0.dp, 10.dp, 0.dp, 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.arrow_back),
+            contentDescription = "Переход на предыдущую неделю",
+            tint = MainGreen,
+            modifier = Modifier
+                .align(CenterVertically)
+                .padding(end = 8.dp)
+                .clickable {
+                    val c = Calendar.getInstance()
+                    c.time = firstDayDate
+                    c.add(Calendar.DATE, -7)
+                    val prevWeekFirstDay = c.time
+                    onPrevWeekClicked(prevWeekFirstDay)
+                }
+        )
+
+        for (day in weekFinalDays) {
+            Column(
+                modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = getDay3LettersName(day).replaceFirstChar { it.uppercase() },
+                    style = MaterialTheme.typography.body2,
+                    color = Gray,
+                    textAlign = TextAlign.Center
+                )
+                Text(text = getDayNumber(day),
+                    style = MaterialTheme.typography.body1,
+                    color = if (selectedDate == day) White else Black,
+
+                    modifier = (if (selectedDate == day) Modifier
+                        .fillMaxWidth()
+                        .padding(top = 9.dp)
+                        .drawBehind {
+                            drawRoundRect(
+                                color = MainGreen,
+                                size = Size(width = 30.dp.toPx(), height = 35.dp.toPx()),
+                                cornerRadius = CornerRadius(x = 5.dp.toPx(), 5.dp.toPx()),
+                                topLeft = Offset(x = 6.dp.toPx(), y = -(6).dp.toPx())
+                            )
+                        }
+                    else Modifier
+                        .fillMaxWidth()
+                        .padding(top = 9.dp)).clickable(
+                        interactionSource = interactionSource,
+                        indication = null
+                    ) {
+                        onSelectDay(day)
+                    },
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
+        Icon(
+            painter = painterResource(R.drawable.arrow_forward),
+            contentDescription = "Переход на следующую неделю",
+            tint = MainGreen,
+            modifier = Modifier
+                .align(CenterVertically)
+                .padding(start = 8.dp)
+                .clickable {
+                    val c = Calendar.getInstance()
+                    c.time = weekFinalDate
+                    c.add(Calendar.DATE, 1)
+                    val nextWeekFirstDay = c.time
+                    onNextWeekClicked(nextWeekFirstDay)
+                }
+        )
+    }
+}
+
+fun getFutureDates(
+    count: Int,
+    startCalendar: Calendar = Calendar.getInstance(Locale.getDefault()),
+    includeStart: Boolean = true
+): MutableList<Date> {
+    val futureDateList = mutableListOf<Date>()
+    if (includeStart)
+        futureDateList.add(startCalendar.time)
+    for (i in 0 until count) {
+        startCalendar.add(Calendar.DATE, 1)
+        futureDateList.add(startCalendar.time)
+    }
+    return futureDateList
+}
+
+fun getDayNumber(date: Date): String =
+    SimpleDateFormat("d", Locale.getDefault()).format(date)
+
+fun getMonthName(date: Date): String {
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    val monthNumber = calendar.get(Calendar.MONTH)
+    val monthsList = listOf(
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь"
+    )
+    return monthsList[monthNumber]
+}
+
+fun getYear4Letters(date: Date): String =
+    SimpleDateFormat("YYYY", Locale("ru", "RU")).format(date)
+
+fun getDay3LettersName(date: Date): String = SimpleDateFormat("EE", Locale("ru", "RU")).format(date)

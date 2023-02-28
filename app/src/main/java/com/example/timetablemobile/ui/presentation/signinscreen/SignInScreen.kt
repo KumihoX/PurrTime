@@ -49,7 +49,9 @@ fun SignInScreen (
                 )
             }
 
-            is SignInScreenState.Content -> Unit
+            is SignInScreenState.Content -> {
+                SignInScreenUI(viewModel = viewModel, navController = navController)
+            }
 
             is SignInScreenState.Error -> {
                 SignInScreenUI(viewModel = viewModel, navController = navController)
@@ -83,7 +85,7 @@ fun SignInScreenUI(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
-        LogIn(viewModel = viewModel)
+        LogIn(viewModel = viewModel, navController = navController)
         WithoutAuth(navController = navController)
     }
 }
@@ -163,10 +165,12 @@ fun PasswordField(viewModel: SignInViewModel) {
 }
 
 @Composable
-fun LogIn(viewModel: SignInViewModel) {
+fun LogIn(viewModel: SignInViewModel, navController: NavController) {
     val buttonState: Boolean by remember { viewModel.fieldsState }
     Button(
-        onClick = { viewModel.login() },
+        onClick = {
+            viewModel.login(navController)
+                  },
         enabled = buttonState,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MainGreen,
