@@ -8,6 +8,7 @@ val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
 val Red = Color(0xFFAD182D)
 val Gray = Color(0xFF696969)
+val LightGray = Color(0xFFECECEC)
 
 val MainGreen = Color(0xFF00615D)
 
