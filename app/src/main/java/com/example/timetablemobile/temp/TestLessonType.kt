@@ -3,7 +3,7 @@ package com.example.timetablemobile.temp
 import androidx.compose.ui.graphics.Color
 import com.example.timetablemobile.ui.theme.*
 
-enum class LessonType(val color: Color) {
+enum class TestLessonType(val color: Color) {
     Lection(LectionColor),
     Seminar(SeminarColor),
     Practice(PracticeColor),
