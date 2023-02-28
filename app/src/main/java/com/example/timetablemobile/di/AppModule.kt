@@ -8,6 +8,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -16,12 +18,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    private val client = OkHttpClient.Builder().apply {
+        val logLevel = HttpLoggingInterceptor.Level.BODY
+        addInterceptor(HttpLoggingInterceptor().setLevel(logLevel))
+    }
+
     @Provides
     @Singleton
     fun provideAuthApi(): AuthApi{
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
             .build()
             .create(AuthApi::class.java)
     }
