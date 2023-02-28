@@ -14,56 +14,77 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.navigation.Screen
+import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.theme.MainGreen
-import com.example.timetablemobile.ui.theme.Red
+
 
 @Composable
 fun SignInScreen (
-    navController: NavController,
-    viewModel: SignInViewModel = hiltViewModel()
+    viewModel: SignInViewModel = hiltViewModel(),
+    navController: NavController
 ) {
-    val state = viewModel.state.value
+    val state by remember { viewModel.state }
 
     Box(modifier = Modifier.fillMaxSize())
     {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp, 0.dp, 16.dp, 0.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            Logo()
-            LoginField(viewModel = viewModel)
-            PasswordField(viewModel = viewModel)
-        }
+        when (state) {
+            SignInScreenState.Initial -> {
+                SignInScreenUI(viewModel = viewModel, navController = navController)
+            }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp, 0.dp, 16.dp, 0.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            LogIn(viewModel = viewModel)
-            WithoutAuth(navController = navController)
-        }
+            SignInScreenState.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MainGreen
+                )
+            }
 
-        if (state.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center)
-            )
+            is SignInScreenState.Content -> Unit
+
+            is SignInScreenState.Error -> {
+                SignInScreenUI(viewModel = viewModel, navController = navController)
+                ErrorAlertDialog(message = (state as SignInScreenState.Error).error)
+            }
         }
+    }
+}
+
+@Composable
+fun SignInScreenUI(
+    navController: NavController,
+    viewModel: SignInViewModel = hiltViewModel()
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp, 0.dp, 16.dp, 0.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        Logo()
+        LoginField(viewModel = viewModel)
+        PasswordField(viewModel = viewModel)
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp, 0.dp, 16.dp, 0.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        LogIn(viewModel = viewModel)
+        WithoutAuth(navController = navController)
     }
 }
 
@@ -79,14 +100,13 @@ fun Logo() {
 @Composable
 fun LoginField(viewModel: SignInViewModel) {
     val login: String by remember { viewModel.login }
-    val correct: Boolean by remember { viewModel.correct }
 
     OutlinedTextField(
         value = login,
         onValueChange = {viewModel.onLoginChange(it)},
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 0.dp, 0.dp, 4.dp),
+            .padding(0.dp, 0.dp, 0.dp, 16.dp),
         placeholder = {
             Text(
                 stringResource(R.string.login),
@@ -106,22 +126,6 @@ fun LoginField(viewModel: SignInViewModel) {
             focusedBorderColor = MainGreen
         )
     )
-    if (!correct) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(0.dp, 0.dp, 0.dp, 16.dp),
-            text = stringResource(R.string.invalidEmailMessage),
-            color = Red,
-            style = MaterialTheme.typography.caption,
-            textAlign = TextAlign.Start
-        )
-    }
-    else {
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .padding(0.dp, 0.dp, 0.dp, 12.dp))
-    }
 }
 
 @Composable
@@ -189,9 +193,7 @@ fun LogIn(viewModel: SignInViewModel) {
 @Composable
 fun WithoutAuth(navController: NavController) {
     TextButton(
-        onClick = {
-                  navController.navigate(Screen.UnsignedScreen.route)
-                  },
+        onClick = { navController.navigate(Screen.UnsignedScreen.route) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 8.dp, 0.dp, 16.dp)

@@ -31,17 +31,12 @@ class SignInViewModel @Inject constructor(
     private val _password = mutableStateOf("")
     var password: State<String> = _password
 
-    private val _correct = mutableStateOf(true)
-    var correct: State<Boolean> = _correct
-
     private val _fieldsState = mutableStateOf(false)
     var fieldsState: State<Boolean> = _fieldsState
 
-
     private fun checkingFields() {
         _fieldsState.value = !(login.value.isNullOrEmpty()
-                || password.value.isNullOrEmpty()
-                || !_correct.value)
+                || password.value.isNullOrEmpty())
     }
 
     fun login() {
@@ -60,7 +55,11 @@ class SignInViewModel @Inject constructor(
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
-                _state.value = SignInScreenState.Error(ex.message ?: "An unexpected error occurred")
+                _state.value = SignInScreenState.Error(
+                    when (ex.message) {
+                        "HTTP 400 Bad Request" -> "Введенные данные неверны"
+                        else -> "Что-то пошло не так"
+                    })
             }
         }
     }
