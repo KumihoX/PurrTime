@@ -2,11 +2,17 @@ package com.example.timetablemobile.di
 
 import com.example.timetablemobile.common.Constants
 import com.example.timetablemobile.data.remote.AuthApi
-import com.example.timetablemobile.data.remote.ScheduleApi
+import com.example.timetablemobile.data.remote.ClassroomApi
+import com.example.timetablemobile.data.remote.GroupApi
+import com.example.timetablemobile.data.remote.TeacherApi
 import com.example.timetablemobile.data.repository.AuthRepositoryImpl
-import com.example.timetablemobile.data.repository.ScheduleRepositoryImpl
+import com.example.timetablemobile.data.repository.ClassroomRepositoryImpl
+import com.example.timetablemobile.data.repository.GroupRepositoryImpl
+import com.example.timetablemobile.data.repository.TeacherRepositoryImpl
 import com.example.timetablemobile.domain.repository.AuthRepository
-import com.example.timetablemobile.domain.repository.ScheduleRepository
+import com.example.timetablemobile.domain.repository.ClassroomRepository
+import com.example.timetablemobile.domain.repository.GroupRepository
+import com.example.timetablemobile.domain.repository.TeacherRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,18 +43,50 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideScheduleApi(): ScheduleApi{
+    fun provideClassroomApi(): ClassroomApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ScheduleApi::class.java)
+            .create(ClassroomApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideScheduleRepository(api: ScheduleApi): ScheduleRepository {
-        return ScheduleRepositoryImpl(api)
+    fun provideScheduleRepository(api: ClassroomApi): ClassroomRepository {
+        return ClassroomRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGroupApi(): GroupApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GroupApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGroupRepository(api: GroupApi): GroupRepository {
+        return GroupRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTeacherApi(): TeacherApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(TeacherApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTeacherRepository(api: TeacherApi): TeacherRepository {
+        return TeacherRepositoryImpl(api)
     }
 
 }
