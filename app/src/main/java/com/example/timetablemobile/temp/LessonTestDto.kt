@@ -1,7 +1,7 @@
 package com.example.timetablemobile.temp
 
 data class LessonTestDto(
-    val type: LessonType,
+    val type: TestLessonType,
     val cabinet: CabinetTestDto,
     val date: String,
     val groups: List<Int>,

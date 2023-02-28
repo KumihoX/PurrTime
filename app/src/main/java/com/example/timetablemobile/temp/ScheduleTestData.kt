@@ -36,7 +36,7 @@ fun GetScheduleTestData(param: Int = 1): ScheduleTestDto {
     )
 
     val testLesson1 = LessonTestDto(
-        LessonType.Lection,
+        TestLessonType.Lection,
         cabinet1,
         "2.03.2023",
         listOf(972103, 972102, 972103),
@@ -45,7 +45,7 @@ fun GetScheduleTestData(param: Int = 1): ScheduleTestDto {
         timeslot1
     )
     val testLesson2 = LessonTestDto(
-        LessonType.Consultation,
+        TestLessonType.Consultation,
         cabinet1,
         "2.03.2023",
         listOf(972103),
@@ -54,7 +54,7 @@ fun GetScheduleTestData(param: Int = 1): ScheduleTestDto {
         timeslot2
     )
     val testLesson3 = LessonTestDto(
-        LessonType.Lab,
+        TestLessonType.Lab,
         cabinet2,
         "2.03.2023",
         listOf(972103),
@@ -64,7 +64,7 @@ fun GetScheduleTestData(param: Int = 1): ScheduleTestDto {
     )
 
     val testLesson4 = LessonTestDto(
-        LessonType.Practice,
+        TestLessonType.Practice,
         cabinet2,
         "2.04.2023",
         listOf(972103),
@@ -73,7 +73,7 @@ fun GetScheduleTestData(param: Int = 1): ScheduleTestDto {
         timeslot4
     )
     val testLesson5 = LessonTestDto(
-        LessonType.Seminar,
+        TestLessonType.Seminar,
         cabinet1,
         "2.02.2023",
         listOf(972103, 972102),
