@@ -15,15 +15,24 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.theme.Gray
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
 import com.example.timetablemobile.ui.theme.MainGreen
 
 @OptIn(ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
 @Composable
-fun LessonCard() {
+fun LessonCard(
+    navController: NavController
+) {
+    val name = "Название предмета"
+    val type = "Тип предмета"
+    val time = "8:45 - 10:20"
+    val teacher = "преподаватель"
+    val classroom = "аудитория"
+    val groups = "группы"
     Box(
         Modifier
             .wrapContentHeight()
@@ -31,7 +40,10 @@ fun LessonCard() {
             .padding(4.dp, 8.dp)
     ) {
         Card(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.LessonDetailScreen.passLessonInfo(
+                name, type, time, teacher, classroom, groups)){
+                popUpTo(Screen.MainScreen.route) { inclusive = true }
+            } },
             modifier = Modifier
                 .wrapContentSize()
                 .padding(end = 8.dp)
@@ -63,16 +75,16 @@ fun LessonCard() {
                         .fillMaxSize()
                 ) {
                     Text(
-                        text = "Название предмета",
+                        text = name,
                         style = MaterialTheme.typography.body1,
                         textAlign = TextAlign.Start
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    IconListElement(textValue = "преподаватель", icon = R.drawable.badge)
-                    IconListElement(textValue = "аудитория", icon = R.drawable.meeting_room)
-                    IconListElement(textValue = "группы", icon = R.drawable.group)
+                    IconListElement(textValue = teacher, icon = R.drawable.badge)
+                    IconListElement(textValue = classroom, icon = R.drawable.meeting_room)
+                    IconListElement(textValue = groups, icon = R.drawable.group)
                 }
             }
         }
@@ -92,7 +104,7 @@ fun LessonCard() {
             elevation = 4.dp
         ) {
             Text(
-                text = "8:45 - 10:20",
+                text = time,
                 modifier = Modifier
                     .wrapContentSize()
                     .padding(8.dp),
