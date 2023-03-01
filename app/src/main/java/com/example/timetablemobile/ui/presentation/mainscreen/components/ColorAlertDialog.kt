@@ -9,6 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,13 +21,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
+import com.example.timetablemobile.ui.presentation.mainscreen.MainViewModel
 import com.example.timetablemobile.ui.theme.*
 
-@Preview(showBackground = true)
 @Composable
-fun ColorAlertDialog() {
+fun ColorAlertDialog(
+    viewModel: MainViewModel
+) {
     AlertDialog(
-        onDismissRequest = { /*TODO*/ },
+        onDismissRequest = { viewModel.closeDialog() },
         modifier = Modifier
             //.padding(vertical = 44.dp)
             .wrapContentSize(),
@@ -33,7 +37,7 @@ fun ColorAlertDialog() {
         backgroundColor = White,
         buttons = {
             Box {
-                ColorAlertDialogBody()
+                ColorAlertDialogBody(viewModel)
 
                 Image(
                     painter = painterResource(R.drawable.corner_cat),
@@ -47,7 +51,9 @@ fun ColorAlertDialog() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColorAlertDialogBody() {
+fun ColorAlertDialogBody(
+    viewModel: MainViewModel
+) {
     Column(
         Modifier
             .padding(16.dp, 12.dp)
@@ -73,7 +79,7 @@ fun ColorAlertDialogBody() {
 
             CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = { viewModel.closeDialog() }
                 ) {
                     Icon(
                         Icons.Outlined.Close,

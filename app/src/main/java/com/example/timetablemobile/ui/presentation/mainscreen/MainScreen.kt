@@ -1,13 +1,10 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -20,27 +17,50 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.timetablemobile.R
+import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
+import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
 import com.example.timetablemobile.ui.theme.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    viewModel: MainViewModel = hiltViewModel()
+) {
     var day by remember { mutableStateOf(Date()) }
+    val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(LightGray)
     )
     {
-        TopBar(onSelectedDayChange = { day = it })
+        Column(modifier = Modifier.fillMaxWidth())
+        {
+            TopBar(onSelectedDayChange = { day = it }, viewModel = viewModel)
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                LessonCard()
+                LessonCard()
+                LessonCard()
+                LessonCard()
+                LessonCard()
+                LessonCard()
+            }
+        }
+        if (helpDialogIsOpen) {
+            ColorAlertDialog(viewModel = viewModel)
+        }
     }
 }
 
 @Composable
 fun TopBar(
     onSelectedDayChange: (Date) -> Unit,
+    viewModel: MainViewModel
 ) {
 
     Box(
@@ -70,7 +90,7 @@ fun TopBar(
             ) {
                 Exit()
                 Info(currentDate = currentDate)
-                Help()
+                Help(viewModel = viewModel)
             }
             WeekScrollableElement(
                 selectedDate = selectedDate,
@@ -92,13 +112,18 @@ fun TopBar(
         }
     }
 }
-
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Exit() {
-    Image(
-        painter = painterResource(R.drawable.logout),
-        contentDescription = "Выход из аккаунта"
-    )
+    CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                painter = painterResource(R.drawable.logout),
+                contentDescription = "Выход из аккаунта",
+                tint = Black
+            )
+        }
+    }
 }
 
 @Composable
@@ -126,12 +151,18 @@ fun Info(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Help() {
-    Image(
-        painter = painterResource(R.drawable.help),
-        contentDescription = "Выход из аккаунта"
-    )
+fun Help(viewModel: MainViewModel) {
+    CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+        IconButton(onClick = { viewModel.openDialog() }) {
+            Icon(
+                painter = painterResource(R.drawable.help),
+                contentDescription = "Открытие окна с подсказкой",
+                tint = Black
+            )
+        }
+    }
 }
 
 @Composable
@@ -151,6 +182,7 @@ fun WeekScrollableElement(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun WeekDays(
     modifier: Modifier = Modifier,
@@ -171,21 +203,23 @@ fun WeekDays(
             .padding(0.dp, 10.dp, 0.dp, 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Icon(
-            painter = painterResource(R.drawable.arrow_back),
-            contentDescription = "Переход на предыдущую неделю",
-            tint = MainGreen,
-            modifier = Modifier
-                .align(CenterVertically)
-                .padding(end = 8.dp)
-                .clickable {
-                    val c = Calendar.getInstance()
-                    c.time = firstDayDate
-                    c.add(Calendar.DATE, -7)
-                    val prevWeekFirstDay = c.time
-                    onPrevWeekClicked(prevWeekFirstDay)
-                }
-        )
+        CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+            Icon(
+                painter = painterResource(R.drawable.arrow_back),
+                contentDescription = "Переход на предыдущую неделю",
+                tint = MainGreen,
+                modifier = Modifier
+                    .align(CenterVertically)
+                    .padding(end = 8.dp)
+                    .clickable {
+                        val c = Calendar.getInstance()
+                        c.time = firstDayDate
+                        c.add(Calendar.DATE, -7)
+                        val prevWeekFirstDay = c.time
+                        onPrevWeekClicked(prevWeekFirstDay)
+                    }
+            )
+        }
 
         for (day in weekFinalDays) {
             Column(
@@ -225,22 +259,23 @@ fun WeekDays(
                 )
             }
         }
-
-        Icon(
-            painter = painterResource(R.drawable.arrow_forward),
-            contentDescription = "Переход на следующую неделю",
-            tint = MainGreen,
-            modifier = Modifier
-                .align(CenterVertically)
-                .padding(start = 8.dp)
-                .clickable {
-                    val c = Calendar.getInstance()
-                    c.time = weekFinalDate
-                    c.add(Calendar.DATE, 1)
-                    val nextWeekFirstDay = c.time
-                    onNextWeekClicked(nextWeekFirstDay)
-                }
-        )
+        CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+            Icon(
+                painter = painterResource(R.drawable.arrow_forward),
+                contentDescription = "Переход на следующую неделю",
+                tint = MainGreen,
+                modifier = Modifier
+                    .align(CenterVertically)
+                    .padding(start = 8.dp)
+                    .clickable {
+                        val c = Calendar.getInstance()
+                        c.time = weekFinalDate
+                        c.add(Calendar.DATE, 1)
+                        val nextWeekFirstDay = c.time
+                        onNextWeekClicked(nextWeekFirstDay)
+                    }
+            )
+        }
     }
 }
 

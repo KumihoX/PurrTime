@@ -1,5 +1,7 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +20,9 @@ class MainViewModel @Inject constructor(
 
     private val _state: MutableLiveData<MainState> = MutableLiveData(MainState.Initial)
     val state: LiveData<MainState> = _state
+
+    private val _helpDialogIsOpen = mutableStateOf(false)
+    var helpDialogIsOpen: State<Boolean> = _helpDialogIsOpen
 
     init {
         //getLessons()
@@ -38,5 +43,13 @@ class MainViewModel @Inject constructor(
                 _state.value = MainState.Error(ex.message ?: "An unexpected error occurred")
             }
         }
+    }
+
+    fun openDialog() {
+        _helpDialogIsOpen.value = true
+    }
+
+    fun closeDialog() {
+        _helpDialogIsOpen.value = false
     }
 }
