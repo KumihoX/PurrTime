@@ -42,12 +42,12 @@ fun MainScreen(
         {
             TopBar(onSelectedDayChange = { day = it }, viewModel = viewModel, navController)
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                LessonCard()
-                LessonCard()
-                LessonCard()
-                LessonCard()
-                LessonCard()
-                LessonCard()
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
             }
         }
         if (helpDialogIsOpen) {
