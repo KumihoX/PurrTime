@@ -12,6 +12,9 @@ val LightGray = Color(0xFFECECEC)
 
 val MainGreen = Color(0xFF00615D)
 
+val SearchFieldBackground = Color(0xFFECECEC)
+val SearchFieldText = Color(0xFF717171)
+
 val LectionColor = Color(0xFFE89005)
 val SeminarColor = Color(0xFF8762C9)
 val PracticeColor = Color(0xFF456ACF)
