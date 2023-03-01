@@ -17,7 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
 import com.example.timetablemobile.ui.theme.*
@@ -25,6 +27,7 @@ import java.util.*
 
 @Composable
 fun MainScreen(
+    navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
     var day by remember { mutableStateOf(Date()) }
@@ -37,7 +40,7 @@ fun MainScreen(
     {
         Column(modifier = Modifier.fillMaxWidth())
         {
-            TopBar(onSelectedDayChange = { day = it }, viewModel = viewModel)
+            TopBar(onSelectedDayChange = { day = it }, viewModel = viewModel, navController)
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 LessonCard()
                 LessonCard()
@@ -56,7 +59,8 @@ fun MainScreen(
 @Composable
 fun TopBar(
     onSelectedDayChange: (Date) -> Unit,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    navController: NavController
 ) {
 
     Box(
@@ -84,7 +88,7 @@ fun TopBar(
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Exit()
+                Exit(navController)
                 Info(currentDate = currentDate)
                 Help(viewModel = viewModel)
             }
@@ -108,11 +112,14 @@ fun TopBar(
         }
     }
 }
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Exit() {
+fun Exit(navController: NavController) {
     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { navController.navigate(Screen.SignInScreen.route){
+            popUpTo(Screen.MainScreen.route) { inclusive = true }
+        } }) {
             Icon(
                 painter = painterResource(R.drawable.logout),
                 contentDescription = "Выход из аккаунта",
