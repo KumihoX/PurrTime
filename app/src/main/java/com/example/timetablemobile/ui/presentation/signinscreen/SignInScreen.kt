@@ -14,6 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.timetablemobile.R
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -196,7 +200,9 @@ fun LogIn(viewModel: SignInViewModel, navController: NavController) {
 @Composable
 fun WithoutAuth(navController: NavController) {
     TextButton(
-        onClick = { navController.navigate(Screen.UnsignedScreen.route) },
+        onClick = {
+                  navController.navigate(Screen.UnsignedScreen.route)
+                  },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 8.dp, 0.dp, 16.dp)
