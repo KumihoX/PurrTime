@@ -1,7 +1,6 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -18,13 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
 import com.example.timetablemobile.ui.theme.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
@@ -279,46 +275,5 @@ fun WeekDays(
     }
 }
 
-fun getFutureDates(
-    count: Int,
-    startCalendar: Calendar = Calendar.getInstance(Locale.getDefault()),
-    includeStart: Boolean = true
-): MutableList<Date> {
-    val futureDateList = mutableListOf<Date>()
-    if (includeStart)
-        futureDateList.add(startCalendar.time)
-    for (i in 0 until count) {
-        startCalendar.add(Calendar.DATE, 1)
-        futureDateList.add(startCalendar.time)
-    }
-    return futureDateList
-}
 
-fun getDayNumber(date: Date): String =
-    SimpleDateFormat("d", Locale.getDefault()).format(date)
 
-fun getMonthName(date: Date): String {
-    val calendar = Calendar.getInstance()
-    calendar.time = date
-    val monthNumber = calendar.get(Calendar.MONTH)
-    val monthsList = listOf(
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь"
-    )
-    return monthsList[monthNumber]
-}
-
-fun getYear4Letters(date: Date): String =
-    SimpleDateFormat("YYYY", Locale("ru", "RU")).format(date)
-
-fun getDay3LettersName(date: Date): String = SimpleDateFormat("EE", Locale("ru", "RU")).format(date)
