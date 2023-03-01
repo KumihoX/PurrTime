@@ -14,4 +14,8 @@ class AuthRepositoryImpl @Inject constructor(
         return api.login(body)
     }
 
+    override suspend fun logout() {
+        return api.logout()
+    }
+
 }

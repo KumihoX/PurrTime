@@ -8,4 +8,7 @@ import retrofit2.http.POST
 interface AuthApi {
     @POST("auth/login/mobile")
     suspend fun login(@Body body: LoginDto): TokenResponse
+
+    @POST("auth/logout")
+    suspend fun logout()
 }
