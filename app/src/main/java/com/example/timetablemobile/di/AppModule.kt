@@ -55,6 +55,7 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
             .build()
             .create(ClassroomApi::class.java)
     }
@@ -71,6 +72,7 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
             .build()
             .create(GroupApi::class.java)
     }
@@ -87,6 +89,7 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
             .build()
             .create(TeacherApi::class.java)
     }
