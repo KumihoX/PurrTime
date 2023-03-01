@@ -21,7 +21,7 @@ fun Navigation(navController: NavHostController) {
         }
 
         composable(route = Screen.MainScreen.route) {
-            MainScreen()
+            MainScreen(navController = navController)
         }
     }
 }

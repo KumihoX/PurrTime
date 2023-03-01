@@ -9,8 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.presentation.mainscreen.MainViewModel
@@ -94,10 +91,22 @@ fun ColorAlertDialogBody(
         ColorDefinitionElement(color = SeminarColor, text = stringResource(R.string.seminar))
         ColorDefinitionElement(color = PracticeColor, text = stringResource(R.string.practice))
         ColorDefinitionElement(color = LabColor, text = stringResource(R.string.lab))
-        ColorDefinitionElement(color = IndividualLessonColor, text = stringResource(R.string.individual_lesson))
-        ColorDefinitionElement(color = ContactWorkColor, text = stringResource(R.string.contact_work))
-        ColorDefinitionElement(color = ControlWorkColor, text = stringResource(R.string.control_work))
-        ColorDefinitionElement(color = ConsultationColor, text = stringResource(R.string.consultation))
+        ColorDefinitionElement(
+            color = IndividualLessonColor,
+            text = stringResource(R.string.individual_lesson)
+        )
+        ColorDefinitionElement(
+            color = ContactWorkColor,
+            text = stringResource(R.string.contact_work)
+        )
+        ColorDefinitionElement(
+            color = ControlWorkColor,
+            text = stringResource(R.string.control_work)
+        )
+        ColorDefinitionElement(
+            color = ConsultationColor,
+            text = stringResource(R.string.consultation)
+        )
         ColorDefinitionElement(color = BookingColor, text = stringResource(R.string.booking))
     }
 }

@@ -44,7 +44,9 @@ fun LessonCard() {
             elevation = 4.dp
         ) {
             Row(
-                Modifier.fillMaxWidth().height(IntrinsicSize.Max)
+                Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Max)
             ) {
                 Box(
                     Modifier
@@ -56,7 +58,9 @@ fun LessonCard() {
 
                 /* TODO: сюда данные из ViewModel подгружать */
                 Column(
-                    Modifier.padding(8.dp, 16.dp).fillMaxSize()
+                    Modifier
+                        .padding(8.dp, 16.dp)
+                        .fillMaxSize()
                 ) {
                     Text(
                         text = "Название предмета",
