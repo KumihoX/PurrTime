@@ -3,14 +3,14 @@ package com.example.timetablemobile.ui.presentation.signinscreen
 import com.example.timetablemobile.data.remote.dto.TokenResponse
 
 
-sealed interface SignInScreenState {
+sealed interface SignInState {
 
-    object Initial : SignInScreenState
+    object Initial : SignInState
 
-    object Loading : SignInScreenState
+    object Loading : SignInState
 
-    data class Content(val token: TokenResponse) : SignInScreenState
+    data class Content(val token: TokenResponse) : SignInState
 
-    data class Error(val error: String) : SignInScreenState
+    data class Error(val error: String) : SignInState
 }
 

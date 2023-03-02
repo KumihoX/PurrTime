@@ -19,4 +19,6 @@
     <string name="consultation">Консультация</string>
     <string name="booking">Бронь</string>
     <string name="what_do_the_colors_mean">Что означают цвета?</string>
+    <string name="nothing_here">Ой-ой!
+По запросу ничего не найдено</string>
 </resources>

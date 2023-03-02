@@ -37,24 +37,24 @@ fun SignInScreen(
     Box(modifier = Modifier.fillMaxSize())
     {
         when (state) {
-            SignInScreenState.Initial -> {
+            SignInState.Initial -> {
                 SignInScreenUI(viewModel = viewModel, navController = navController)
             }
 
-            SignInScreenState.Loading -> {
+            SignInState.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = MainGreen
                 )
             }
 
-            is SignInScreenState.Content -> {
+            is SignInState.Content -> {
                 SignInScreenUI(viewModel = viewModel, navController = navController)
             }
 
-            is SignInScreenState.Error -> {
+            is SignInState.Error -> {
                 SignInScreenUI(viewModel = viewModel, navController = navController)
-                ErrorAlertDialog(message = (state as SignInScreenState.Error).error)
+                ErrorAlertDialog(message = (state as SignInState.Error).error)
             }
         }
     }

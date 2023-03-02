@@ -1,125 +1,147 @@
 package com.example.timetablemobile.ui.presentation.searchscreen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.timetablemobile.R
-import com.example.timetablemobile.ui.theme.Black
+import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
+import com.example.timetablemobile.ui.presentation.searchscreen.components.SearchField
+import com.example.timetablemobile.ui.presentation.searchscreen.components.SearchListItem
+import com.example.timetablemobile.ui.presentation.signinscreen.SignInState
 import com.example.timetablemobile.ui.theme.MainGreen
-import com.example.timetablemobile.ui.theme.SearchFieldBackground
-import com.example.timetablemobile.ui.theme.SearchFieldText
 
 @Composable
-fun SearchScreen() {
-
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun SearchField(
-    text: String,
-    onTextChange: (String) -> Unit,
-    placeholderValue: String
+fun SearchScreen(
+    viewModel: SearchViewModel = hiltViewModel(),
+    navController: NavController
 ) {
-    TextField(
-        value = text,
-        onValueChange = onTextChange,
-        modifier = Modifier
-            .wrapContentSize(),
-        textStyle = MaterialTheme.typography.body2,
-        placeholder = {
-              Text(
-                  text = placeholderValue,
-                  modifier = Modifier
-                      .wrapContentSize(),
-                  style = MaterialTheme.typography.body2,
-                  color = SearchFieldText
-              )
-        },
-        trailingIcon = {
-            if (text != "") {
-                CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+    val state by remember { viewModel.state }
+
+    val searchFieldText: String by remember { viewModel.searchFieldText }
+
+    Scaffold(
+        Modifier.fillMaxSize(),
+        topBar = {
+            Column(
+                Modifier
+                    .padding(16.dp)
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    Modifier
+                        .padding(bottom = 20.dp)
+                        .wrapContentHeight()
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
                     IconButton(
-                        onClick = { onTextChange("") }
+                        onClick = { /*TODO*/ },
+                        Modifier
+                            .requiredSize(24.dp)
                     ) {
                         Icon(
-                            Icons.Outlined.Close,
+                            Icons.Outlined.ArrowBack,
                             contentDescription = null,
-                            Modifier.size(20.dp)
+                            tint = MainGreen
+                        )
+                    }
+
+                    Text(
+                        text = "optionName",
+                        Modifier.fillMaxWidth(),
+                        style = MaterialTheme.typography.body1,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+
+                SearchField(
+                    text = searchFieldText,
+                    placeholderValue = "temp"
+                ) { viewModel.onSearchFieldChange(it) }
+            }
+        }
+    ) {
+        Box(
+            Modifier
+                .padding(it)
+                .fillMaxSize()
+        ) {
+            when (state) {
+                //это состояние будет показываться, если по введенному запросу ничего не нашлось
+                SearchState.Initial -> {
+                    Box(Modifier.fillMaxSize()) {
+                        Text(
+                            stringResource(R.string.nothing_here),
+                            Modifier
+                                .align(Center),
+                            style = MaterialTheme.typography.h5,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Image(
+                            painterResource(R.drawable.cat_bottom_question),
+                            contentDescription = null,
+                            Modifier.align(BottomCenter)
                         )
                     }
                 }
+
+                SearchState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Center),
+                        color = MainGreen
+                    )
+                }
+
+                is SearchState.Content -> {
+                    val results = (state as SearchState.Content).requestResultsList
+
+                    LazyColumn(
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize()
+                    ) {
+                        items(results) { result ->
+                            SearchListItem(
+                                itemName = result.toString()
+                            ) //{  }
+                        }
+                    }
+                }
+
+                is SearchState.Error -> {
+                    ErrorAlertDialog(message = (state as SignInState.Error).error)
+                }
             }
-        },
-        singleLine = true,
-        shape = RoundedCornerShape(4.dp),
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Black,
-            cursorColor = Black
-        )
-    )
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun ListItem(
-    itemName: String,
-    //onItemClick: () -> Unit
-) {
-    Column(
-        Modifier.fillMaxWidth().wrapContentHeight()
-    ) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .clickable { /*onItemClick()*/ },
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = itemName,
-                Modifier
-                    .wrapContentSize()
-                    .padding(8.dp, 4.dp, 0.dp, 4.dp),
-                style = MaterialTheme.typography.body2,
-                color = Black
-            )
-
-            Icon(
-                painterResource(R.drawable.arrow_forward),
-                contentDescription = null,
-                Modifier.size(20.dp),
-                tint = MainGreen
-            )
         }
-
-        Spacer(
-            Modifier
-                .height(2.dp)
-                .fillMaxWidth()
-                .background(SearchFieldBackground)
-        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ItemPreview() {
-    ListItem("972103")
+fun SearchScreenPreview() {
+    SearchScreen(navController = rememberNavController())
 }

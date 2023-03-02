@@ -20,8 +20,8 @@ class SignInViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
-    private val _state: MutableState<SignInScreenState> = mutableStateOf(SignInScreenState.Initial)
-    var state: State<SignInScreenState> = _state
+    private val _state: MutableState<SignInState> = mutableStateOf(SignInState.Initial)
+    var state: State<SignInState> = _state
 
     private val _login = mutableStateOf("")
     var login: State<String> = _login
@@ -46,18 +46,18 @@ class SignInViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            _state.value = SignInScreenState.Loading
+            _state.value = SignInState.Loading
 
             try {
                 val token = loginUseCase(userData)
-                _state.value = SignInScreenState.Content(token)
+                _state.value = SignInState.Content(token)
                 navController.navigate(Screen.MainScreen.route) {
                     popUpTo(Screen.SignInScreen.route) { inclusive = true }
                 }
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
-                _state.value = SignInScreenState.Error(
+                _state.value = SignInState.Error(
                     when (ex.message) {
                         "HTTP 400 Bad Request" -> "Введенные данные неверны"
                         else -> "Что-то пошло не так"
