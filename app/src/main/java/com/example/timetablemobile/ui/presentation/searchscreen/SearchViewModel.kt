@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    //private val getClassroomsUseCase: GetClassroomsListUseCase,
+    //private val getCabinetsUseCase: GetCabinetsListUseCase,
     //private val getGroupsUseCase: GetGroupsListUseCase,
     //private val getTeachersUseCase: GetTeachersListUseCase
 ) : ViewModel() {
@@ -25,7 +25,7 @@ class SearchViewModel @Inject constructor(
         //_state.value = SearchState.Content(results)
         /*savedStateHandle.get<String>(Constants.PARAM_UNSIGNED_CHOICE)?.let { choice ->
             when(choice) {
-                R.string.classroom.toString() -> getClassrooms()
+                R.string.cabinet.toString() -> getCabinets()
                 R.string.group.toString() -> getGroups()
                 R.string.teacher.toString() -> getTeachers()
                 else -> _state.value = SearchState.Error("Что-то пошло не так")
@@ -40,13 +40,13 @@ class SearchViewModel @Inject constructor(
         _searchFieldText.value = newValue
     }
 
-    private fun getClassrooms() {
+    private fun getCabinets() {
         viewModelScope.launch {
             _state.value = SearchState.Loading
 
             try {
-                //val classrooms = getClassroomsUseCase()
-                //_state.value = SearchState.Content(classrooms)
+                //val cabinets = getCabinetsUseCase()
+                //_state.value = SearchState.Content(cabinets)
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {

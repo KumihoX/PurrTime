@@ -1,13 +1,13 @@
 package com.example.timetablemobile.data.repository
 
-import com.example.timetablemobile.data.remote.ClassroomApi
+import com.example.timetablemobile.data.remote.CabinetApi
 import com.example.timetablemobile.data.remote.dto.ScheduleDto
-import com.example.timetablemobile.domain.repository.ClassroomRepository
+import com.example.timetablemobile.domain.repository.CabinetRepository
 import javax.inject.Inject
 
-class ClassroomRepositoryImpl @Inject constructor(
-    private val api: ClassroomApi
-) : ClassroomRepository {
+class CabinetRepositoryImpl @Inject constructor(
+    private val api: CabinetApi
+) : CabinetRepository {
 
     override suspend fun getSchedule(
         number: Int,

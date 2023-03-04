@@ -31,7 +31,7 @@ fun LessonCard(
     val type = "Тип предмета"
     val time = "8:45 - 10:20"
     val teacher = "преподаватель"
-    val classroom = "аудитория"
+    val cabinet = "аудитория"
     val groups = "группы"
     Box(
         Modifier
@@ -41,7 +41,7 @@ fun LessonCard(
     ) {
         Card(
             onClick = { navController.navigate(Screen.LessonDetailScreen.passLessonInfo(
-                name, type, time, teacher, classroom, groups)){
+                name, type, time, teacher, cabinet, groups)){
                 popUpTo(Screen.MainScreen.route) { inclusive = true }
             } },
             modifier = Modifier
@@ -83,7 +83,7 @@ fun LessonCard(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     IconListElement(textValue = teacher, icon = R.drawable.badge)
-                    IconListElement(textValue = classroom, icon = R.drawable.meeting_room)
+                    IconListElement(textValue = cabinet, icon = R.drawable.meeting_room)
                     IconListElement(textValue = groups, icon = R.drawable.group)
                 }
             }

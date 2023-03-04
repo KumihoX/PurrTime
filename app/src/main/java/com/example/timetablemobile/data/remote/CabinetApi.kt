@@ -5,9 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ClassroomApi {
+interface CabinetApi {
 
-    @GET("classrooms/{number}/schedule")
+    @GET("cabinets/{number}/schedule")
     suspend fun getSchedule(
         @Path("number") number: Int,
         @Query("startsAt") startsAt: String,

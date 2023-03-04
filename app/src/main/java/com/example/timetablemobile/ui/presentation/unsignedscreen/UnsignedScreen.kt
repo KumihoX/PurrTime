@@ -50,7 +50,7 @@ fun UnsignedScreen() {
         ) {
             ScheduleOption(name = stringResource(R.string.group))
             ScheduleOption(name = stringResource(R.string.teacher))
-            ScheduleOption(name = stringResource(R.string.classroom))
+            ScheduleOption(name = stringResource(R.string.cabinet))
         }
     }
 }

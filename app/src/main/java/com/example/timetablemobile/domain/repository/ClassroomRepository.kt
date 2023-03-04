@@ -2,7 +2,7 @@ package com.example.timetablemobile.domain.repository
 
 import com.example.timetablemobile.data.remote.dto.ScheduleDto
 
-interface ClassroomRepository {
+interface CabinetRepository {
 
     suspend fun getSchedule(
         number: Int,

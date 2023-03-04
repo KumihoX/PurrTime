@@ -2,15 +2,15 @@ package com.example.timetablemobile.di
 
 import com.example.timetablemobile.common.Constants
 import com.example.timetablemobile.data.remote.AuthApi
-import com.example.timetablemobile.data.remote.ClassroomApi
+import com.example.timetablemobile.data.remote.CabinetApi
 import com.example.timetablemobile.data.remote.GroupApi
 import com.example.timetablemobile.data.remote.TeacherApi
 import com.example.timetablemobile.data.repository.AuthRepositoryImpl
-import com.example.timetablemobile.data.repository.ClassroomRepositoryImpl
+import com.example.timetablemobile.data.repository.CabinetRepositoryImpl
 import com.example.timetablemobile.data.repository.GroupRepositoryImpl
 import com.example.timetablemobile.data.repository.TeacherRepositoryImpl
 import com.example.timetablemobile.domain.repository.AuthRepository
-import com.example.timetablemobile.domain.repository.ClassroomRepository
+import com.example.timetablemobile.domain.repository.CabinetRepository
 import com.example.timetablemobile.domain.repository.GroupRepository
 import com.example.timetablemobile.domain.repository.TeacherRepository
 import dagger.Module
@@ -51,19 +51,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideClassroomApi(): ClassroomApi {
+    fun provideCabinetApi(): CabinetApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client.build())
             .build()
-            .create(ClassroomApi::class.java)
+            .create(CabinetApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideScheduleRepository(api: ClassroomApi): ClassroomRepository {
-        return ClassroomRepositoryImpl(api)
+    fun provideScheduleRepository(api: CabinetApi): CabinetRepository {
+        return CabinetRepositoryImpl(api)
     }
 
     @Provides

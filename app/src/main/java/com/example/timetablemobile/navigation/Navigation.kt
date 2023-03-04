@@ -42,7 +42,7 @@ fun Navigation(navController: NavHostController) {
                 navArgument(LESSON_TEACHER) {
                     type = NavType.StringType
                 },
-                navArgument(LESSON_CLASSROOM) {
+                navArgument(LESSON_CABINET) {
                     type = NavType.StringType
                 },
                 navArgument(LESSON_GROUPS) {

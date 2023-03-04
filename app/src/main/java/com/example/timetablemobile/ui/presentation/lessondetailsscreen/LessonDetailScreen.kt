@@ -116,7 +116,7 @@ fun LessonDetailScreen(
                 icon = R.drawable.badge
             )
             EnabledIconListElement(
-                textValue = arguments.getString(LESSON_CLASSROOM).toString(),
+                textValue = arguments.getString(LESSON_CABINET).toString(),
                 icon = R.drawable.meeting_room
             )
             DisabledIconListElement(
