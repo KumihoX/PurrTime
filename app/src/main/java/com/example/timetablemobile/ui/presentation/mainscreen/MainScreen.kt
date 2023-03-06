@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
 import com.example.timetablemobile.ui.theme.*
@@ -27,8 +28,8 @@ import java.util.*
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    viewModel: MainViewModel = hiltViewModel()
 ) {
     var day by remember { mutableStateOf(Date()) }
     val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
@@ -45,12 +46,12 @@ fun MainScreen(
                 viewModel = viewModel,
                 navController = navController)
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                LessonCard()
-                LessonCard()
-                LessonCard()
-                LessonCard()
-                LessonCard()
-                LessonCard()
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
+                LessonCard(navController)
             }
         }
         if (helpDialogIsOpen) {
@@ -115,8 +116,10 @@ fun TopBar(
         }
     }
 }
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
+
 fun Exit(
     viewModel: MainViewModel,
     navController: NavController

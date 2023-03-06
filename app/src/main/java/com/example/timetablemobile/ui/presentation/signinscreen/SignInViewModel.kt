@@ -8,16 +8,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.timetablemobile.common.Resource
 import com.example.timetablemobile.data.remote.dto.LoginDto
-import com.example.timetablemobile.data.remote.dto.TokenResponse
 import com.example.timetablemobile.domain.usecase.login.LoginUseCase
 import com.example.timetablemobile.domain.usecase.token.SaveTokenUseCase
 import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +21,7 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _state: MutableState<SignInScreenState> = mutableStateOf(SignInScreenState.Initial)
     var state: State<SignInScreenState> = _state
 
@@ -37,6 +33,7 @@ class SignInViewModel @Inject constructor(
 
     private val _fieldsState = mutableStateOf(false)
     var fieldsState: State<Boolean> = _fieldsState
+
 
     private fun checkingFields() {
         _fieldsState.value = !(login.value.isNullOrEmpty()
@@ -63,7 +60,9 @@ class SignInViewModel @Inject constructor(
                 val saveTokenUseCase = SaveTokenUseCase(context)
                 saveTokenUseCase.execute(token)
 
-                navController.navigate(Screen.MainScreen.route)
+                navController.navigate(Screen.MainScreen.route) {
+                    popUpTo(Screen.SignInScreen.route) { inclusive = true }
+                }
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -71,7 +70,8 @@ class SignInViewModel @Inject constructor(
                     when (ex.message) {
                         "HTTP 400 Bad Request" -> "Введенные данные неверны"
                         else -> "Что-то пошло не так"
-                    })
+                    }
+                )
             }
         }
     }

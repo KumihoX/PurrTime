@@ -7,9 +7,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,7 +32,7 @@ import com.example.timetablemobile.ui.theme.MainGreen
 
 
 @Composable
-fun SignInScreen (
+fun SignInScreen(
     viewModel: SignInViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -106,7 +108,7 @@ fun LoginField(viewModel: SignInViewModel) {
 
     OutlinedTextField(
         value = login,
-        onValueChange = {viewModel.onLoginChange(it)},
+        onValueChange = { viewModel.onLoginChange(it) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 0.dp, 0.dp, 16.dp),
@@ -137,7 +139,7 @@ fun PasswordField(viewModel: SignInViewModel) {
 
     OutlinedTextField(
         value = password,
-        onValueChange = {viewModel.onPasswordChange(it)},
+        onValueChange = { viewModel.onPasswordChange(it) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 0.dp, 0.dp, 16.dp),
@@ -199,7 +201,9 @@ fun LogIn(viewModel: SignInViewModel, navController: NavController) {
 @Composable
 fun WithoutAuth(navController: NavController) {
     TextButton(
-        onClick = { navController.navigate(Screen.UnsignedScreen.route) },
+        onClick = {
+                  navController.navigate(Screen.UnsignedScreen.route)
+                  },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 8.dp, 0.dp, 16.dp)
