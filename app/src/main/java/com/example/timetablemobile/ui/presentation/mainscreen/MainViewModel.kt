@@ -1,6 +1,7 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
 import android.content.Context
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -23,9 +24,8 @@ class MainViewModel @Inject constructor(
     //private val getLessonsUseCase: GetLessonsUseCase
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
-
-    private val _state: MutableLiveData<MainState> = MutableLiveData(MainState.Initial)
-    val state: LiveData<MainState> = _state
+    private val _state: MutableState<MainState> = mutableStateOf(MainState.Initial)
+    var state: State<MainState> = _state
 
     private val _helpDialogIsOpen = mutableStateOf(false)
     var helpDialogIsOpen: State<Boolean> = _helpDialogIsOpen
@@ -56,17 +56,22 @@ class MainViewModel @Inject constructor(
         context: Context
     ) {
         viewModelScope.launch {
+            _state.value = MainState.Loading
             try {
                 logoutUseCase(context = context)
-                navController.navigate(Screen.SignInScreen.route)
+                navController.navigate(Screen.SignInScreen.route) {
+                    popUpTo(Screen.MainScreen.route) { inclusive = true }
+                }
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
-                /*_state.value = SignInScreenState.Error(
+                _state.value = MainState.Error(
                     when (ex.message) {
-                        "HTTP 400 Bad Request" -> "Введенные данные неверны"
-                        else -> "Что-то пошло не так"*/
+                        "HTTP 401 Unauthorized" -> "Вы не авторизованы"
+                        else -> "Что-то пошло не так"
                     }
+                )
+            }
         }
     }
 

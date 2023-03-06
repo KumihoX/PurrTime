@@ -12,9 +12,9 @@ import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreen
 import com.example.timetablemobile.ui.presentation.unsignedscreen.UnsignedScreen
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(navController: NavHostController, startScreen: String) {
 
-    NavHost(navController = navController, startDestination = Screen.SignInScreen.route) {
+    NavHost(navController = navController, startDestination = startScreen) {
         composable(route = Screen.SignInScreen.route) {
             SignInScreen(navController = navController)
         }

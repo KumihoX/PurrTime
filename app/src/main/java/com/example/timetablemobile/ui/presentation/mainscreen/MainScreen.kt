@@ -21,8 +21,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.navigation.Screen
+import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
+import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreenState
+import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreenUI
 import com.example.timetablemobile.ui.theme.*
 import java.util.*
 
@@ -31,32 +34,73 @@ fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
+    val state by remember { viewModel.state }
+
     var day by remember { mutableStateOf(Date()) }
     val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(LightGray)
     )
     {
-        Column(modifier = Modifier.fillMaxWidth())
-        {
-            TopBar(
-                onSelectedDayChange = { day = it },
-                viewModel = viewModel,
-                navController = navController)
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                LessonCard(navController)
-                LessonCard(navController)
-                LessonCard(navController)
-                LessonCard(navController)
-                LessonCard(navController)
-                LessonCard(navController)
+        when (state) {
+            MainState.Initial -> {
+                Column(modifier = Modifier.fillMaxWidth())
+                {
+                    TopBar(
+                        onSelectedDayChange = { day = it },
+                        viewModel = viewModel,
+                        navController = navController)
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                    }
+                }
+                if (helpDialogIsOpen) {
+                    ColorAlertDialog(viewModel = viewModel)
+                }
+            }
+
+            MainState.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MainGreen
+                )
+            }
+
+            is MainState.Content -> {
+
+            }
+
+            is MainState.Error -> {
+                Column(modifier = Modifier.fillMaxWidth())
+                {
+                    TopBar(
+                        onSelectedDayChange = { day = it },
+                        viewModel = viewModel,
+                        navController = navController)
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                        LessonCard(navController)
+                    }
+                }
+                if (helpDialogIsOpen) {
+                    ColorAlertDialog(viewModel = viewModel)
+                }
+                ErrorAlertDialog(message = (state as MainState.Error).error)
             }
         }
-        if (helpDialogIsOpen) {
-            ColorAlertDialog(viewModel = viewModel)
-        }
+
     }
 }
 
