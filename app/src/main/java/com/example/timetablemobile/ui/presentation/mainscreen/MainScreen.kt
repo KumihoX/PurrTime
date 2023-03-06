@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,10 @@ fun MainScreen(
     {
         Column(modifier = Modifier.fillMaxWidth())
         {
-            TopBar(onSelectedDayChange = { day = it }, viewModel = viewModel, navController)
+            TopBar(
+                onSelectedDayChange = { day = it },
+                viewModel = viewModel,
+                navController = navController)
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 LessonCard(navController)
                 LessonCard(navController)
@@ -88,7 +92,7 @@ fun TopBar(
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Exit(navController)
+                Exit(viewModel, navController)
                 Info(currentDate = currentDate)
                 Help(viewModel = viewModel)
             }
@@ -115,11 +119,14 @@ fun TopBar(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Exit(navController: NavController) {
+
+fun Exit(
+    viewModel: MainViewModel,
+    navController: NavController
+) {
     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-        IconButton(onClick = { navController.navigate(Screen.SignInScreen.route){
-            popUpTo(Screen.MainScreen.route) { inclusive = true }
-        } }) {
+        val context = LocalContext.current
+        IconButton(onClick = { viewModel.logout(navController, context) }) {
             Icon(
                 painter = painterResource(R.drawable.logout),
                 contentDescription = "Выход из аккаунта",

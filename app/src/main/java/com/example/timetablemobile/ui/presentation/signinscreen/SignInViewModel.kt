@@ -1,5 +1,6 @@
 package com.example.timetablemobile.ui.presentation.signinscreen
 
+import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -9,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.timetablemobile.data.remote.dto.LoginDto
 import com.example.timetablemobile.domain.usecase.login.LoginUseCase
+import com.example.timetablemobile.domain.usecase.token.SaveTokenUseCase
 import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -38,7 +40,10 @@ class SignInViewModel @Inject constructor(
                 || password.value.isNullOrEmpty())
     }
 
-    fun login(navController: NavController) {
+    fun login(
+        navController: NavController,
+        context: Context
+    ) {
 
         val userData = LoginDto(
             login = _login.value,
@@ -51,6 +56,10 @@ class SignInViewModel @Inject constructor(
             try {
                 val token = loginUseCase(userData)
                 _state.value = SignInScreenState.Content(token)
+
+                val saveTokenUseCase = SaveTokenUseCase(context)
+                saveTokenUseCase.execute(token)
+
                 navController.navigate(Screen.MainScreen.route) {
                     popUpTo(Screen.SignInScreen.route) { inclusive = true }
                 }

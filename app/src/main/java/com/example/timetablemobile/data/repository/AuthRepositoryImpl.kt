@@ -14,4 +14,12 @@ class AuthRepositoryImpl @Inject constructor(
         return api.login(body)
     }
 
+    override suspend fun logout(token: TokenResponse) {
+        return api.logout(token.accessToken.toString())
+    }
+
+    override suspend fun getInfo(token: TokenResponse) {
+        return api.getInfo(token.accessToken.toString())
+    }
+
 }

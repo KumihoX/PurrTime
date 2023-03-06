@@ -1,11 +1,16 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.timetablemobile.domain.usecase.logout.LogoutUseCase
+import com.example.timetablemobile.navigation.Screen
+import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -16,6 +21,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     //will be added later
     //private val getLessonsUseCase: GetLessonsUseCase
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     private val _state: MutableLiveData<MainState> = MutableLiveData(MainState.Initial)
@@ -42,6 +48,25 @@ class MainViewModel @Inject constructor(
             } catch (ex: Exception) {
                 _state.value = MainState.Error(ex.message ?: "An unexpected error occurred")
             }
+        }
+    }
+
+    fun logout(
+        navController: NavController,
+        context: Context
+    ) {
+        viewModelScope.launch {
+            try {
+                logoutUseCase(context = context)
+                navController.navigate(Screen.SignInScreen.route)
+            } catch (rethrow: CancellationException) {
+                throw rethrow
+            } catch (ex: Exception) {
+                /*_state.value = SignInScreenState.Error(
+                    when (ex.message) {
+                        "HTTP 400 Bad Request" -> "Введенные данные неверны"
+                        else -> "Что-то пошло не так"*/
+                    }
         }
     }
 

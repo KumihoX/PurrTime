@@ -6,4 +6,8 @@ import com.example.timetablemobile.data.remote.dto.TokenResponse
 //Нужно ли тут писать @Body
 interface AuthRepository {
     suspend fun login(body: LoginDto): TokenResponse
+
+    suspend fun logout(token: TokenResponse)
+
+    suspend fun getInfo(token: TokenResponse)
 }
