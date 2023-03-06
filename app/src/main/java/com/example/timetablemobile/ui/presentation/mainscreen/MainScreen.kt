@@ -13,10 +13,12 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
@@ -25,7 +27,8 @@ import java.util.*
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     var day by remember { mutableStateOf(Date()) }
     val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
@@ -37,7 +40,10 @@ fun MainScreen(
     {
         Column(modifier = Modifier.fillMaxWidth())
         {
-            TopBar(onSelectedDayChange = { day = it }, viewModel = viewModel)
+            TopBar(
+                onSelectedDayChange = { day = it },
+                viewModel = viewModel,
+                navController = navController)
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 LessonCard()
                 LessonCard()
@@ -56,7 +62,8 @@ fun MainScreen(
 @Composable
 fun TopBar(
     onSelectedDayChange: (Date) -> Unit,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    navController: NavController
 ) {
 
     Box(
@@ -84,7 +91,7 @@ fun TopBar(
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Exit()
+                Exit(viewModel, navController)
                 Info(currentDate = currentDate)
                 Help(viewModel = viewModel)
             }
@@ -110,9 +117,13 @@ fun TopBar(
 }
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Exit() {
+fun Exit(
+    viewModel: MainViewModel,
+    navController: NavController
+) {
     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-        IconButton(onClick = { /*TODO*/ }) {
+        val context = LocalContext.current
+        IconButton(onClick = { viewModel.logout(navController, context) }) {
             Icon(
                 painter = painterResource(R.drawable.logout),
                 contentDescription = "Выход из аккаунта",

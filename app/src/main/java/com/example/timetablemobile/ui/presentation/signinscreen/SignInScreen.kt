@@ -17,6 +17,7 @@ import com.example.timetablemobile.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -166,10 +167,11 @@ fun PasswordField(viewModel: SignInViewModel) {
 
 @Composable
 fun LogIn(viewModel: SignInViewModel, navController: NavController) {
+    val context = LocalContext.current
     val buttonState: Boolean by remember { viewModel.fieldsState }
     Button(
         onClick = {
-            viewModel.login(navController)
+            viewModel.login(navController, context)
                   },
         enabled = buttonState,
         colors = ButtonDefaults.buttonColors(
