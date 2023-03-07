@@ -15,6 +15,7 @@ import com.example.timetablemobile.domain.usecase.list.GetTeachersListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
@@ -29,7 +30,19 @@ class SearchViewModel @Inject constructor(
     private val _state: MutableState<SearchState> = mutableStateOf(SearchState.Initial)
     var state: State<SearchState> = _state
 
+    private val _requestResult = mutableStateOf<List<Any>>(emptyList())
+    var requestResult: State<List<Any>> = _requestResult
+
+    private val _searchResult = mutableStateOf<List<Any>>(emptyList())
+    var searchResult: State<List<Any>> = _searchResult
+
     init {
+        /*val testList = listOf(100, 123, 124, 125, 126, 127, 128, 129, 200, 201, 202, 300, 301, 302, 1054)
+
+        _state.value = SearchState.Content(testList)
+        _requestResult.value = testList
+        _searchResult.value = testList*/
+
         savedStateHandle.get<String>(Constants.PARAM_UNSIGNED_CHOICE)?.let { choice ->
             when(choice) {
                 R.string.cabinet.toString() -> getCabinets()
@@ -43,8 +56,29 @@ class SearchViewModel @Inject constructor(
     private val _searchFieldText = mutableStateOf("")
     var searchFieldText: State<String> = _searchFieldText
 
-    fun onSearchFieldChange(newValue: String) {
+    fun onSearchFieldChange(newValue: String, requestResultList: List<Any>) {
         _searchFieldText.value = newValue
+
+        if (newValue.isNotEmpty())
+            getSearchResult(newValue, requestResultList)
+        else
+            _searchResult.value = _requestResult.value
+    }
+
+    private fun getSearchResult(value: String, list: List<Any>) {
+
+        val sortedList = ArrayList<Any>()
+
+        for (item in list) {
+            if (item.toString()
+                    .lowercase(Locale.getDefault())
+                    .contains(value.lowercase(Locale.getDefault()))
+            ) {
+                sortedList.add(item)
+            }
+        }
+
+        _searchResult.value = sortedList
     }
 
     private fun getCabinets() {

@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -82,7 +83,7 @@ fun SearchScreen(
                 SearchField(
                     text = searchFieldText,
                     placeholderValue = "temp"
-                ) { viewModel.onSearchFieldChange(it) }
+                ) { viewModel.onSearchFieldChange(it, (state as SearchState.Content).requestResultsList) }
             }
         }
     ) {
@@ -92,24 +93,8 @@ fun SearchScreen(
                 .fillMaxSize()
         ) {
             when (state) {
-                //это состояние будет показываться, если по введенному запросу ничего не нашлось
-                SearchState.Initial -> {
-                    Box(Modifier.fillMaxSize()) {
-                        Text(
-                            stringResource(R.string.nothing_here),
-                            Modifier
-                                .align(Center),
-                            style = MaterialTheme.typography.h5,
-                            textAlign = TextAlign.Center
-                        )
 
-                        Image(
-                            painterResource(R.drawable.cat_bottom_question),
-                            contentDescription = null,
-                            Modifier.align(BottomCenter)
-                        )
-                    }
-                }
+                SearchState.Initial -> EmptySearchScreen()
 
                 SearchState.Loading -> {
                     CircularProgressIndicator(
@@ -119,17 +104,23 @@ fun SearchScreen(
                 }
 
                 is SearchState.Content -> {
-                    val results = (state as SearchState.Content).requestResultsList
 
-                    LazyColumn(
-                        Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxSize()
-                    ) {
-                        items(results) { result ->
-                            SearchListItem(
-                                itemName = result.toString()
-                            ) //{  }
+                    val searchResult: List<Any> by remember { viewModel.searchResult }
+
+                    if (searchResult.isEmpty()) {
+                        EmptySearchScreen()
+                    }
+                    else {
+                        LazyColumn(
+                            Modifier
+                                .padding(horizontal = 16.dp)
+                                .fillMaxSize()
+                        ) {
+                            items(searchResult) { result ->
+                                SearchListItem(
+                                    itemName = result.toString()
+                                ) //{  }
+                            }
                         }
                     }
                 }
@@ -139,6 +130,25 @@ fun SearchScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun EmptySearchScreen() {
+    Box(Modifier.fillMaxSize()) {
+        Text(
+            stringResource(R.string.nothing_here),
+            Modifier
+                .align(TopCenter),
+            style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Center
+        )
+
+        Image(
+            painterResource(R.drawable.cat_bottom_question),
+            contentDescription = null,
+            Modifier.align(BottomCenter)
+        )
     }
 }
 
