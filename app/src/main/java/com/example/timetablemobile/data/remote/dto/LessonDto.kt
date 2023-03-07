@@ -1,11 +1,9 @@
 package com.example.timetablemobile.data.remote.dto
 
-import com.example.timetablemobile.temp.TestLessonType
-
 data class LessonDto(
     //val type: String,
     val name: String,
-    //val cabinet: CabinetDto,
+    //val cabinet: CabinetsDto,
     val cabinet: String,
     //val date: String,
     //val groups: List<Int>,

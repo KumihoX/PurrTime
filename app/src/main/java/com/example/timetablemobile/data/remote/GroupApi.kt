@@ -1,5 +1,6 @@
 package com.example.timetablemobile.data.remote
 
+import com.example.timetablemobile.data.remote.dto.GroupsDto
 import com.example.timetablemobile.data.remote.dto.ScheduleDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,5 +14,8 @@ interface GroupApi {
         @Query("startsAt") startsAt: String,
         @Query("endsAt") endsAt: String
     ): ScheduleDto
+
+    @GET("groups")
+    suspend fun getList(): GroupsDto
 
 }
