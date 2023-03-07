@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.timetablemobile.ui.presentation.lessondetailsscreen.LessonDetailScreen
 import com.example.timetablemobile.ui.presentation.mainscreen.MainScreen
+import com.example.timetablemobile.ui.presentation.searchscreen.SearchScreen
 import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreen
 import com.example.timetablemobile.ui.presentation.unsignedscreen.UnsignedScreen
 
@@ -20,11 +21,15 @@ fun Navigation(navController: NavHostController, startScreen: String) {
         }
 
         composable(route = Screen.UnsignedScreen.route) {
-            UnsignedScreen()
+            UnsignedScreen(navController = navController)
         }
 
         composable(route = Screen.MainScreen.route) {
             MainScreen(navController = navController)
+        }
+
+        composable(route = Screen.SearchScreen.route) {
+            SearchScreen(navController = navController)
         }
 
         composable(

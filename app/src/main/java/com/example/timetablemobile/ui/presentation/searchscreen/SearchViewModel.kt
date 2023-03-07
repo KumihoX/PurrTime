@@ -12,10 +12,13 @@ import com.example.timetablemobile.data.remote.dto.toCabinetsNumbersList
 import com.example.timetablemobile.domain.usecase.list.GetCabinetsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetGroupsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetTeachersListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+@HiltViewModel
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getCabinetsUseCase: GetCabinetsListUseCase,

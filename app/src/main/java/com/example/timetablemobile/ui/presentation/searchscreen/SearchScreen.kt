@@ -24,10 +24,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.searchscreen.components.SearchField
 import com.example.timetablemobile.ui.presentation.searchscreen.components.SearchListItem
-import com.example.timetablemobile.ui.presentation.signinscreen.SignInState
 import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
@@ -57,7 +57,9 @@ fun SearchScreen(
                     horizontalArrangement = Arrangement.Start
                 ) {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(Screen.UnsignedScreen.route){
+                            popUpTo(Screen.SearchScreen.route) { inclusive = true }
+                        } },
                         Modifier
                             .requiredSize(24.dp)
                     ) {
@@ -133,7 +135,7 @@ fun SearchScreen(
                 }
 
                 is SearchState.Error -> {
-                    ErrorAlertDialog(message = (state as SignInState.Error).error)
+                    ErrorAlertDialog(message = (state as SearchState.Error).error)
                 }
             }
         }

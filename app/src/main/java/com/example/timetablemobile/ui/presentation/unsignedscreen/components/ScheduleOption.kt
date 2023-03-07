@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
-fun ScheduleOption(name: String) {
+fun ScheduleOption(name: String, navController: NavController) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { navController.navigate(Screen.SearchScreen.route) },
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()

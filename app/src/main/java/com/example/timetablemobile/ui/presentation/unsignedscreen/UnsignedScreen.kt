@@ -13,13 +13,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.presentation.unsignedscreen.components.ScheduleOption
 
 
-@Preview(showBackground = true)
 @Composable
-fun UnsignedScreen() {
+fun UnsignedScreen(navController: NavController) {
 
     Column(
         Modifier.fillMaxSize(),
@@ -48,9 +48,9 @@ fun UnsignedScreen() {
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp)
         ) {
-            ScheduleOption(name = stringResource(R.string.group))
-            ScheduleOption(name = stringResource(R.string.teacher))
-            ScheduleOption(name = stringResource(R.string.classroom))
+            ScheduleOption(name = stringResource(R.string.group), navController = navController)
+            ScheduleOption(name = stringResource(R.string.teacher), navController = navController)
+            ScheduleOption(name = stringResource(R.string.cabinet), navController = navController)
         }
     }
 }

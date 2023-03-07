@@ -11,6 +11,7 @@ sealed class Screen(val route: String) {
     object SignInScreen : Screen("sign_in_screen")
     object UnsignedScreen : Screen("unsigned_screen")
     object MainScreen : Screen("main_screen")
+    object SearchScreen : Screen("search_screen")
     object LessonDetailScreen: Screen("lesson_detail_screen/" +
             "{$LESSON_NAME}/{$LESSON_TYPE}/{$LESSON_TIME}/" +
             "{$LESSON_TEACHER}/{$LESSON_CLASSROOM}/{$LESSON_GROUPS}"){
