@@ -1,6 +1,7 @@
 package com.example.timetablemobile.domain.repository
 
 import com.example.timetablemobile.data.remote.dto.ScheduleDto
+import com.example.timetablemobile.data.remote.dto.TeachersDto
 
 interface TeacherRepository {
 
@@ -9,5 +10,7 @@ interface TeacherRepository {
         startsAt: String,
         endsAt: String
     ): ScheduleDto
+
+    suspend fun getList(): TeachersDto
 
 }
