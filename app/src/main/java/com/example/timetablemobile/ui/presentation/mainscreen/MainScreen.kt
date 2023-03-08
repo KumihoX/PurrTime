@@ -1,5 +1,6 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
+import android.os.Bundle
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.LESSON_TYPE
+import com.example.timetablemobile.navigation.SCHEDULE_TYPE
 import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
@@ -31,9 +34,11 @@ import java.util.*
 
 @Composable
 fun MainScreen(
+    scheduleType: Bundle,
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
+    val header = scheduleType.getString(SCHEDULE_TYPE).toString()
     val state by remember { viewModel.state }
 
     var day by remember { mutableStateOf(Date()) }
@@ -52,7 +57,8 @@ fun MainScreen(
                     TopBar(
                         onSelectedDayChange = { day = it },
                         viewModel = viewModel,
-                        navController = navController)
+                        navController = navController,
+                        header = header)
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         LessonCard(navController)
                         LessonCard(navController)
@@ -84,7 +90,9 @@ fun MainScreen(
                     TopBar(
                         onSelectedDayChange = { day = it },
                         viewModel = viewModel,
-                        navController = navController)
+                        navController = navController,
+                        header = header
+                    )
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         LessonCard(navController)
                         LessonCard(navController)
@@ -108,7 +116,8 @@ fun MainScreen(
 fun TopBar(
     onSelectedDayChange: (Date) -> Unit,
     viewModel: MainViewModel,
-    navController: NavController
+    navController: NavController,
+    header: String
 ) {
 
     Box(
@@ -137,7 +146,7 @@ fun TopBar(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Exit(viewModel, navController)
-                Info(currentDate = currentDate)
+                Info(currentDate = currentDate, header = header)
                 Help(viewModel = viewModel)
             }
             WeekScrollableElement(
@@ -182,7 +191,8 @@ fun Exit(
 
 @Composable
 fun Info(
-    currentDate: Date
+    currentDate: Date,
+    header: String
 ) {
     val monthName = getMonthName(currentDate).replaceFirstChar { it.uppercase() }
     val yearName = getYear4Letters(currentDate)
@@ -191,7 +201,7 @@ fun Info(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Группа 972103",
+            text = header,
             style = MaterialTheme.typography.h5,
             color = Black,
             textAlign = TextAlign.Center

@@ -26,24 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TimetableMobileTheme {
-                val viewModel: MainActivityViewModel = hiltViewModel()
-                val startScreen: String by remember { viewModel.startScreen }
-                val context = LocalContext.current
-                val state by remember { viewModel.state }
-
-                when (state) {
-                    MainActivityState.Initial -> {
-                        val navController = rememberNavController()
-                        Navigation(navController, startScreen)
-                    }
-
-                    MainActivityState.Loading -> {
-                        viewModel.checkAuthorization(context)
-                    }
-                }
-
-
-
+                val navController = rememberNavController()
+                Navigation(navController)
             }
         }
     }

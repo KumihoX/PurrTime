@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.timetablemobile.data.remote.dto.LoginDto
+import com.example.timetablemobile.data.remote.dto.UserInfoDto
 import com.example.timetablemobile.domain.usecase.login.LoginUseCase
 import com.example.timetablemobile.domain.usecase.token.SaveTokenUseCase
+import com.example.timetablemobile.domain.usecase.userInfo.InfoUseCase
 import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val infoUseCase: InfoUseCase
 ) : ViewModel() {
     private val _state: MutableState<SignInScreenState> = mutableStateOf(SignInScreenState.Initial)
     var state: State<SignInScreenState> = _state
@@ -34,10 +37,24 @@ class SignInViewModel @Inject constructor(
     private val _fieldsState = mutableStateOf(false)
     var fieldsState: State<Boolean> = _fieldsState
 
+    private var scheduleType = ""
+    private var typeData = ""
+
 
     private fun checkingFields() {
         _fieldsState.value = !(login.value.isNullOrEmpty()
                 || password.value.isNullOrEmpty())
+    }
+
+    private fun defineUser(userInfo: UserInfoDto) {
+        if (!userInfo.teacherId.isNullOrEmpty()) {
+            scheduleType = "TEACHER"
+            typeData = userInfo.teacherId
+        }
+        if (userInfo.group != null) {
+            scheduleType = "STUDENT"
+            typeData = userInfo.group.toString()
+        }
     }
 
     fun login(
@@ -60,7 +77,14 @@ class SignInViewModel @Inject constructor(
                 val saveTokenUseCase = SaveTokenUseCase(context)
                 saveTokenUseCase.execute(token)
 
-                navController.navigate(Screen.MainScreen.route) {
+                val userData = infoUseCase(context = context)
+                defineUser(userData)
+
+                navController.navigate(
+                    Screen.MainScreen.passScheduleInfo(
+                        type = scheduleType,
+                        data = typeData
+                    )) {
                     popUpTo(Screen.SignInScreen.route) { inclusive = true }
                 }
             } catch (rethrow: CancellationException) {

@@ -2,6 +2,7 @@ package com.example.timetablemobile.data.remote
 
 import com.example.timetablemobile.data.remote.dto.LoginDto
 import com.example.timetablemobile.data.remote.dto.TokenResponse
+import com.example.timetablemobile.data.remote.dto.UserInfoDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -16,5 +17,5 @@ interface AuthApi {
     suspend fun logout(@Header("Authorization") token: String)
 
     @GET("users/me")
-    suspend fun getInfo(@Header("Authorization") token: String)
+    suspend fun getInfo(@Header("Authorization") token: String): UserInfoDto
 }

@@ -7,15 +7,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.timetablemobile.ui.presentation.lessondetailsscreen.LessonDetailScreen
+import com.example.timetablemobile.ui.presentation.loadingscreen.LoadingScreen
 import com.example.timetablemobile.ui.presentation.mainscreen.MainScreen
 import com.example.timetablemobile.ui.presentation.searchscreen.SearchScreen
 import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreen
 import com.example.timetablemobile.ui.presentation.unsignedscreen.UnsignedScreen
 
 @Composable
-fun Navigation(navController: NavHostController, startScreen: String) {
+fun Navigation(navController: NavHostController) {
 
-    NavHost(navController = navController, startDestination = startScreen) {
+    NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
+        composable(route = Screen.LoadingScreen.route) {
+            LoadingScreen(navController = navController)
+        }
+
         composable(route = Screen.SignInScreen.route) {
             SignInScreen(navController = navController)
         }
@@ -24,8 +29,18 @@ fun Navigation(navController: NavHostController, startScreen: String) {
             UnsignedScreen(navController = navController)
         }
 
-        composable(route = Screen.MainScreen.route) {
-            MainScreen(navController = navController)
+        composable(
+            route = Screen.MainScreen.route,
+            arguments = listOf(
+                navArgument(SCHEDULE_TYPE) {
+                    type = NavType.StringType
+                },
+                navArgument(TYPE_DATA) {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            it.arguments?.let { it1 -> MainScreen(it1, navController) }
         }
 
         composable(route = Screen.SearchScreen.route) {

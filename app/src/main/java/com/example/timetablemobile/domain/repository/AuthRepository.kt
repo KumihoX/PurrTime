@@ -2,6 +2,7 @@ package com.example.timetablemobile.domain.repository
 
 import com.example.timetablemobile.data.remote.dto.LoginDto
 import com.example.timetablemobile.data.remote.dto.TokenResponse
+import com.example.timetablemobile.data.remote.dto.UserInfoDto
 
 //Нужно ли тут писать @Body
 interface AuthRepository {
@@ -9,5 +10,5 @@ interface AuthRepository {
 
     suspend fun logout(token: TokenResponse)
 
-    suspend fun getInfo(token: TokenResponse)
+    suspend fun getInfo(token: TokenResponse): UserInfoDto
 }
