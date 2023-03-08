@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getCabinetsUseCase: GetCabinetsListUseCase,
     private val getGroupsUseCase: GetGroupsListUseCase,
     private val getTeachersUseCase: GetTeachersListUseCase
@@ -43,18 +42,20 @@ class SearchViewModel @Inject constructor(
         _requestResult.value = testList
         _searchResult.value = testList*/
 
-        savedStateHandle.get<String>(Constants.PARAM_UNSIGNED_CHOICE)?.let { choice ->
-            when(choice) {
-                R.string.cabinet.toString() -> getCabinets()
-                R.string.group.toString() -> getGroups()
-                R.string.teacher.toString() -> getTeachers()
-                else -> _state.value = SearchState.Error("Что-то пошло не так")
-            }
-        }
+        _state.value = SearchState.Loading
     }
 
     private val _searchFieldText = mutableStateOf("")
     var searchFieldText: State<String> = _searchFieldText
+
+    fun getList(choice: String) {
+        when(choice) {
+            "Аудитории" -> getCabinets()
+            "Группы" -> getGroups()
+            "Преподавателя" -> getTeachers()
+            else -> _state.value = SearchState.Error("Что-то пошло не так")
+        }
+    }
 
     fun onSearchFieldChange(newValue: String, requestResultList: List<Any>) {
         _searchFieldText.value = newValue

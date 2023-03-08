@@ -43,8 +43,18 @@ fun Navigation(navController: NavHostController) {
             it.arguments?.let { it1 -> MainScreen(it1, navController) }
         }
 
-        composable(route = Screen.SearchScreen.route) {
-            SearchScreen(navController = navController)
+        composable(
+            route = Screen.SearchScreen.route,
+            arguments = listOf(
+                navArgument(USER_CHOICE_HEADER) {
+                    type = NavType.StringType
+                },
+                navArgument(USER_CHOICE_PLACEHOLDER) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            it.arguments?.let { it1 -> SearchScreen(it1, navController) }
         }
 
         composable(

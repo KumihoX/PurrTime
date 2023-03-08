@@ -13,13 +13,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.presentation.unsignedscreen.components.ScheduleOption
 
 
 @Composable
-fun UnsignedScreen(navController: NavController) {
+fun UnsignedScreen(
+    navController: NavController,
+    viewModel: UnsignedViewModel = hiltViewModel()
+) {
 
     Column(
         Modifier.fillMaxSize(),
@@ -48,9 +52,9 @@ fun UnsignedScreen(navController: NavController) {
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp)
         ) {
-            ScheduleOption(name = stringResource(R.string.group), navController = navController)
-            ScheduleOption(name = stringResource(R.string.teacher), navController = navController)
-            ScheduleOption(name = stringResource(R.string.cabinet), navController = navController)
+            ScheduleOption(name = stringResource(R.string.group)) { viewModel.navigateToSearch(navController, it) }
+            ScheduleOption(name = stringResource(R.string.teacher)) { viewModel.navigateToSearch(navController, it) }
+            ScheduleOption(name = stringResource(R.string.cabinet)) { viewModel.navigateToSearch(navController, it) }
         }
     }
 }

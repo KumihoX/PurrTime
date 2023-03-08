@@ -1,7 +1,6 @@
 package com.example.timetablemobile.data.remote.dto
 
-data class TimeslotDto(
+data class TeacherDto(
     val id: String,
-    val endsAt: String,
-    val startsAt: String
+    val name: String
 )

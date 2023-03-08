@@ -21,4 +21,8 @@
     <string name="what_do_the_colors_mean">Что означают цвета?</string>
     <string name="nothing_here">Ой-ой! \n
         По запросу ничего не найдено</string>
+    <string name="cabinet_number">Номер аудитории</string>
+    <string name="group_number">Номер группы</string>
+    <string name="teachers">Преподаватели</string>
+    <string name="teacher_name">Имя преподавателя</string>
 </resources>

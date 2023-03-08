@@ -1,5 +1,6 @@
 package com.example.timetablemobile.ui.presentation.searchscreen
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,6 +27,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.navigation.Screen
+import com.example.timetablemobile.navigation.USER_CHOICE_HEADER
+import com.example.timetablemobile.navigation.USER_CHOICE_PLACEHOLDER
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.searchscreen.components.SearchField
 import com.example.timetablemobile.ui.presentation.searchscreen.components.SearchListItem
@@ -33,9 +36,13 @@ import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel(),
-    navController: NavController
+    userChoice: Bundle,
+    navController: NavController,
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
+    val header = userChoice.getString(USER_CHOICE_HEADER).toString()
+    val searchFieldPlaceholder = userChoice.getString(USER_CHOICE_PLACEHOLDER).toString()
+
     val state by remember { viewModel.state }
 
     val searchFieldText: String by remember { viewModel.searchFieldText }
@@ -72,7 +79,7 @@ fun SearchScreen(
                     }
 
                     Text(
-                        text = "optionName",
+                        text = header,
                         Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.body1,
                         fontWeight = FontWeight.Bold,
@@ -82,7 +89,7 @@ fun SearchScreen(
 
                 SearchField(
                     text = searchFieldText,
-                    placeholderValue = "temp"
+                    placeholderValue = searchFieldPlaceholder
                 ) { viewModel.onSearchFieldChange(it, (state as SearchState.Content).requestResultsList) }
             }
         }
@@ -150,10 +157,4 @@ fun EmptySearchScreen() {
             Modifier.align(BottomCenter)
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SearchScreenPreview() {
-    SearchScreen(navController = rememberNavController())
 }

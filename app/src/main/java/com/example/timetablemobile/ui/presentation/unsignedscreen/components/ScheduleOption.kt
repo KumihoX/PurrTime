@@ -18,9 +18,12 @@ import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
-fun ScheduleOption(name: String, navController: NavController) {
+fun ScheduleOption(
+    name: String,
+    navigateToSearch: (String) -> Unit
+) {
     Button(
-        onClick = { navController.navigate(Screen.SearchScreen.route) },
+        onClick = { navigateToSearch(name) },
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
