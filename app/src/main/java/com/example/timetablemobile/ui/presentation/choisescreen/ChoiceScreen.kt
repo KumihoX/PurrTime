@@ -1,5 +1,6 @@
-package com.example.timetablemobile.ui.presentation.unsignedscreen
+package com.example.timetablemobile.ui.presentation.choisescreen
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -15,14 +16,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.STUDENT_DATA
+import com.example.timetablemobile.navigation.TEACHER_DATA
 import com.example.timetablemobile.ui.presentation.common.ScheduleOption
 
 @Composable
-fun UnsignedScreen(
+fun ChoiceScreen(
+    info: Bundle,
     navController: NavController,
-    viewModel: UnsignedViewModel = hiltViewModel()
+    viewModel: ChoiceViewModel = hiltViewModel()
 ) {
+    val studentInfo = info.getString(STUDENT_DATA).toString()
+    val teacherInfo = info.getString(TEACHER_DATA).toString()
 
+    viewModel.handOverData(studentInfo, teacherInfo)
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -36,7 +43,7 @@ fun UnsignedScreen(
         )
 
         Text(
-            text = stringResource(R.string.which_schedule_want_to_see),
+            text = stringResource(R.string.which_your_schedule_want_to_see),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp, 28.dp, 16.dp, 32.dp),
@@ -50,9 +57,17 @@ fun UnsignedScreen(
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp)
         ) {
-            ScheduleOption(name = stringResource(R.string.group)) { viewModel.navigateToSearch(navController, it) }
-            ScheduleOption(name = stringResource(R.string.teacher)) { viewModel.navigateToSearch(navController, it) }
-            ScheduleOption(name = stringResource(R.string.cabinet)) { viewModel.navigateToSearch(navController, it) }
+            ScheduleOption(
+                name = stringResource(R.string.group)
+            ) {
+                viewModel.navigateToSearch(navController, it)
+            }
+            ScheduleOption(name = stringResource(R.string.teacher)) {
+                viewModel.navigateToSearch(
+                    navController,
+                    it
+                )
+            }
         }
     }
 }

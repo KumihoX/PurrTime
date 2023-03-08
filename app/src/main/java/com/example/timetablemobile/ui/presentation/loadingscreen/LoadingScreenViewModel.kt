@@ -26,13 +26,17 @@ class LoadingScreenViewModel @Inject constructor(
     private var scheduleType = ""
     private var typeData = ""
 
+    private var twoRoles = false
 
     private fun defineUser(userInfo: UserInfoDto) {
-        if (!userInfo.teacherId.isNullOrEmpty()) {
+        if (!userInfo.teacherId.isNullOrEmpty() && userInfo.group != null) {
+            twoRoles = true
+        }
+        else if (!userInfo.teacherId.isNullOrEmpty()) {
             scheduleType = "TEACHER"
             typeData = userInfo.teacherId
         }
-        if (userInfo.group != null) {
+        else if (userInfo.group != null) {
             scheduleType = "STUDENT"
             typeData = userInfo.group.toString()
         }
@@ -46,11 +50,22 @@ class LoadingScreenViewModel @Inject constructor(
             try {
                 val userData = infoUseCase(context = context)
                 defineUser(userData)
-                navController.navigate(
-                    Screen.MainScreen.passScheduleInfo(
-                    type = scheduleType,
-                    data = typeData
-                ))
+                if (!twoRoles) {
+                    navController.navigate(
+                        Screen.MainScreen.passScheduleInfo(
+                            type = scheduleType,
+                            data = typeData
+                        )
+                    )
+                }
+                else {
+                    navController.navigate(
+                        Screen.ChoiceScreen.passScheduleInfo(
+                            studentData = userData.group.toString(),
+                            teacherData = userData.teacherId.toString()
+                        )
+                    )
+                }
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {

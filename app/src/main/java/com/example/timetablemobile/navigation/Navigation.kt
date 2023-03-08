@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.timetablemobile.ui.presentation.choisescreen.ChoiceScreen
 import com.example.timetablemobile.ui.presentation.lessondetailsscreen.LessonDetailScreen
 import com.example.timetablemobile.ui.presentation.loadingscreen.LoadingScreen
 import com.example.timetablemobile.ui.presentation.mainscreen.MainScreen
@@ -27,6 +28,19 @@ fun Navigation(navController: NavHostController) {
 
         composable(route = Screen.UnsignedScreen.route) {
             UnsignedScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.ChoiceScreen.route,
+            arguments = listOf(
+                navArgument(STUDENT_DATA) {
+                    type = NavType.StringType
+                },
+                navArgument(TEACHER_DATA) {
+                    type = NavType.StringType
+                },
+            )) {
+            it.arguments?.let { it1 -> ChoiceScreen(it1, navController) }
         }
 
         composable(
@@ -78,7 +92,8 @@ fun Navigation(navController: NavHostController) {
                 navArgument(LESSON_GROUPS) {
                     type = NavType.StringType
                 },
-            )) {
+            )
+        ) {
             it.arguments?.let { it1 -> LessonDetailScreen(it1, navController) }
         }
     }

@@ -4,14 +4,11 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.timetablemobile.domain.usecase.logout.LogoutUseCase
 import com.example.timetablemobile.navigation.Screen
-import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -30,11 +27,18 @@ class MainViewModel @Inject constructor(
     private val _helpDialogIsOpen = mutableStateOf(false)
     var helpDialogIsOpen: State<Boolean> = _helpDialogIsOpen
 
-    init {
-        //getLessons()
-    }
-
-    private fun getLessons(id: String, startDate: Date, endDate: Date) {
+    fun getLessons(
+        id: String,
+        startDate: Date,
+        endDate: Date,
+        typeData: String,
+        scheduleType: String
+    ) {
+        /*when (scheduleType) {
+            "TEACHER" -> ,
+            "CABINET" -> ,
+            "STUDENT" ->
+        }*/
         viewModelScope.launch {
 
             _state.value = MainState.Loading
@@ -65,12 +69,13 @@ class MainViewModel @Inject constructor(
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
-                _state.value = MainState.Error(
-                    when (ex.message) {
-                        "HTTP 401 Unauthorized" -> "Вы не авторизованы"
-                        else -> "Что-то пошло не так"
+                if (ex.message == "HTTP 401 Unauthorized") {
+                    navController.navigate(Screen.SignInScreen.route) {
+                        popUpTo(Screen.MainScreen.route) { inclusive = true }
                     }
-                )
+                } else {
+                    _state.value = MainState.Error("Что-то пошло не так")
+                }
             }
         }
     }

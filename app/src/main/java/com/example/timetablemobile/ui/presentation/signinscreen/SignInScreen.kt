@@ -11,17 +11,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import com.example.timetablemobile.R
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.timetablemobile.R
 import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.theme.MainGreen
@@ -170,7 +170,7 @@ fun LogIn(viewModel: SignInViewModel, navController: NavController) {
     Button(
         onClick = {
             viewModel.login(navController, context)
-                  },
+        },
         enabled = buttonState,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MainGreen,
@@ -198,8 +198,8 @@ fun LogIn(viewModel: SignInViewModel, navController: NavController) {
 fun WithoutAuth(navController: NavController) {
     TextButton(
         onClick = {
-                  navController.navigate(Screen.UnsignedScreen.route)
-                  },
+            navController.navigate(Screen.UnsignedScreen.route)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp, 8.dp, 0.dp, 16.dp)

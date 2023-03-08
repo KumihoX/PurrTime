@@ -9,9 +9,3 @@ data class LessonDto(
     val groupsNum: List<Int>,
     val data: String
 )
-
-fun LessonDto.toLesson(): Lesson {
-    return Lesson(
-
-    )
-}

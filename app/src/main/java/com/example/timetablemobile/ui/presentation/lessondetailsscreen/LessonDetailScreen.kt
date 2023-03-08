@@ -1,7 +1,6 @@
 package com.example.timetablemobile.ui.presentation.lessondetailsscreen
 
 import android.os.Bundle
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,14 +9,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Bottom
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
@@ -31,7 +27,6 @@ import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.navigation.*
 import com.example.timetablemobile.ui.theme.Black
-import com.example.timetablemobile.ui.theme.Gray
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
 import com.example.timetablemobile.ui.theme.MainGreen
 
@@ -52,9 +47,11 @@ fun LessonDetailScreen(
         ) {
             CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                 IconButton(
-                    onClick = { navController.navigate(Screen.MainScreen.route){
-                        popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
-                    } },
+                    onClick = {
+                        navController.navigate(Screen.MainScreen.route) {
+                            popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
+                        }
+                    },
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .align(Start)
@@ -144,7 +141,7 @@ fun EnabledIconListElement(textValue: String, icon: Int) {
             .clickable { }
             .fillMaxWidth()
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically
         )
         {
@@ -184,7 +181,7 @@ fun DisabledIconListElement(textValue: String, icon: Int) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically
         )
         {

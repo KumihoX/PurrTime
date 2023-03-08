@@ -1,4 +1,4 @@
-package com.example.timetablemobile.ui.presentation.unsignedscreen.components
+package com.example.timetablemobile.ui.presentation.common
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth

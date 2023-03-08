@@ -65,9 +65,11 @@ fun SearchScreen(
                     horizontalArrangement = Arrangement.Start
                 ) {
                     IconButton(
-                        onClick = { navController.navigate(Screen.UnsignedScreen.route){
-                            popUpTo(Screen.SearchScreen.route) { inclusive = true }
-                        } },
+                        onClick = {
+                            navController.navigate(Screen.UnsignedScreen.route) {
+                                popUpTo(Screen.SearchScreen.route) { inclusive = true }
+                            }
+                        },
                         Modifier
                             .requiredSize(24.dp)
                     ) {
@@ -116,8 +118,7 @@ fun SearchScreen(
 
                     if (searchResult.isEmpty()) {
                         EmptySearchScreen()
-                    }
-                    else {
+                    } else {
                         LazyColumn(
                             Modifier
                                 .padding(horizontal = 16.dp)

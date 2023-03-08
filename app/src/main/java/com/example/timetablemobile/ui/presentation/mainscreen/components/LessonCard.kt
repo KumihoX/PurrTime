@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
@@ -40,10 +39,15 @@ fun LessonCard(
             .padding(4.dp, 8.dp)
     ) {
         Card(
-            onClick = { navController.navigate(Screen.LessonDetailScreen.passLessonInfo(
-                name, type, time, teacher, classroom, groups)){
-                popUpTo(Screen.MainScreen.route) { inclusive = true }
-            } },
+            onClick = {
+                navController.navigate(
+                    Screen.LessonDetailScreen.passLessonInfo(
+                        name, type, time, teacher, classroom, groups
+                    )
+                ) {
+                    popUpTo(Screen.MainScreen.route) { inclusive = true }
+                }
+            },
             modifier = Modifier
                 .wrapContentSize()
                 .padding(end = 8.dp)

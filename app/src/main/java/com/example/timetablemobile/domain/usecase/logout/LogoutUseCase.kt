@@ -10,8 +10,7 @@ import javax.inject.Inject
 class LogoutUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
-    suspend operator fun invoke(context: Context)
-    {
+    suspend operator fun invoke(context: Context) {
         val getTokenFromLocalStorageUseCase = GetTokenFromLocalStorageUseCase(context)
         val token = getTokenFromLocalStorageUseCase.execute()
         val bearerToken = TokenResponse("Bearer ${token.accessToken}")

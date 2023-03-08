@@ -21,14 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
-import com.example.timetablemobile.navigation.LESSON_TYPE
-import com.example.timetablemobile.navigation.SCHEDULE_TYPE
-import com.example.timetablemobile.navigation.Screen
+import com.example.timetablemobile.navigation.TYPE_DATA
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
-import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreenState
-import com.example.timetablemobile.ui.presentation.signinscreen.SignInScreenUI
 import com.example.timetablemobile.ui.theme.*
 import java.util.*
 
@@ -38,7 +34,7 @@ fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    val header = scheduleType.getString(SCHEDULE_TYPE).toString()
+    val header = scheduleType.getString(TYPE_DATA).toString()
     val state by remember { viewModel.state }
 
     var day by remember { mutableStateOf(Date()) }
@@ -58,7 +54,8 @@ fun MainScreen(
                         onSelectedDayChange = { day = it },
                         viewModel = viewModel,
                         navController = navController,
-                        header = header)
+                        header = header
+                    )
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         LessonCard(navController)
                         LessonCard(navController)

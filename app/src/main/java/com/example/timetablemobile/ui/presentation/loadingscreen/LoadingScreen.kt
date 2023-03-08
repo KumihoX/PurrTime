@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.ui.theme.MainGreen
 
 @Composable
