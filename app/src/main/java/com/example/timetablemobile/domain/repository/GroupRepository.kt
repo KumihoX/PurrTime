@@ -1,6 +1,6 @@
 package com.example.timetablemobile.domain.repository
 
-import com.example.timetablemobile.data.remote.dto.GroupsDto
+import com.example.timetablemobile.data.remote.dto.GroupListDto
 import com.example.timetablemobile.data.remote.dto.ScheduleDto
 
 interface GroupRepository {
@@ -11,6 +11,6 @@ interface GroupRepository {
         endsAt: String
     ): ScheduleDto
 
-    suspend fun getList(): GroupsDto
+    suspend fun getList(): GroupListDto
 
 }

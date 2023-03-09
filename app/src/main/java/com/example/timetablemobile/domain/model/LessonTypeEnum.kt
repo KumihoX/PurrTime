@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.theme.*
 
-enum class LessonType(
+enum class LessonTypeEnum(
     val typeNameId: Int,
     val color: Color
 ) {

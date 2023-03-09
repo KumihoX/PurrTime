@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.timetablemobile.R
 import com.example.timetablemobile.common.Constants
-import com.example.timetablemobile.data.remote.dto.toCabinetsNumbersList
 import com.example.timetablemobile.domain.usecase.list.GetCabinetsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetGroupsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetTeachersListUseCase
@@ -30,40 +29,32 @@ class SearchViewModel @Inject constructor(
     var state: State<SearchState> = _state
 
     private val _requestResult = mutableStateOf<List<Any>>(emptyList())
-    var requestResult: State<List<Any>> = _requestResult
-
     private val _searchResult = mutableStateOf<List<Any>>(emptyList())
     var searchResult: State<List<Any>> = _searchResult
 
-    init {
-        /*val testList = listOf(100, 123, 124, 125, 126, 127, 128, 129, 200, 201, 202, 300, 301, 302, 1054)
-
-        _state.value = SearchState.Content(testList)
-        _requestResult.value = testList
-        _searchResult.value = testList*/
-
-        _state.value = SearchState.Loading
-    }
-
     private val _searchFieldText = mutableStateOf("")
     var searchFieldText: State<String> = _searchFieldText
+
+    /*init {
+        _state.value = SearchState.Initial
+    }*/
+
+    fun onSearchFieldChange(newValue: String) {
+        _searchFieldText.value = newValue
+
+        if (newValue.isNotEmpty())
+            getSearchResult(newValue, _requestResult.value)
+        else
+            _searchResult.value = _requestResult.value
+    }
 
     fun getList(choice: String) {
         when(choice) {
             "Аудитории" -> getCabinets()
             "Группы" -> getGroups()
-            "Преподавателя" -> getTeachers()
+            "Преподаватели" -> getTeachers()
             else -> _state.value = SearchState.Error("Что-то пошло не так")
         }
-    }
-
-    fun onSearchFieldChange(newValue: String, requestResultList: List<Any>) {
-        _searchFieldText.value = newValue
-
-        if (newValue.isNotEmpty())
-            getSearchResult(newValue, requestResultList)
-        else
-            _searchResult.value = _requestResult.value
     }
 
     private fun getSearchResult(value: String, list: List<Any>) {
@@ -87,8 +78,13 @@ class SearchViewModel @Inject constructor(
             _state.value = SearchState.Loading
 
             try {
+
                 val cabinets = getCabinetsUseCase()
-                _state.value = SearchState.Content(cabinets.toCabinetsNumbersList())
+                _state.value = SearchState.Content(cabinets)
+
+                _requestResult.value = cabinets
+                _searchResult.value = cabinets
+
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -102,8 +98,13 @@ class SearchViewModel @Inject constructor(
             _state.value = SearchState.Loading
 
             try {
+
                 val groups = getGroupsUseCase()
-                _state.value = SearchState.Content(groups.groupsList)
+                _state.value = SearchState.Content(groups)
+
+                _requestResult.value = groups
+                _searchResult.value = groups
+
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -117,8 +118,13 @@ class SearchViewModel @Inject constructor(
             _state.value = SearchState.Loading
 
             try {
+
                 val teachers = getTeachersUseCase()
-                _state.value = SearchState.Content(teachers.teachersList)
+                _state.value = SearchState.Content(teachers)
+
+                _requestResult.value = teachers.map { it.name }
+                _searchResult.value = teachers.map { it.name }
+
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {

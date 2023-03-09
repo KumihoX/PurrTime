@@ -92,7 +92,7 @@ fun SearchScreen(
                 SearchField(
                     text = searchFieldText,
                     placeholderValue = searchFieldPlaceholder
-                ) { viewModel.onSearchFieldChange(it, (state as SearchState.Content).requestResultsList) }
+                ) { viewModel.onSearchFieldChange(it) }
             }
         }
     ) {
@@ -103,7 +103,11 @@ fun SearchScreen(
         ) {
             when (state) {
 
-                SearchState.Initial -> EmptySearchScreen()
+                SearchState.Initial -> {
+                    EmptySearchScreen()
+
+                    viewModel.getList(header)
+                }
 
                 SearchState.Loading -> {
                     CircularProgressIndicator(

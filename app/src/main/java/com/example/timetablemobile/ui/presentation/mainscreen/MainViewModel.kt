@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.timetablemobile.domain.usecase.logout.LogoutUseCase
+import com.example.timetablemobile.domain.usecase.schedule.GetCabinetScheduleUseCase
+import com.example.timetablemobile.domain.usecase.schedule.GetGroupScheduleUseCase
+import com.example.timetablemobile.domain.usecase.schedule.GetTeacherScheduleUseCase
 import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -17,8 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    //will be added later
-    //private val getLessonsUseCase: GetLessonsUseCase
+    private val getGroupScheduleUseCase: GetGroupScheduleUseCase,
+    private val getCabinetScheduleUseCase: GetCabinetScheduleUseCase,
+    private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     private val _state: MutableState<MainState> = mutableStateOf(MainState.Initial)

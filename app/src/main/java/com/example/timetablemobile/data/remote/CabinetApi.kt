@@ -1,6 +1,6 @@
 package com.example.timetablemobile.data.remote
 
-import com.example.timetablemobile.data.remote.dto.CabinetsDto
+import com.example.timetablemobile.data.remote.dto.CabinetListDto
 import com.example.timetablemobile.data.remote.dto.ScheduleDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,6 +16,6 @@ interface CabinetApi {
     ): ScheduleDto
 
     @GET("cabinets")
-    suspend fun getList(): CabinetsDto
+    suspend fun getList(): CabinetListDto
 
 }
