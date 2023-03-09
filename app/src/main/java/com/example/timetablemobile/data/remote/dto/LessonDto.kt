@@ -1,7 +1,5 @@
 package com.example.timetablemobile.data.remote.dto
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.timetablemobile.domain.model.Lesson
 import com.example.timetablemobile.domain.model.LessonTypeEnum
 import java.time.LocalDate
@@ -14,7 +12,6 @@ data class LessonDto(
     val date: String
 )
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun LessonDto.toLesson(): Lesson {
     val lessonType = when(lesson.type) {
         "LECTURE" -> LessonTypeEnum.Lection
@@ -28,25 +25,30 @@ fun LessonDto.toLesson(): Lesson {
         else -> LessonTypeEnum.ContactWork
     }
 
-    val parsedStart = timeslot.startsAt.substringAfter("T").split(":")
+    val parsedStart = timeslot.startAt.substringAfter("T").split(":")
     val starts = parsedStart[0] + ":" + parsedStart[1]
 
     val parsedEnd = timeslot.endsAt.substringAfter("T").split(":")
     val ends = parsedEnd[0] + ":" + parsedEnd[1]
 
     var groups = ""
-    for(group in lesson.groups) {
-        groups = "$groups, $group"
+    if (lesson.groups.isNotEmpty()) {
+        groups = lesson.groups[0].toString()
+
+        for (i in 1 until lesson.groups.size) {
+            val newGroup = lesson.groups[i]
+            groups = "$groups, $newGroup"
+        }
     }
 
-    val currFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val newFormatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy")
+    val currFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+    //val newFormatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy")
     val parsedDate = LocalDate.parse(date, currFormatter)
 
     return Lesson(
         type = lessonType,
         subject = lesson.subject,
-        cabinetName = lesson.cabinet.number.toString() + lesson.cabinet.name,
+        cabinetName = lesson.cabinet.number.toString() + " " + lesson.cabinet.name,
         teacher = lesson.teacher,
         time = "$starts - $ends",
         groups = groups,

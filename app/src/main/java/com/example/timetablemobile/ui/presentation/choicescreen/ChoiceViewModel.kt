@@ -1,4 +1,4 @@
-package com.example.timetablemobile.ui.presentation.choisescreen
+package com.example.timetablemobile.ui.presentation.choicescreen
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController

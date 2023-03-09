@@ -1,6 +1,6 @@
 package com.example.timetablemobile.data.remote
 
-import com.example.timetablemobile.data.remote.dto.ScheduleDto
+import com.example.timetablemobile.data.remote.dto.LessonListDto
 import com.example.timetablemobile.data.remote.dto.TeacherListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +13,7 @@ interface TeacherApi {
         @Path("id") id: String,
         @Query("startsAt") startsAt: String,
         @Query("endsAt") endsAt: String
-    ): ScheduleDto
+    ): LessonListDto
 
     @GET("teachers")
     suspend fun getList(): TeacherListDto

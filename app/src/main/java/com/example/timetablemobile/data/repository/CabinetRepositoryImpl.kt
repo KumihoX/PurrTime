@@ -2,7 +2,7 @@ package com.example.timetablemobile.data.repository
 
 import com.example.timetablemobile.data.remote.CabinetApi
 import com.example.timetablemobile.data.remote.dto.CabinetListDto
-import com.example.timetablemobile.data.remote.dto.ScheduleDto
+import com.example.timetablemobile.data.remote.dto.LessonListDto
 import com.example.timetablemobile.domain.repository.CabinetRepository
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class CabinetRepositoryImpl @Inject constructor(
         number: Int,
         startsAt: String,
         endsAt: String
-    ): ScheduleDto {
+    ): LessonListDto {
         return api.getSchedule(number, startsAt, endsAt)
     }
 

@@ -3,11 +3,8 @@ package com.example.timetablemobile.ui.presentation.searchscreen
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.timetablemobile.R
-import com.example.timetablemobile.common.Constants
 import com.example.timetablemobile.domain.usecase.list.GetCabinetsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetGroupsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetTeachersListUseCase
@@ -21,7 +18,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val getCabinetsUseCase: GetCabinetsListUseCase,
     private val getGroupsUseCase: GetGroupsListUseCase,
-    private val getTeachersUseCase: GetTeachersListUseCase
+    private val getTeachersUseCase: GetTeachersListUseCase,
 ) : ViewModel() {
 
     private val _state: MutableState<SearchState> = mutableStateOf(SearchState.Initial)

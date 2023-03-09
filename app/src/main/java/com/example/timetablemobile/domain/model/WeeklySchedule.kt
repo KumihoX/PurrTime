@@ -1,11 +1,11 @@
 package com.example.timetablemobile.domain.model
 
 data class WeeklySchedule(
-    val monday: List<Lesson> = emptyList(),
-    val tuesday: List<Lesson> = emptyList(),
-    val wednesday: List<Lesson> = emptyList(),
-    val thursday : List<Lesson> = emptyList(),
-    val friday : List<Lesson> = emptyList(),
-    val saturday : List<Lesson> = emptyList(),
-    val sunday : List<Lesson> = emptyList(),
+    val monday: ArrayList<Lesson> = ArrayList(),
+    val tuesday: ArrayList<Lesson> = ArrayList(),
+    val wednesday: ArrayList<Lesson> = ArrayList(),
+    val thursday: ArrayList<Lesson> = ArrayList(),
+    val friday: ArrayList<Lesson> = ArrayList(),
+    val saturday: ArrayList<Lesson> = ArrayList(),
+    val sunday: ArrayList<Lesson> = ArrayList()
 )

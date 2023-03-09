@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.timetablemobile.data.remote.dto.LessonDto
-import com.example.timetablemobile.data.remote.dto.ScheduleDto
+import com.example.timetablemobile.data.remote.dto.LessonListDto
+import com.example.timetablemobile.data.remote.dto.toWeeklySchedule
+import com.example.timetablemobile.domain.model.WeeklySchedule
 import com.example.timetablemobile.domain.usecase.logout.LogoutUseCase
 import com.example.timetablemobile.domain.usecase.schedule.GetCabinetScheduleUseCase
 import com.example.timetablemobile.domain.usecase.schedule.GetGroupScheduleUseCase
@@ -31,6 +33,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state: MutableState<MainState> = mutableStateOf(MainState.Loading)
     var state: State<MainState> = _state
+
+    private val _weeklySchedule: MutableState<WeeklySchedule> = mutableStateOf(WeeklySchedule())
+    var weeklySchedule: State<WeeklySchedule> = _weeklySchedule
 
     private val _header: MutableState<String> = mutableStateOf("")
     var header: State<String> = _header
@@ -66,6 +71,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val result = getTeacherScheduleUseCase(id, startDate, endDate)
+                _state.value = MainState.Content(result.toWeeklySchedule())
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -81,6 +87,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val result = getCabinetScheduleUseCase(id.toInt(), startDate, endDate)
+                _state.value = MainState.Content(result.toWeeklySchedule())
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -96,6 +103,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val result = getGroupScheduleUseCase(id, startDate, endDate)
+                _state.value = MainState.Content(result.toWeeklySchedule())
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {

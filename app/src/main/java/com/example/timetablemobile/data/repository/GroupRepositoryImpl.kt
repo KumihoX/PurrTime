@@ -2,7 +2,7 @@ package com.example.timetablemobile.data.repository
 
 import com.example.timetablemobile.data.remote.GroupApi
 import com.example.timetablemobile.data.remote.dto.GroupListDto
-import com.example.timetablemobile.data.remote.dto.ScheduleDto
+import com.example.timetablemobile.data.remote.dto.LessonListDto
 import com.example.timetablemobile.domain.repository.GroupRepository
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class GroupRepositoryImpl @Inject constructor(
         id: String,
         startsAt: String,
         endsAt: String
-    ): ScheduleDto {
+    ): LessonListDto {
         return api.getSchedule(id, startsAt, endsAt)
     }
 

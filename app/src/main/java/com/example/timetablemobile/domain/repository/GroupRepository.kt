@@ -1,7 +1,7 @@
 package com.example.timetablemobile.domain.repository
 
 import com.example.timetablemobile.data.remote.dto.GroupListDto
-import com.example.timetablemobile.data.remote.dto.ScheduleDto
+import com.example.timetablemobile.data.remote.dto.LessonListDto
 
 interface GroupRepository {
 
@@ -9,7 +9,7 @@ interface GroupRepository {
         id: String,
         startsAt: String,
         endsAt: String
-    ): ScheduleDto
+    ): LessonListDto
 
     suspend fun getList(): GroupListDto
 

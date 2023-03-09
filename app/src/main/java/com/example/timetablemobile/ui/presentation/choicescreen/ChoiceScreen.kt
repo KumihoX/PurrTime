@@ -1,4 +1,4 @@
-package com.example.timetablemobile.ui.presentation.choisescreen
+package com.example.timetablemobile.ui.presentation.choicescreen
 
 import android.os.Bundle
 import androidx.compose.foundation.Image
