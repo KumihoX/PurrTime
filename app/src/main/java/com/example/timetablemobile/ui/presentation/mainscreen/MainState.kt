@@ -1,5 +1,7 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
+import com.example.timetablemobile.data.remote.dto.ScheduleDto
+
 sealed interface MainState {
 
     object Initial : MainState
