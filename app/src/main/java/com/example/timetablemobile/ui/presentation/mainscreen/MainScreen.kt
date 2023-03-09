@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.navigation.SCHEDULE_TYPE
 import com.example.timetablemobile.navigation.TYPE_DATA
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
@@ -34,7 +35,12 @@ fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    val header = scheduleType.getString(TYPE_DATA).toString()
+    viewModel.getScreenInfo(
+        typeData = scheduleType.getString(TYPE_DATA).toString(),
+        scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
+    )
+
+    val header by remember { viewModel.header }
     val state by remember { viewModel.state }
 
     var day by remember { mutableStateOf(Date()) }
@@ -194,7 +200,7 @@ fun Info(
     val monthName = getMonthName(currentDate).replaceFirstChar { it.uppercase() }
     val yearName = getYear4Letters(currentDate)
     Column(
-        modifier = Modifier.wrapContentSize(),
+        modifier = Modifier.wrapContentHeight().width(300.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

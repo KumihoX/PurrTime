@@ -32,12 +32,12 @@ class LoadingScreenViewModel @Inject constructor(
     private var caughtException = false
 
     private fun defineUser(userInfo: UserInfoDto) {
-        if (!userInfo.teacherId.isNullOrEmpty() && userInfo.group != null) {
+        if (userInfo.teacherId != null && userInfo.group != null) {
             twoRoles = true
         }
-        else if (!userInfo.teacherId.isNullOrEmpty()) {
+        else if (userInfo.teacherId != null) {
             scheduleType = "TEACHER"
-            typeData = userInfo.teacherId
+            typeData = userInfo.teacherId.id
         }
         else if (userInfo.group != null) {
             scheduleType = "STUDENT"
@@ -69,6 +69,7 @@ class LoadingScreenViewModel @Inject constructor(
                         )
                     )
                 }
+                caughtException = true
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception ) {

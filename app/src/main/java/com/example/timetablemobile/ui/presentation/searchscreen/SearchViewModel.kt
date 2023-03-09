@@ -80,10 +80,10 @@ class SearchViewModel @Inject constructor(
             try {
 
                 val cabinets = getCabinetsUseCase()
-                _state.value = SearchState.Content(cabinets)
+                _state.value = SearchState.Content(cabinets.cabinets)
 
-                _requestResult.value = cabinets
-                _searchResult.value = cabinets
+                _requestResult.value = cabinets.cabinets
+                _searchResult.value = cabinets.cabinets
 
             } catch (rethrow: CancellationException) {
                 throw rethrow
@@ -100,10 +100,10 @@ class SearchViewModel @Inject constructor(
             try {
 
                 val groups = getGroupsUseCase()
-                _state.value = SearchState.Content(groups)
+                _state.value = SearchState.Content(groups.groups)
 
-                _requestResult.value = groups
-                _searchResult.value = groups
+                _requestResult.value = groups.groups
+                _searchResult.value = groups.groups
 
             } catch (rethrow: CancellationException) {
                 throw rethrow
@@ -120,10 +120,10 @@ class SearchViewModel @Inject constructor(
             try {
 
                 val teachers = getTeachersUseCase()
-                _state.value = SearchState.Content(teachers)
+                _state.value = SearchState.Content(teachers.teachers)
 
-                _requestResult.value = teachers.map { it.name }
-                _searchResult.value = teachers.map { it.name }
+                _requestResult.value = teachers.teachers.map { it.name }
+                _searchResult.value = teachers.teachers.map { it.name }
 
             } catch (rethrow: CancellationException) {
                 throw rethrow

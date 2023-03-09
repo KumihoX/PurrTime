@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase,
     private val infoUseCase: InfoUseCase
 ) : ViewModel() {
@@ -49,12 +48,12 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun defineUser(userInfo: UserInfoDto) {
-        if (!userInfo.teacherId.isNullOrEmpty() && userInfo.group != null) {
+        if (userInfo.teacherId != null && userInfo.group != null) {
             twoRoles = true
         }
-        else if (!userInfo.teacherId.isNullOrEmpty()) {
+        else if (userInfo.teacherId != null) {
             scheduleType = "TEACHER"
-            typeData = userInfo.teacherId
+            typeData = userInfo.teacherId.id
         }
         else if (userInfo.group != null) {
             scheduleType = "STUDENT"
