@@ -67,7 +67,10 @@ fun SearchScreen(
                     IconButton(
                         onClick = {
                             navController.navigate(Screen.UnsignedScreen.route) {
-                                popUpTo(Screen.SearchScreen.route) { inclusive = true }
+                                popUpTo(Screen.SearchScreen.route) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
                             }
                         },
                         Modifier

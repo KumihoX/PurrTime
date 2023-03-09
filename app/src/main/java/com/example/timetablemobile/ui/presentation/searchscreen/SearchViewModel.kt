@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getCabinetsUseCase: GetCabinetsListUseCase,
@@ -82,8 +81,8 @@ class SearchViewModel @Inject constructor(
                 val cabinets = getCabinetsUseCase()
                 _state.value = SearchState.Content(cabinets.cabinets)
 
-                _requestResult.value = cabinets.cabinets
-                _searchResult.value = cabinets.cabinets
+                _requestResult.value = cabinets.cabinets.map { it.number }
+                _searchResult.value = cabinets.cabinets.map { it.number }
 
             } catch (rethrow: CancellationException) {
                 throw rethrow
