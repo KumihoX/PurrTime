@@ -8,9 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.timetablemobile.data.remote.dto.LessonDto
-import com.example.timetablemobile.data.remote.dto.LessonListDto
 import com.example.timetablemobile.data.remote.dto.toWeeklySchedule
+import com.example.timetablemobile.domain.model.Lesson
 import com.example.timetablemobile.domain.model.WeeklySchedule
 import com.example.timetablemobile.domain.usecase.logout.LogoutUseCase
 import com.example.timetablemobile.domain.usecase.schedule.GetCabinetScheduleUseCase
@@ -34,9 +33,6 @@ class MainViewModel @Inject constructor(
     private val _state: MutableState<MainState> = mutableStateOf(MainState.Loading)
     var state: State<MainState> = _state
 
-    private val _weeklySchedule: MutableState<WeeklySchedule> = mutableStateOf(WeeklySchedule())
-    var weeklySchedule: State<WeeklySchedule> = _weeklySchedule
-
     private val _header: MutableState<String> = mutableStateOf("")
     var header: State<String> = _header
 
@@ -45,6 +41,42 @@ class MainViewModel @Inject constructor(
 
     private val _helpDialogIsOpen = mutableStateOf(false)
     var helpDialogIsOpen: State<Boolean> = _helpDialogIsOpen
+
+    private val _weeklySchedule: MutableState<WeeklySchedule> = mutableStateOf(WeeklySchedule())
+    var weeklySchedule: State<WeeklySchedule> = _weeklySchedule
+
+    private val _currLessonList = mutableStateOf<List<Lesson>>(emptyList())
+    var currLessonList: State<List<Lesson>> = _currLessonList
+
+    private val _selectedDayOfWeek = mutableStateOf(1)
+    var selectedDayOfWeek: State<Int> = _selectedDayOfWeek
+
+    fun onSelectedDayOfWeekChange(date: Date) {
+        val calendar = Calendar.getInstance()
+        calendar.firstDayOfWeek = Calendar.MONDAY
+
+        calendar.time = date
+        _selectedDayOfWeek.value = calendar[Calendar.DAY_OF_WEEK]
+
+        updateCurrentLessonList()
+    }
+
+    init {
+        _state.value = MainState.Initial
+    }
+
+    private fun updateCurrentLessonList() {
+        _currLessonList.value = when(_selectedDayOfWeek.value) {
+            1 -> _weeklySchedule.value.sunday
+            2 -> _weeklySchedule.value.monday
+            3 -> _weeklySchedule.value.tuesday
+            4 -> _weeklySchedule.value.wednesday
+            5 -> _weeklySchedule.value.thursday
+            6 -> _weeklySchedule.value.friday
+            7 -> _weeklySchedule.value.saturday
+            else -> emptyList()
+        }
+    }
 
     private fun teacherHeader(info: String) {
         val teacherName = info.split("=").last()
@@ -72,6 +104,10 @@ class MainViewModel @Inject constructor(
             try {
                 val result = getTeacherScheduleUseCase(id, startDate, endDate)
                 _state.value = MainState.Content(result.toWeeklySchedule())
+
+                _weeklySchedule.value = result.toWeeklySchedule()
+                updateCurrentLessonList()
+
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -88,6 +124,10 @@ class MainViewModel @Inject constructor(
             try {
                 val result = getCabinetScheduleUseCase(id.toInt(), startDate, endDate)
                 _state.value = MainState.Content(result.toWeeklySchedule())
+
+                _weeklySchedule.value = result.toWeeklySchedule()
+                updateCurrentLessonList()
+
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -104,6 +144,10 @@ class MainViewModel @Inject constructor(
             try {
                 val result = getGroupScheduleUseCase(id, startDate, endDate)
                 _state.value = MainState.Content(result.toWeeklySchedule())
+
+                _weeklySchedule.value = result.toWeeklySchedule()
+                updateCurrentLessonList()
+
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
@@ -116,6 +160,9 @@ class MainViewModel @Inject constructor(
     private fun getStartAndEndData(): ArrayList<String> {
         val calendar = Calendar.getInstance()
         calendar.firstDayOfWeek = Calendar.MONDAY
+
+        _selectedDayOfWeek.value = calendar.get(Calendar.DAY_OF_WEEK)
+
         calendar.add(Calendar.WEEK_OF_MONTH, 0)
         calendar[Calendar.DAY_OF_WEEK] = calendar.firstDayOfWeek
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -168,7 +215,7 @@ class MainViewModel @Inject constructor(
             }
         }
         getSchedule(startDate, endDate)
-        _state.value = MainState.Initial
+        //_state.value = MainState.Initial
     }
 
     fun logout(

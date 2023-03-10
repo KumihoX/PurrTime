@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.domain.model.Lesson
 import com.example.timetablemobile.navigation.SCHEDULE_TYPE
 import com.example.timetablemobile.navigation.TYPE_DATA
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
@@ -35,10 +38,10 @@ fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    viewModel.getScreenInfo(
+    /*viewModel.getScreenInfo(
         typeData = scheduleType.getString(TYPE_DATA).toString(),
         scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
-    )
+    )*/
 
     val header by remember { viewModel.header }
     val state by remember { viewModel.state }
@@ -54,26 +57,10 @@ fun MainScreen(
     {
         when (state) {
             MainState.Initial -> {
-                Column(modifier = Modifier.fillMaxWidth())
-                {
-                    TopBar(
-                        onSelectedDayChange = { day = it },
-                        viewModel = viewModel,
-                        navController = navController,
-                        header = header
-                    )
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                    }
-                }
-                if (helpDialogIsOpen) {
-                    ColorAlertDialog(viewModel = viewModel)
-                }
+                viewModel.getScreenInfo(
+                    typeData = scheduleType.getString(TYPE_DATA).toString(),
+                    scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
+                )
             }
 
             MainState.Loading -> {
@@ -84,7 +71,41 @@ fun MainScreen(
             }
 
             is MainState.Content -> {
+                Column(modifier = Modifier.fillMaxWidth())
+                {
+                    TopBar(
+                        onSelectedDayChange = {
+                            day = it
+                            viewModel.onSelectedDayOfWeekChange(it)
+                        },
+                        viewModel = viewModel,
+                        navController = navController,
+                        header = header
+                    )
 
+                    val currLessonList: List<Lesson> by remember { viewModel.currLessonList }
+                    if (currLessonList.isEmpty()) {
+                        EmptyMainScreen()
+                    }
+                    else {
+                        LazyColumn() {
+                            items(currLessonList) { lesson ->
+                                LessonCard(
+                                    navController = navController,
+                                    name = lesson.subject,
+                                    type = lesson.type,
+                                    time = lesson.time,
+                                    teacher = lesson.teacher,
+                                    classroom = lesson.cabinetName,
+                                    groups = lesson.groups
+                                )
+                            }
+                        }
+                    }
+                }
+                if (helpDialogIsOpen) {
+                    ColorAlertDialog(viewModel = viewModel)
+                }
             }
 
             is MainState.Error -> {
@@ -97,12 +118,12 @@ fun MainScreen(
                         header = header
                     )
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        /*LessonCard(navController)
                         LessonCard(navController)
                         LessonCard(navController)
                         LessonCard(navController)
                         LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
+                        LessonCard(navController)*/
                     }
                 }
                 if (helpDialogIsOpen) {
@@ -111,8 +132,12 @@ fun MainScreen(
                 ErrorAlertDialog(message = (state as MainState.Error).error)
             }
         }
-
     }
+}
+
+@Composable
+fun EmptyMainScreen() {
+
 }
 
 @Composable
@@ -175,7 +200,6 @@ fun TopBar(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-
 fun Exit(
     viewModel: MainViewModel,
     navController: NavController
@@ -200,7 +224,9 @@ fun Info(
     val monthName = getMonthName(currentDate).replaceFirstChar { it.uppercase() }
     val yearName = getYear4Letters(currentDate)
     Column(
-        modifier = Modifier.wrapContentHeight().width(300.dp),
+        modifier = Modifier
+            .wrapContentHeight()
+            .width(300.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -345,6 +371,3 @@ fun WeekDays(
         }
     }
 }
-
-
-

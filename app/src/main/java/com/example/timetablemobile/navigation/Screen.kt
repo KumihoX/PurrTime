@@ -1,5 +1,7 @@
 package com.example.timetablemobile.navigation
 
+import com.example.timetablemobile.domain.model.LessonTypeEnum
+
 const val LESSON_NAME = "lesson_name"
 const val LESSON_TYPE = "lesson_type"
 const val LESSON_TIME = "lesson_time"
@@ -48,7 +50,7 @@ sealed class Screen(val route: String) {
     ) {
         fun passLessonInfo(
             name: String,
-            type: String,
+            type: LessonTypeEnum,
             time: String,
             teacher: String,
             classroom: String,
