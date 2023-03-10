@@ -1,7 +1,6 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -11,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -39,10 +39,6 @@ fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    /*viewModel.getScreenInfo(
-        typeData = scheduleType.getString(TYPE_DATA).toString(),
-        scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
-    )*/
     val state by remember { viewModel.state }
     val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
 
@@ -55,44 +51,35 @@ fun MainScreen(
             .background(LightGray)
     )
     {
-        when (state) {
-            MainState.Initial -> {
-                viewModel.getScreenInfo(
-                    typeData = scheduleType.getString(DATA_ID).toString(),
-                    scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
-                )
-            }
-
-            MainState.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MainGreen
-                )
-            }
-
-            is MainState.Content -> {
-                Column(modifier = Modifier.fillMaxWidth())
-                {
-                    TopBar(
-                        onSelectedDayChange = {
-                            day = it
-                            viewModel.onSelectedDayOfWeekChange(it)
-                        },
-                        viewModel = viewModel,
-                        navController = navController,
-                        header = header
-                    )
-
+        if (state == MainState.Initial) {
+            viewModel.getScreenInfo(
+                typeData = scheduleType.getString(DATA_ID).toString(),
+                scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
+            )
+        }
+        Column(modifier = Modifier.fillMaxWidth())
+        {
+            TopBar(
+                onSelectedDayChange = {
+                    day = it
+                    viewModel.onSelectedDayOfWeekChange(it)
+                },
+                viewModel = viewModel,
+                navController = navController,
+                header = header
+            )
+            when (state) {
+                is MainState.Content -> {
                     val currLessonList: List<Lesson> by remember { viewModel.currLessonList }
                     if (currLessonList.isEmpty()) {
                         EmptyMainScreen()
-                    }
-                    else {
+                    } else {
                         LazyColumn() {
                             items(currLessonList) { lesson ->
                                 LessonCard(
                                     navController = navController,
-                                    scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString(),
+                                    scheduleType = scheduleType.getString(SCHEDULE_TYPE)
+                                        .toString(),
                                     scheduleData = scheduleType.getString(DATA_ID).toString(),
                                     name = lesson.subject,
                                     type = lesson.type,
@@ -104,28 +91,39 @@ fun MainScreen(
                             }
                         }
                     }
-                }
-                if (helpDialogIsOpen) {
-                    ColorAlertDialog(viewModel = viewModel)
-                }
-            }
 
-            is MainState.Error -> {
-                Column(modifier = Modifier.fillMaxWidth())
-                {
-                    TopBar(
-                        onSelectedDayChange = { day = it },
-                        viewModel = viewModel,
-                        navController = navController,
-                        header = header
-                    )
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    if (helpDialogIsOpen) {
+                        ColorAlertDialog(viewModel = viewModel)
                     }
                 }
-                if (helpDialogIsOpen) {
-                    ColorAlertDialog(viewModel = viewModel)
+
+                MainState.Loading -> {
+                    Box (modifier = Modifier.fillMaxSize())
+                    {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Center),
+                            color = MainGreen
+                        )
+                    }
                 }
-                ErrorAlertDialog(message = (state as MainState.Error).error)
+
+                is MainState.Error -> {
+                    Column(modifier = Modifier.fillMaxWidth())
+                    {
+                        TopBar(
+                            onSelectedDayChange = { day = it },
+                            viewModel = viewModel,
+                            navController = navController,
+                            header = header
+                        )
+                        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        }
+                    }
+                    if (helpDialogIsOpen) {
+                        ColorAlertDialog(viewModel = viewModel)
+                    }
+                    ErrorAlertDialog(message = (state as MainState.Error).error)
+                }
             }
         }
     }

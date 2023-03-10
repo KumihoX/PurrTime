@@ -101,6 +101,7 @@ class MainViewModel @Inject constructor(
         endDate: String,
     ) {
         viewModelScope.launch {
+            _state.value = MainState.Loading
             try {
                 val result = getTeacherScheduleUseCase(id, startDate, endDate)
                 _state.value = MainState.Content(result.toWeeklySchedule())
@@ -121,6 +122,7 @@ class MainViewModel @Inject constructor(
         endDate: String,
     ) {
         viewModelScope.launch {
+            _state.value = MainState.Loading
             try {
                 val result = getCabinetScheduleUseCase(id.toInt(), startDate, endDate)
                 _state.value = MainState.Content(result.toWeeklySchedule())
@@ -141,6 +143,7 @@ class MainViewModel @Inject constructor(
         endDate: String,
     ) {
         viewModelScope.launch {
+            _state.value = MainState.Loading
             try {
                 val result = getGroupScheduleUseCase(id, startDate, endDate)
                 _state.value = MainState.Content(result.toWeeklySchedule())
@@ -210,9 +213,9 @@ class MainViewModel @Inject constructor(
         when (scheduleType) {
             "TEACHER" -> {
                 teacherHeader(typeData)
-                val TeacherId = getTeacherId(typeData)
+                val teacherId = getTeacherId(typeData)
                 type = scheduleType
-                id = TeacherId
+                id = teacherId
             }
             "CABINET" -> {
                 cabinetHeader(typeData)
