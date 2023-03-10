@@ -138,7 +138,7 @@ fun EmptyMainScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(R.drawable.cat_sleepy2),
+                painter = painterResource(R.drawable.cat_sleepy),
                 contentDescription = null,
                 Modifier.padding(bottom = 4.dp)
             )
