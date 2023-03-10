@@ -10,7 +10,8 @@ const val LESSON_CLASSROOM = "lesson_classroom"
 const val LESSON_GROUPS = "lesson_groups"
 
 const val SCHEDULE_TYPE = "schedule_type"
-const val TYPE_DATA = "type_data"
+const val DATA_ID = "data_id"
+const val DATA = "data"
 
 const val STUDENT_DATA = "student_data"
 const val TEACHER_DATA = "teacher_data"
@@ -29,11 +30,12 @@ sealed class Screen(val route: String) {
         ): String = "choice_screen/$studentData/$teacherData"
     }
 
-    object MainScreen : Screen("main_screen/{$SCHEDULE_TYPE}/{$TYPE_DATA}") {
+    object MainScreen : Screen("main_screen/{$SCHEDULE_TYPE}/{$DATA_ID}") {
         fun passScheduleInfo(
             type: String,
-            data: String
-        ): String = "main_screen/$type/$data"
+            dataId: String,
+            //data: String? = null
+        ): String = "main_screen/$type/$dataId"
     }
 
     object SearchScreen : Screen("search_screen/{$USER_CHOICE_HEADER}/{$USER_CHOICE_PLACEHOLDER}") {
@@ -44,17 +46,21 @@ sealed class Screen(val route: String) {
     }
 
     object LessonDetailScreen : Screen(
-        "lesson_detail_screen/" +
+        "lesson_detail_screen/{$SCHEDULE_TYPE}/{$DATA_ID}/" +
                 "{$LESSON_NAME}/{$LESSON_TYPE}/{$LESSON_TIME}/" +
                 "{$LESSON_TEACHER}/{$LESSON_CLASSROOM}/{$LESSON_GROUPS}"
     ) {
         fun passLessonInfo(
+            typeSchedule: String,
+            dataIdSchedule: String,
+            //dataSchedule: String? = null,
             name: String,
             type: LessonTypeEnum,
             time: String,
             teacher: String,
             classroom: String,
             groups: String
-        ): String = "lesson_detail_screen/$name/$type/$time/$teacher/$classroom/$groups"
+        ): String = "lesson_detail_screen/$typeSchedule/$dataIdSchedule" +
+                "/$name/$type/$time/$teacher/$classroom/$groups"
     }
 }

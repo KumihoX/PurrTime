@@ -26,6 +26,8 @@ import com.example.timetablemobile.ui.theme.MainGreen
 @Composable
 fun LessonCard(
     navController: NavController,
+    scheduleType: String,
+    scheduleData: String,
     name: String,
     type: LessonTypeEnum,
     time: String,
@@ -43,7 +45,7 @@ fun LessonCard(
             onClick = {
                 navController.navigate(
                     Screen.LessonDetailScreen.passLessonInfo(
-                        name, type, time, teacher, classroom, groups
+                        scheduleType, scheduleData, name, type, time, teacher, classroom, groups
                     )
                 ) {
                     popUpTo(Screen.MainScreen.route) { inclusive = true }

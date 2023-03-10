@@ -1,6 +1,7 @@
 package com.example.timetablemobile.ui.presentation.mainscreen
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -24,8 +25,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.domain.model.Lesson
+import com.example.timetablemobile.navigation.DATA_ID
 import com.example.timetablemobile.navigation.SCHEDULE_TYPE
-import com.example.timetablemobile.navigation.TYPE_DATA
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.ColorAlertDialog
 import com.example.timetablemobile.ui.presentation.mainscreen.components.LessonCard
@@ -42,12 +43,11 @@ fun MainScreen(
         typeData = scheduleType.getString(TYPE_DATA).toString(),
         scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
     )*/
+    val state by remember { viewModel.state }
+    val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
 
     val header by remember { viewModel.header }
-    val state by remember { viewModel.state }
-
     var day by remember { mutableStateOf(Date()) }
-    val helpDialogIsOpen: Boolean by remember { viewModel.helpDialogIsOpen }
 
     Box(
         modifier = Modifier
@@ -58,7 +58,7 @@ fun MainScreen(
         when (state) {
             MainState.Initial -> {
                 viewModel.getScreenInfo(
-                    typeData = scheduleType.getString(TYPE_DATA).toString(),
+                    typeData = scheduleType.getString(DATA_ID).toString(),
                     scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
                 )
             }
@@ -92,6 +92,8 @@ fun MainScreen(
                             items(currLessonList) { lesson ->
                                 LessonCard(
                                     navController = navController,
+                                    scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString(),
+                                    scheduleData = scheduleType.getString(DATA_ID).toString(),
                                     name = lesson.subject,
                                     type = lesson.type,
                                     time = lesson.time,
@@ -118,12 +120,6 @@ fun MainScreen(
                         header = header
                     )
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        /*LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)
-                        LessonCard(navController)*/
                     }
                 }
                 if (helpDialogIsOpen) {
@@ -188,10 +184,16 @@ fun TopBar(
                 onNextWeekClicked = {
                     calendar.time = it
                     currentDate = it
+                    selectedDate = it
+                    viewModel.increaseWeekDeviation()
+                    onSelectedDayChange(it)
                 },
                 onPrevWeekClicked = {
                     calendar.time = it
                     currentDate = it
+                    selectedDate = it
+                    viewModel.decreaseWeekDeviation()
+                    onSelectedDayChange(it)
                 }
             )
         }

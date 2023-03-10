@@ -57,7 +57,7 @@ class LoadingScreenViewModel @Inject constructor(
                     navController.navigate(
                         Screen.MainScreen.passScheduleInfo(
                             type = scheduleType,
-                            data = typeData
+                            dataId = typeData
                         )
                     )
                 }

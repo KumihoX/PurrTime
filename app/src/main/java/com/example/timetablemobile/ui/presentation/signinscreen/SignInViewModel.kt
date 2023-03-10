@@ -88,7 +88,7 @@ class SignInViewModel @Inject constructor(
                     navController.navigate(
                         Screen.MainScreen.passScheduleInfo(
                             type = scheduleType,
-                            data = typeData
+                            dataId = typeData
                         )
                     ) {
                         popUpTo(Screen.SignInScreen.route) { inclusive = true }

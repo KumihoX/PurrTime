@@ -2,9 +2,7 @@ package com.example.timetablemobile.ui.presentation.mainscreen
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -38,6 +36,8 @@ class MainViewModel @Inject constructor(
 
     private var type = ""
     private var id = ""
+
+    private var weekDeviation = 0
 
     private val _helpDialogIsOpen = mutableStateOf(false)
     var helpDialogIsOpen: State<Boolean> = _helpDialogIsOpen
@@ -163,7 +163,7 @@ class MainViewModel @Inject constructor(
 
         _selectedDayOfWeek.value = calendar.get(Calendar.DAY_OF_WEEK)
 
-        calendar.add(Calendar.WEEK_OF_MONTH, 0)
+        calendar.add(Calendar.WEEK_OF_MONTH, weekDeviation)
         calendar[Calendar.DAY_OF_WEEK] = calendar.firstDayOfWeek
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
 
@@ -174,6 +174,17 @@ class MainViewModel @Inject constructor(
         days.add(simpleDateFormat.format(calendar.time))
 
         return days
+    }
+
+    fun increaseWeekDeviation() {
+        weekDeviation += 1
+        getScreenInfo()
+    }
+
+    fun decreaseWeekDeviation() {
+        weekDeviation -= 1
+        getScreenInfo()
+
     }
 
     fun getSchedule(
@@ -189,8 +200,8 @@ class MainViewModel @Inject constructor(
 
 
     fun getScreenInfo(
-        typeData: String,
-        scheduleType: String
+        typeData: String = id,
+        scheduleType: String = type
     ) {
         val days = getStartAndEndData()
         val startDate = days[0]

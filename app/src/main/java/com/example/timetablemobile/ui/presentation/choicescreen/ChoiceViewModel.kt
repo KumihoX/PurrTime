@@ -29,7 +29,7 @@ class ChoiceViewModel @Inject constructor(): ViewModel() {
                 navController.navigate(
                     Screen.MainScreen.passScheduleInfo(
                         type = "STUDENT",
-                        data = studentData
+                        dataId = studentData
                     )
                 )
             }
@@ -37,7 +37,7 @@ class ChoiceViewModel @Inject constructor(): ViewModel() {
                 navController.navigate(
                     Screen.MainScreen.passScheduleInfo(
                         type = "TEACHER",
-                        data = teacherData
+                        dataId = teacherData
                     )
                 )
             }

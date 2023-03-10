@@ -48,7 +48,10 @@ fun LessonDetailScreen(
             CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                 IconButton(
                     onClick = {
-                        navController.navigate(Screen.MainScreen.route) {
+                        navController.navigate(Screen.MainScreen.passScheduleInfo(
+                            arguments.getString(SCHEDULE_TYPE).toString(),
+                            arguments.getString(DATA_ID).toString()
+                        )) {
                             popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                         }
                     },

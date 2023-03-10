@@ -49,9 +49,14 @@ fun Navigation(navController: NavHostController) {
                 navArgument(SCHEDULE_TYPE) {
                     type = NavType.StringType
                 },
-                navArgument(TYPE_DATA) {
+                navArgument(DATA_ID) {
                     type = NavType.StringType
                 },
+                /*navArgument(DATA) {
+                    nullable = true
+                    type = NavType.StringType
+                    defaultValue = null
+                },*/
             )
         ) {
             it.arguments?.let { it1 -> MainScreen(it1, navController) }
@@ -74,6 +79,17 @@ fun Navigation(navController: NavHostController) {
         composable(
             route = Screen.LessonDetailScreen.route,
             arguments = listOf(
+                navArgument(SCHEDULE_TYPE) {
+                    type = NavType.StringType
+                },
+                navArgument(DATA_ID) {
+                    type = NavType.StringType
+                },
+                /*navArgument(DATA) {
+                    nullable = true
+                    type = NavType.StringType
+                    defaultValue = null
+                },*/
                 navArgument(LESSON_NAME) {
                     type = NavType.StringType
                 },
