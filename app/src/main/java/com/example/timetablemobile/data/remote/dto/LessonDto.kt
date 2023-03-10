@@ -42,7 +42,6 @@ fun LessonDto.toLesson(): Lesson {
     }
 
     val currFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-    //val newFormatter = DateTimeFormatter.ofPattern("EEEE dd-MM-yyyy")
     val parsedDate = LocalDate.parse(date, currFormatter)
 
     return Lesson(
