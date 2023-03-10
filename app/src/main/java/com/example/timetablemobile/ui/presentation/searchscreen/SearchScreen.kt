@@ -20,12 +20,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.domain.model.Cabinet
+import com.example.timetablemobile.domain.model.Teacher
 import com.example.timetablemobile.navigation.Screen
 import com.example.timetablemobile.navigation.USER_CHOICE_HEADER
 import com.example.timetablemobile.navigation.USER_CHOICE_PLACEHOLDER
@@ -95,7 +95,7 @@ fun SearchScreen(
                 SearchField(
                     text = searchFieldText,
                     placeholderValue = searchFieldPlaceholder
-                ) { viewModel.onSearchFieldChange(it) }
+                ) { viewModel.onSearchFieldChange(it, header) }
             }
         }
     ) {
@@ -121,20 +121,59 @@ fun SearchScreen(
 
                 is SearchState.Content -> {
 
-                    val searchResult: List<Any> by remember { viewModel.searchResult }
-
-                    if (searchResult.isEmpty()) {
-                        EmptySearchScreen()
-                    } else {
-                        LazyColumn(
-                            Modifier
-                                .padding(horizontal = 16.dp)
-                                .fillMaxSize()
-                        ) {
-                            items(searchResult) { result ->
-                                SearchListItem(
-                                    itemName = result.toString()
-                                ) //{  }
+                    when(header) {
+                        "Аудитории" -> {
+                            val searchResult: List<Cabinet> by remember { viewModel.cabinetSearchResult }
+                            if (searchResult.isEmpty()) {
+                                EmptySearchScreen()
+                            } else {
+                                LazyColumn(
+                                    Modifier
+                                        .padding(horizontal = 16.dp)
+                                        .fillMaxSize()
+                                ) {
+                                    items(searchResult) { result ->
+                                        SearchListItem(
+                                            itemName = result.name
+                                        ) { viewModel.navigateToCabinetSchedule(navController, result.id) }
+                                    }
+                                }
+                            }
+                        }
+                        "Группы" -> {
+                            val searchResult: List<Int> by remember { viewModel.groupSearchResult }
+                            if (searchResult.isEmpty()) {
+                                EmptySearchScreen()
+                            } else {
+                                LazyColumn(
+                                    Modifier
+                                        .padding(horizontal = 16.dp)
+                                        .fillMaxSize()
+                                ) {
+                                    items(searchResult) { result ->
+                                        SearchListItem(
+                                            itemName = result.toString()
+                                        ) { viewModel.navigateToGroupSchedule(navController, result) }
+                                    }
+                                }
+                            }
+                        }
+                        "Преподаватели" -> {
+                            val searchResult: List<Teacher> by remember { viewModel.teacherSearchResult }
+                            if (searchResult.isEmpty()) {
+                                EmptySearchScreen()
+                            } else {
+                                LazyColumn(
+                                    Modifier
+                                        .padding(horizontal = 16.dp)
+                                        .fillMaxSize()
+                                ) {
+                                    items(searchResult) { result ->
+                                        SearchListItem(
+                                            itemName = result.name
+                                        ) { viewModel.navigateToTeacherSchedule(navController, result.id) }
+                                    }
+                                }
                             }
                         }
                     }

@@ -9,3 +9,12 @@ data class WeeklySchedule(
     val saturday: ArrayList<Lesson> = ArrayList(),
     val sunday: ArrayList<Lesson> = ArrayList()
 )
+
+fun WeeklySchedule.sortTimeDescending(): WeeklySchedule {
+
+
+
+    return WeeklySchedule(
+
+    )
+}

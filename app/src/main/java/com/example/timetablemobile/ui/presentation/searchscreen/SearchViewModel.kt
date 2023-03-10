@@ -5,6 +5,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.timetablemobile.data.remote.dto.toCabinetList
+import com.example.timetablemobile.data.remote.dto.toTeacherList
+import com.example.timetablemobile.domain.model.Cabinet
+import com.example.timetablemobile.domain.model.Teacher
 import com.example.timetablemobile.domain.usecase.list.GetCabinetsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetGroupsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetTeachersListUseCase
@@ -24,24 +29,82 @@ class SearchViewModel @Inject constructor(
     private val _state: MutableState<SearchState> = mutableStateOf(SearchState.Initial)
     var state: State<SearchState> = _state
 
-    private val _requestResult = mutableStateOf<List<Any>>(emptyList())
-    private val _searchResult = mutableStateOf<List<Any>>(emptyList())
-    var searchResult: State<List<Any>> = _searchResult
+    private val _cabinetRequestResult = mutableStateOf<List<Cabinet>>(emptyList())
+    private val _cabinetSearchResult = mutableStateOf<List<Cabinet>>(emptyList())
+    var cabinetSearchResult: State<List<Cabinet>> = _cabinetSearchResult
+
+    private val _teacherRequestResult = mutableStateOf<List<Teacher>>(emptyList())
+    private val _teacherSearchResult = mutableStateOf<List<Teacher>>(emptyList())
+    var teacherSearchResult: State<List<Teacher>> = _teacherSearchResult
+
+    private val _groupRequestResult = mutableStateOf<List<Int>>(emptyList())
+    private val _groupSearchResult = mutableStateOf<List<Int>>(emptyList())
+    var groupSearchResult: State<List<Int>> = _groupSearchResult
 
     private val _searchFieldText = mutableStateOf("")
     var searchFieldText: State<String> = _searchFieldText
 
-    /*init {
-        _state.value = SearchState.Initial
-    }*/
-
-    fun onSearchFieldChange(newValue: String) {
+    fun onSearchFieldChange(newValue: String, choice: String) {
         _searchFieldText.value = newValue
 
         if (newValue.isNotEmpty())
-            getSearchResult(newValue, _requestResult.value)
+            when(choice) {
+                "Аудитории" -> getCabinetSearchResult(newValue, _cabinetRequestResult.value)
+                "Группы" -> getGroupSearchResult(newValue, _groupRequestResult.value)
+                "Преподаватели" -> getTeacherSearchResult(newValue, _teacherRequestResult.value)
+                else -> _state.value = SearchState.Error("Что-то пошло не так")
+            }
         else
-            _searchResult.value = _requestResult.value
+            when(choice) {
+                "Аудитории" -> _cabinetSearchResult.value = _cabinetRequestResult.value
+                "Группы" -> _groupSearchResult.value = _groupRequestResult.value
+                "Преподаватели" -> _teacherSearchResult.value = _teacherRequestResult.value
+            }
+    }
+
+    private fun getCabinetSearchResult(value: String, list: List<Cabinet>) {
+        val sortedList = ArrayList<Cabinet>()
+
+        for (item in list) {
+            if (item.name
+                    .lowercase(Locale.getDefault())
+                    .contains(value.lowercase(Locale.getDefault()))
+            ) {
+                sortedList.add(item)
+            }
+        }
+
+        _cabinetSearchResult.value = sortedList
+    }
+
+    private fun getGroupSearchResult(value: String, list: List<Int>) {
+        val sortedList = ArrayList<Int>()
+
+        for (item in list) {
+            if (item.toString()
+                    .lowercase(Locale.getDefault())
+                    .contains(value.lowercase(Locale.getDefault()))
+            ) {
+                sortedList.add(item)
+            }
+        }
+
+        _groupSearchResult.value = sortedList
+    }
+
+    private fun getTeacherSearchResult(value: String, list: List<Teacher>) {
+        val sortedList = ArrayList<Teacher>()
+
+        for (item in list) {
+            if (item.name
+                    .lowercase(Locale.getDefault())
+                    .contains(value.lowercase(Locale.getDefault()))
+            ) {
+                sortedList.add(item)
+            }
+        }
+
+        _teacherSearchResult.value = sortedList
     }
 
     fun getList(choice: String) {
@@ -53,22 +116,6 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun getSearchResult(value: String, list: List<Any>) {
-
-        val sortedList = ArrayList<Any>()
-
-        for (item in list) {
-            if (item.toString()
-                    .lowercase(Locale.getDefault())
-                    .contains(value.lowercase(Locale.getDefault()))
-            ) {
-                sortedList.add(item)
-            }
-        }
-
-        _searchResult.value = sortedList
-    }
-
     private fun getCabinets() {
         viewModelScope.launch {
             _state.value = SearchState.Loading
@@ -76,10 +123,10 @@ class SearchViewModel @Inject constructor(
             try {
 
                 val cabinets = getCabinetsUseCase()
-                _state.value = SearchState.Content(cabinets.cabinets)
+                _state.value = SearchState.Content(cabinets.toCabinetList())
 
-                _requestResult.value = cabinets.cabinets.map { it.number }
-                _searchResult.value = cabinets.cabinets.map { it.number }
+                _cabinetRequestResult.value = cabinets.toCabinetList()
+                _cabinetSearchResult.value = cabinets.toCabinetList()
 
             } catch (rethrow: CancellationException) {
                 throw rethrow
@@ -98,8 +145,8 @@ class SearchViewModel @Inject constructor(
                 val groups = getGroupsUseCase()
                 _state.value = SearchState.Content(groups.groups)
 
-                _requestResult.value = groups.groups
-                _searchResult.value = groups.groups
+                _groupRequestResult.value = groups.groups
+                _groupSearchResult.value = groups.groups
 
             } catch (rethrow: CancellationException) {
                 throw rethrow
@@ -116,10 +163,10 @@ class SearchViewModel @Inject constructor(
             try {
 
                 val teachers = getTeachersUseCase()
-                _state.value = SearchState.Content(teachers.teachers)
+                _state.value = SearchState.Content(teachers.toTeacherList())
 
-                _requestResult.value = teachers.teachers.map { it.name }
-                _searchResult.value = teachers.teachers.map { it.name }
+                _teacherRequestResult.value = teachers.toTeacherList()
+                _teacherSearchResult.value = teachers.toTeacherList()
 
             } catch (rethrow: CancellationException) {
                 throw rethrow
@@ -127,5 +174,17 @@ class SearchViewModel @Inject constructor(
                 _state.value = SearchState.Error("Что-то пошло не так")
             }
         }
+    }
+
+    fun navigateToCabinetSchedule(navController: NavController, id: Int) {
+        //navController.navigate()
+    }
+
+    fun navigateToTeacherSchedule(navController: NavController, id: String) {
+        //navController.navigate()
+    }
+
+    fun navigateToGroupSchedule(navController: NavController, id: Int) {
+        //navController.navigate()
     }
 }

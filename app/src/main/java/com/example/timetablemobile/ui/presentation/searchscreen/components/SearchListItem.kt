@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.timetablemobile.R
 import com.example.timetablemobile.ui.theme.Black
@@ -20,7 +19,7 @@ import com.example.timetablemobile.ui.theme.SearchFieldBackground
 @Composable
 fun SearchListItem(
     itemName: String,
-    //onItemClick: () -> Unit
+    onItemClick: () -> Unit
 ) {
     Column(
         Modifier
@@ -31,7 +30,7 @@ fun SearchListItem(
             Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .clickable { /*onItemClick()*/ },
+                .clickable { onItemClick() },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -58,10 +57,4 @@ fun SearchListItem(
             thickness = 1.dp
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SearchListItemPreview() {
-    SearchListItem("972103")
 }
