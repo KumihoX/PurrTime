@@ -26,4 +26,6 @@
     <string name="group_number">Номер группы</string>
     <string name="teachers">Преподаватели</string>
     <string name="teacher_name">Имя преподавателя</string>
+    <string name="no_lessons_this_day">В этот день занятий нет</string>
+    <string name="maybe_lessons_will_be_added_later">Возможно, они появятся позже...</string>
 </resources>

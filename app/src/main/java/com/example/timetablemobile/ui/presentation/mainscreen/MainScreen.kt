@@ -19,6 +19,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -131,7 +132,34 @@ fun MainScreen(
 
 @Composable
 fun EmptyMainScreen() {
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.align(Center),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(R.drawable.cat_sleepy2),
+                contentDescription = null,
+                Modifier.padding(bottom = 4.dp)
+            )
 
+            Text(
+                text = stringResource(R.string.no_lessons_this_day),
+                Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.h6,
+                color = Black
+            )
+
+            Text(
+                text = stringResource(R.string.maybe_lessons_will_be_added_later),
+                Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.subtitle1,
+                color = Gray
+            )
+        }
+    }
 }
 
 @Composable
