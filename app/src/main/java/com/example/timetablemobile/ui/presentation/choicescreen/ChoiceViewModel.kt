@@ -1,6 +1,9 @@
 package com.example.timetablemobile.ui.presentation.choicescreen
 
 import android.os.Bundle
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.navigation.STUDENT_DATA
@@ -12,6 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChoiceViewModel @Inject constructor() : ViewModel() {
+
+    private val _state: MutableState<ChoiceState> = mutableStateOf(ChoiceState.Loading)
+    var state: State<ChoiceState> = _state
 
     private var studentData = ""
     private var teacherId = ""
@@ -26,6 +32,8 @@ class ChoiceViewModel @Inject constructor() : ViewModel() {
         studentData = studentInfo
         teacherId = teacherInfoId
         teacherName = teacherInfoName
+
+        _state.value = ChoiceState.Initial
     }
 
     fun navigateToSearch(

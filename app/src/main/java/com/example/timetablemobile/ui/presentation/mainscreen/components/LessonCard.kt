@@ -26,9 +26,6 @@ import com.example.timetablemobile.ui.theme.MainGreen
 @Composable
 fun LessonCard(
     navController: NavController,
-    scheduleType: String,
-    scheduleDataId: String,
-    scheduleData: String,
     name: String,
     type: LessonTypeEnum,
     time: String,
@@ -48,9 +45,6 @@ fun LessonCard(
             onClick = {
                 navController.navigate(
                     Screen.LessonDetailScreen.passLessonInfo(
-                        typeSchedule = scheduleType,
-                        dataIdSchedule = scheduleDataId,
-                        dataSchedule = scheduleData,
                         name = name,
                         type = type,
                         time = time,

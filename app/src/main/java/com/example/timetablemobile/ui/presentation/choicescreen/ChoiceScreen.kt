@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,46 +26,51 @@ fun ChoiceScreen(
     navController: NavController,
     viewModel: ChoiceViewModel = hiltViewModel()
 ) {
+    val state by remember { viewModel.state }
 
-    viewModel.handOverData(info)
-    Column(
-        Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(R.drawable.cat_heart_above),
-            contentDescription = null,
-            modifier = Modifier
-                .width(240.dp),
-            contentScale = ContentScale.FillBounds
-        )
+    when (state) {
+        ChoiceState.Loading -> viewModel.handOverData(info)
 
-        Text(
-            text = stringResource(R.string.which_your_schedule_want_to_see),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp, 28.dp, 16.dp, 32.dp),
-            style = MaterialTheme.typography.h5,
-            textAlign = TextAlign.Center
-        )
-
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(horizontal = 16.dp)
-        ) {
-            ScheduleOption(
-                name = stringResource(R.string.group)
+        ChoiceState.Initial ->
+            Column(
+                Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                viewModel.navigateToSearch(navController, it)
-            }
-            ScheduleOption(name = stringResource(R.string.teacher)) {
-                viewModel.navigateToSearch(
-                    navController,
-                    it
+                Image(
+                    painter = painterResource(R.drawable.cat_heart_above),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(240.dp),
+                    contentScale = ContentScale.FillBounds
                 )
+
+                Text(
+                    text = stringResource(R.string.which_your_schedule_want_to_see),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp, 28.dp, 16.dp, 32.dp),
+                    style = MaterialTheme.typography.h5,
+                    textAlign = TextAlign.Center
+                )
+
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(vertical = 28.dp, horizontal = 16.dp)
+                ) {
+                    ScheduleOption(
+                        name = stringResource(R.string.group)
+                    ) {
+                        viewModel.navigateToSearch(navController, it)
+                    }
+                    ScheduleOption(name = stringResource(R.string.teacher)) {
+                        viewModel.navigateToSearch(
+                            navController,
+                            it
+                        )
+                    }
+                }
             }
-        }
     }
 }

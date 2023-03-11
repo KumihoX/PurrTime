@@ -83,17 +83,6 @@ fun Navigation(navController: NavHostController) {
         composable(
             route = Screen.LessonDetailScreen.route,
             arguments = listOf(
-                navArgument(SCHEDULE_TYPE) {
-                    type = NavType.StringType
-                },
-                navArgument(DATA_ID) {
-                    type = NavType.StringType
-                },
-                navArgument(DATA) {
-                    nullable = true
-                    type = NavType.StringType
-                    defaultValue = null
-                },
                 navArgument(LESSON_NAME) {
                     type = NavType.StringType
                 },

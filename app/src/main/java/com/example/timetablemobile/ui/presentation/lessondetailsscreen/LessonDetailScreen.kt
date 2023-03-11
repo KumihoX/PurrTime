@@ -48,7 +48,10 @@ fun LessonDetailScreen(
             CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                 IconButton(
                     onClick = {
-                        navController.popBackStack(route = Screen.MainScreen.route, inclusive = false)
+                        navController.popBackStack(
+                            route = Screen.MainScreen.route,
+                            inclusive = false
+                        )
                     },
                     modifier = Modifier
                         .padding(bottom = 16.dp)

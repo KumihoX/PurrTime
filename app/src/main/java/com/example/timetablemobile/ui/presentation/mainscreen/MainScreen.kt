@@ -81,10 +81,6 @@ fun MainScreen(
                             items(currLessonList) { lesson ->
                                 LessonCard(
                                     navController = navController,
-                                    scheduleType = scheduleType.getString(SCHEDULE_TYPE)
-                                        .toString(),
-                                    scheduleDataId = scheduleType.getString(DATA_ID).toString(),
-                                    scheduleData = scheduleType.getString(DATA).toString(),
                                     name = lesson.subject,
                                     type = lesson.type,
                                     time = lesson.time,

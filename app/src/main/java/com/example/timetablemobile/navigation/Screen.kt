@@ -50,15 +50,11 @@ sealed class Screen(val route: String) {
     }
 
     object LessonDetailScreen : Screen(
-        "lesson_detail_screen/{$SCHEDULE_TYPE}/{$DATA_ID}?{$DATA}/" +
-                "{$LESSON_NAME}/{$LESSON_TYPE}/{$LESSON_TIME}/" +
+        "lesson_detail_screen/{$LESSON_NAME}/{$LESSON_TYPE}/{$LESSON_TIME}/" +
                 "{$LESSON_TEACHER}/{$LESSON_TEACHER_ID}/{$LESSON_CLASSROOM}/" +
                 "{$LESSON_CLASSROOM_ID}/{$LESSON_GROUPS}"
     ) {
         fun passLessonInfo(
-            typeSchedule: String,
-            dataIdSchedule: String,
-            dataSchedule: String? = null,
             name: String,
             type: LessonTypeEnum,
             time: String,
@@ -67,7 +63,7 @@ sealed class Screen(val route: String) {
             classroom: String,
             classroomId: String,
             groups: String
-        ): String = "lesson_detail_screen/$typeSchedule/$dataIdSchedule?$dataSchedule" +
-                "/$name/$type/$time/$teacher/$teacherId/$classroom/$classroomId/$groups"
+        ): String = "lesson_detail_screen/$name/$type/$time/$teacher/$teacherId/" +
+                "$classroom/$classroomId/$groups"
     }
 }
