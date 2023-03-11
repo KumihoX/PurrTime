@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -13,10 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -354,31 +358,33 @@ fun WeekDays(
                     color = Gray,
                     textAlign = TextAlign.Center
                 )
-                Text(text = getDayNumber(day),
-                    style = MaterialTheme.typography.body1,
-                    color = if (selectedDate == day) White else Black,
 
-                    modifier = (if (selectedDate == day) Modifier
-                        .fillMaxWidth()
+                val color = if (selectedDate == day) MainGreen else Color.Transparent
+                Box(
+                    Modifier
                         .padding(top = 9.dp)
-                        .drawBehind {
-                            drawRoundRect(
-                                color = MainGreen,
-                                size = Size(width = 30.dp.toPx(), height = 35.dp.toPx()),
-                                cornerRadius = CornerRadius(x = 5.dp.toPx(), 5.dp.toPx()),
-                                topLeft = Offset(x = 6.dp.toPx(), y = -(6).dp.toPx())
-                            )
-                        }
-                    else Modifier
-                        .fillMaxWidth()
-                        .padding(top = 9.dp)).clickable(
-                        interactionSource = interactionSource,
-                        indication = null
-                    ) {
-                        onSelectDay(day)
-                    },
-                    textAlign = TextAlign.Center
-                )
+                        .wrapContentSize()
+                        .clip(RoundedCornerShape(5.dp))
+                        .background(color)
+                ) {
+                    Text(
+                        text = getDayNumber(day),
+                        style = MaterialTheme.typography.body1,
+                        color = if (selectedDate == day) White else Black,
+
+                        modifier = Modifier
+                            .padding(6.dp, 8.dp)
+                            .wrapContentHeight()
+                            .width(18.dp)
+                            .clickable(
+                                interactionSource = interactionSource,
+                                indication = null
+                        ) {
+                            onSelectDay(day)
+                        },
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
         CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
