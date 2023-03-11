@@ -60,12 +60,7 @@ fun LessonCard(
                         classroomId = classroomId,
                         groups = groups
                     )
-                ) {
-                    popUpTo(Screen.MainScreen.route) {
-                        inclusive = true
-                        saveState = true
-                    }
-                }
+                )
             },
             modifier = Modifier
                 .wrapContentSize()
