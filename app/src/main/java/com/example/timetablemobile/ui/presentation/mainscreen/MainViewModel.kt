@@ -67,7 +67,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun updateCurrentLessonList() {
-        _currLessonList.value = when(_selectedDayOfWeek.value) {
+        _currLessonList.value = when (_selectedDayOfWeek.value) {
             1 -> _weeklySchedule.value.sunday
             2 -> _weeklySchedule.value.monday
             3 -> _weeklySchedule.value.tuesday
@@ -80,20 +80,15 @@ class MainViewModel @Inject constructor(
     }
 
     private fun teacherHeader(info: String) {
-        _header.value = "$info"
+        _header.value = info
     }
 
     private fun cabinetHeader(info: String) {
-        _header.value = "$info"
+        _header.value = info
     }
 
     private fun studentHeader(info: String) {
         _header.value = "Группа $info"
-    }
-
-    private fun getTeacherId(info: String): String {
-        val teacherId = info.split("=")[1]
-        return teacherId.substring(0, teacherId.length - 6)
     }
 
     private fun getTeacherSchedule(
@@ -194,7 +189,7 @@ class MainViewModel @Inject constructor(
         startDate: String,
         endDate: String
     ) {
-       when (type) {
+        when (type) {
             "TEACHER" -> getTeacherSchedule(startDate, endDate)
             "CABINET" -> getCabinetSchedule(startDate, endDate)
             "STUDENT" -> getStudentSchedule(startDate, endDate)

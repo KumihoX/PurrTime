@@ -48,11 +48,13 @@ fun LessonDetailScreen(
             CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                 IconButton(
                     onClick = {
-                        navController.navigate(Screen.MainScreen.passScheduleInfo(
-                            arguments.getString(SCHEDULE_TYPE).toString(),
-                            arguments.getString(DATA_ID).toString(),
-                            arguments.getString(DATA).toString(),
-                        )) {
+                        navController.navigate(
+                            Screen.MainScreen.passScheduleInfo(
+                                arguments.getString(SCHEDULE_TYPE).toString(),
+                                arguments.getString(DATA_ID).toString(),
+                                arguments.getString(DATA).toString(),
+                            )
+                        ) {
                             popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                         }
                     },
@@ -152,11 +154,13 @@ fun TeacherListElement(
         modifier = Modifier
             .padding(bottom = 20.dp)
             .clickable {
-                navController.navigate(Screen.MainScreen.passScheduleInfo(
-                    type = "TEACHER",
-                    dataId = id,
-                    data = textValue
-                )) {
+                navController.navigate(
+                    Screen.MainScreen.passScheduleInfo(
+                        type = "TEACHER",
+                        dataId = id,
+                        data = textValue
+                    )
+                ) {
                     popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                 }
             }
@@ -207,11 +211,13 @@ fun CabinetListElement(
         modifier = Modifier
             .padding(bottom = 20.dp)
             .clickable {
-                navController.navigate(Screen.MainScreen.passScheduleInfo(
-                    type = "CABINET",
-                    dataId = id,
-                    data = textValue
-                ))
+                navController.navigate(
+                    Screen.MainScreen.passScheduleInfo(
+                        type = "CABINET",
+                        dataId = id,
+                        data = textValue
+                    )
+                )
                 {
                     popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                 }

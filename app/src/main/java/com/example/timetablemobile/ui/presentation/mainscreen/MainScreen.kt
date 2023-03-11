@@ -77,7 +77,7 @@ fun MainScreen(
                     if (currLessonList.isEmpty()) {
                         EmptyMainScreen()
                     } else {
-                        LazyColumn() {
+                        LazyColumn {
                             items(currLessonList) { lesson ->
                                 LessonCard(
                                     navController = navController,
@@ -104,7 +104,7 @@ fun MainScreen(
                 }
 
                 MainState.Loading -> {
-                    Box (modifier = Modifier.fillMaxSize())
+                    Box(modifier = Modifier.fillMaxSize())
                     {
                         CircularProgressIndicator(
                             modifier = Modifier.align(Center),

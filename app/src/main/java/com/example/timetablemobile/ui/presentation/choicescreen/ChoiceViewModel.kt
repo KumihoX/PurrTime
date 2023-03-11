@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ChoiceViewModel @Inject constructor(): ViewModel() {
+class ChoiceViewModel @Inject constructor() : ViewModel() {
 
     private var studentData = ""
     private var teacherId = ""
@@ -32,14 +32,14 @@ class ChoiceViewModel @Inject constructor(): ViewModel() {
         navController: NavController,
         userChoice: String
     ) {
-        when(userChoice) {
+        when (userChoice) {
             "Группы" -> {
                 navController.navigate(
                     Screen.MainScreen.passScheduleInfo(
                         type = "STUDENT",
                         dataId = studentData
                     )
-                ){
+                ) {
                     popUpTo(Screen.ChoiceScreen.route) { inclusive = true }
                 }
             }
@@ -50,7 +50,7 @@ class ChoiceViewModel @Inject constructor(): ViewModel() {
                         dataId = teacherId,
                         data = teacherName
                     )
-                ){
+                ) {
                     popUpTo(Screen.ChoiceScreen.route) { inclusive = true }
                 }
             }

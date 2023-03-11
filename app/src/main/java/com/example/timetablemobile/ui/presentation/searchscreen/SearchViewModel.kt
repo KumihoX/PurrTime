@@ -49,14 +49,14 @@ class SearchViewModel @Inject constructor(
         _searchFieldText.value = newValue
 
         if (newValue.isNotEmpty())
-            when(choice) {
+            when (choice) {
                 "Аудитории" -> getCabinetSearchResult(newValue, _cabinetRequestResult.value)
                 "Группы" -> getGroupSearchResult(newValue, _groupRequestResult.value)
                 "Преподаватели" -> getTeacherSearchResult(newValue, _teacherRequestResult.value)
                 else -> _state.value = SearchState.Error("Что-то пошло не так")
             }
         else
-            when(choice) {
+            when (choice) {
                 "Аудитории" -> _cabinetSearchResult.value = _cabinetRequestResult.value
                 "Группы" -> _groupSearchResult.value = _groupRequestResult.value
                 "Преподаватели" -> _teacherSearchResult.value = _teacherRequestResult.value
@@ -109,7 +109,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun getList(choice: String) {
-        when(choice) {
+        when (choice) {
             "Аудитории" -> getCabinets()
             "Группы" -> getGroups()
             "Преподаватели" -> getTeachers()
@@ -178,30 +178,36 @@ class SearchViewModel @Inject constructor(
     }
 
     fun navigateToCabinetSchedule(navController: NavController, id: Int, name: String) {
-        navController.navigate(Screen.MainScreen.passScheduleInfo(
-            type = "CABINET",
-            dataId = id.toString(),
-            data = name
-        )) {
+        navController.navigate(
+            Screen.MainScreen.passScheduleInfo(
+                type = "CABINET",
+                dataId = id.toString(),
+                data = name
+            )
+        ) {
             popUpTo(Screen.SearchScreen.route) { inclusive = true }
         }
     }
 
     fun navigateToTeacherSchedule(navController: NavController, id: String, name: String) {
-        navController.navigate(Screen.MainScreen.passScheduleInfo(
-            type = "TEACHER",
-            dataId = id,
-            data = name
-        )) {
+        navController.navigate(
+            Screen.MainScreen.passScheduleInfo(
+                type = "TEACHER",
+                dataId = id,
+                data = name
+            )
+        ) {
             popUpTo(Screen.SearchScreen.route) { inclusive = true }
         }
     }
 
     fun navigateToGroupSchedule(navController: NavController, id: Int) {
-        navController.navigate(Screen.MainScreen.passScheduleInfo(
-            type = "STUDENT",
-            dataId = id.toString()
-        )) {
+        navController.navigate(
+            Screen.MainScreen.passScheduleInfo(
+                type = "STUDENT",
+                dataId = id.toString()
+            )
+        ) {
             popUpTo(Screen.SearchScreen.route) { inclusive = true }
         }
     }

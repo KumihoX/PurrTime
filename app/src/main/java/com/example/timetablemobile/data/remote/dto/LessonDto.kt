@@ -13,7 +13,7 @@ data class LessonDto(
 )
 
 fun LessonDto.toLesson(): Lesson {
-    val lessonType = when(lesson.type) {
+    val lessonType = when (lesson.type) {
         "LECTURE" -> LessonTypeEnum.Lection
         "SEMINAR" -> LessonTypeEnum.Seminar
         "PRACTICE" -> LessonTypeEnum.Practice

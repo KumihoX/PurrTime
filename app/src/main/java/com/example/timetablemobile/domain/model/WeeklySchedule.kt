@@ -13,7 +13,6 @@ data class WeeklySchedule(
 fun WeeklySchedule.sortTimeDescending(): WeeklySchedule {
 
 
-
     return WeeklySchedule(
 
     )

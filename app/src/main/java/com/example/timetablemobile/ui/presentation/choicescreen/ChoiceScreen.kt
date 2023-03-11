@@ -16,9 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
-import com.example.timetablemobile.navigation.STUDENT_DATA
-import com.example.timetablemobile.navigation.TEACHER_ID
-import com.example.timetablemobile.navigation.TEACHER_NAME
 import com.example.timetablemobile.ui.presentation.common.ScheduleOption
 
 @Composable

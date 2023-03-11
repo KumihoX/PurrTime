@@ -1,6 +1,5 @@
 package com.example.timetablemobile.navigation
 
-import com.example.timetablemobile.data.remote.dto.TeacherDto
 import com.example.timetablemobile.domain.model.LessonTypeEnum
 
 const val LESSON_NAME = "lesson_name"

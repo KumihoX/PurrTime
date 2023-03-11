@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -44,20 +43,18 @@ class SignInViewModel @Inject constructor(
 
 
     private fun checkingFields() {
-        _fieldsState.value = !(login.value.isNullOrEmpty()
-                || password.value.isNullOrEmpty())
+        _fieldsState.value = !(login.value.isEmpty()
+                || password.value.isEmpty())
     }
 
     private fun defineUser(userInfo: UserInfoDto) {
         if (userInfo.teacherId != null && userInfo.group != null) {
             twoRoles = true
-        }
-        else if (userInfo.teacherId != null) {
+        } else if (userInfo.teacherId != null) {
             scheduleType = "TEACHER"
             dataId = userInfo.teacherId.id
             data = userInfo.teacherId.name
-        }
-        else if (userInfo.group != null) {
+        } else if (userInfo.group != null) {
             scheduleType = "STUDENT"
             dataId = userInfo.group.toString()
         }
@@ -96,14 +93,13 @@ class SignInViewModel @Inject constructor(
                     ) {
                         popUpTo(Screen.SignInScreen.route) { inclusive = true }
                     }
-                }
-                else {
+                } else {
                     navController.navigate(
-                            Screen.ChoiceScreen.passScheduleInfo(
-                                studentData = userData.group!!.toString(),
-                                teacherId = userData.teacherId!!.id,
-                                teacherName = userData.teacherId.name
-                            )
+                        Screen.ChoiceScreen.passScheduleInfo(
+                            studentData = userData.group!!.toString(),
+                            teacherId = userData.teacherId!!.id,
+                            teacherName = userData.teacherId.name
+                        )
                     ) {
                         popUpTo(Screen.SignInScreen.route) { inclusive = true }
                     }

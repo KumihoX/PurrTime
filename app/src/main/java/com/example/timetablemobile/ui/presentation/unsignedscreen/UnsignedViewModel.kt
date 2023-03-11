@@ -1,22 +1,20 @@
 package com.example.timetablemobile.ui.presentation.unsignedscreen
 
-import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.timetablemobile.R
 import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UnsignedViewModel @Inject constructor(): ViewModel() {
+class UnsignedViewModel @Inject constructor() : ViewModel() {
 
     fun navigateToSearch(
         navController: NavController,
         userChoice: String
     ) {
         //надо что-то придумать со стрингами...
-        when(userChoice) {
+        when (userChoice) {
             "Аудитории" -> {
                 navController.navigate(
                     Screen.SearchScreen.passUserChoice(

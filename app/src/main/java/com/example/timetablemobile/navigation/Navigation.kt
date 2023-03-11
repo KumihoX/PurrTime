@@ -42,7 +42,8 @@ fun Navigation(navController: NavHostController) {
                 navArgument(TEACHER_NAME) {
                     type = NavType.StringType
                 },
-            )) {
+            )
+        ) {
             it.arguments?.let { it1 -> ChoiceScreen(it1, navController) }
         }
 

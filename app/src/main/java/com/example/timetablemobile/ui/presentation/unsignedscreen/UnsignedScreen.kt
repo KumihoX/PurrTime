@@ -50,9 +50,24 @@ fun UnsignedScreen(
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp)
         ) {
-            ScheduleOption(name = stringResource(R.string.group)) { viewModel.navigateToSearch(navController, it) }
-            ScheduleOption(name = stringResource(R.string.teacher)) { viewModel.navigateToSearch(navController, it) }
-            ScheduleOption(name = stringResource(R.string.cabinet)) { viewModel.navigateToSearch(navController, it) }
+            ScheduleOption(name = stringResource(R.string.group)) {
+                viewModel.navigateToSearch(
+                    navController,
+                    it
+                )
+            }
+            ScheduleOption(name = stringResource(R.string.teacher)) {
+                viewModel.navigateToSearch(
+                    navController,
+                    it
+                )
+            }
+            ScheduleOption(name = stringResource(R.string.cabinet)) {
+                viewModel.navigateToSearch(
+                    navController,
+                    it
+                )
+            }
         }
     }
 }

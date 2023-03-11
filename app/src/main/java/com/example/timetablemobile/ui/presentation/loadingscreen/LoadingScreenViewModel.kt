@@ -12,8 +12,6 @@ import com.example.timetablemobile.domain.usecase.userInfo.InfoUseCase
 import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,13 +33,11 @@ class LoadingScreenViewModel @Inject constructor(
     private fun defineUser(userInfo: UserInfoDto) {
         if (userInfo.teacherId != null && userInfo.group != null) {
             twoRoles = true
-        }
-        else if (userInfo.teacherId != null) {
+        } else if (userInfo.teacherId != null) {
             scheduleType = "TEACHER"
             dataId = userInfo.teacherId.id
             data = userInfo.teacherId.name
-        }
-        else if (userInfo.group != null) {
+        } else if (userInfo.group != null) {
             scheduleType = "STUDENT"
             dataId = userInfo.group.toString()
         }
@@ -65,8 +61,7 @@ class LoadingScreenViewModel @Inject constructor(
                     ) {
                         popUpTo(Screen.LoadingScreen.route) { inclusive = true }
                     }
-                }
-                else {
+                } else {
                     navController.navigate(
                         Screen.ChoiceScreen.passScheduleInfo(
                             studentData = userData.group!!.toString(),
@@ -80,7 +75,7 @@ class LoadingScreenViewModel @Inject constructor(
                 caughtException = true
             } catch (rethrow: CancellationException) {
                 throw rethrow
-            } catch (ex: Exception ) {
+            } catch (ex: Exception) {
                 when (ex.message) {
                     "HTTP 401 Unauthorized" -> {
                         caughtException = true
