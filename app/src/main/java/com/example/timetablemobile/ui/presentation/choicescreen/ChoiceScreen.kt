@@ -17,7 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.navigation.STUDENT_DATA
-import com.example.timetablemobile.navigation.TEACHER_DATA
+import com.example.timetablemobile.navigation.TEACHER_ID
+import com.example.timetablemobile.navigation.TEACHER_NAME
 import com.example.timetablemobile.ui.presentation.common.ScheduleOption
 
 @Composable
@@ -26,10 +27,8 @@ fun ChoiceScreen(
     navController: NavController,
     viewModel: ChoiceViewModel = hiltViewModel()
 ) {
-    val studentInfo = info.getString(STUDENT_DATA).toString()
-    val teacherInfo = info.getString(TEACHER_DATA).toString()
 
-    viewModel.handOverData(studentInfo, teacherInfo)
+    viewModel.handOverData(info)
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally

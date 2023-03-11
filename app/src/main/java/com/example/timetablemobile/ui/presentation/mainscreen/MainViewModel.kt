@@ -36,6 +36,7 @@ class MainViewModel @Inject constructor(
 
     private var type = ""
     private var id = ""
+    private var info = ""
 
     private var weekDeviation = 0
 
@@ -79,12 +80,11 @@ class MainViewModel @Inject constructor(
     }
 
     private fun teacherHeader(info: String) {
-        val teacherName = info.split("=").last()
-        _header.value = teacherName.substring(0, teacherName.length - 2)
+        _header.value = "$info"
     }
 
     private fun cabinetHeader(info: String) {
-        _header.value = "Учебная аудитория $info"
+        _header.value = "$info"
     }
 
     private fun studentHeader(info: String) {
@@ -203,7 +203,8 @@ class MainViewModel @Inject constructor(
 
 
     fun getScreenInfo(
-        typeData: String = id,
+        data: String = info,
+        dataId: String = id,
         scheduleType: String = type
     ) {
         val days = getStartAndEndData()
@@ -212,24 +213,20 @@ class MainViewModel @Inject constructor(
 
         when (scheduleType) {
             "TEACHER" -> {
-                teacherHeader(typeData)
-                val teacherId = getTeacherId(typeData)
-                type = scheduleType
-                id = teacherId
+                teacherHeader(data)
+                info = data
             }
             "CABINET" -> {
-                cabinetHeader(typeData)
-                type = scheduleType
-                id = typeData
+                cabinetHeader(data)
+                info = data
             }
             "STUDENT" -> {
-                studentHeader(typeData)
-                type = scheduleType
-                id = typeData
+                studentHeader(dataId)
             }
         }
+        type = scheduleType
+        id = dataId
         getSchedule(startDate, endDate)
-        //_state.value = MainState.Initial
     }
 
     fun logout(

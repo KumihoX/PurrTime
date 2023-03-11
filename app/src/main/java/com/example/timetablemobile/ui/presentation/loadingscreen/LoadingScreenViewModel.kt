@@ -26,7 +26,8 @@ class LoadingScreenViewModel @Inject constructor(
     var state: State<LoadingState> = _state
 
     private var scheduleType = ""
-    private var typeData = ""
+    private var dataId = ""
+    private var data = ""
 
     private var twoRoles = false
     private var caughtException = false
@@ -37,11 +38,12 @@ class LoadingScreenViewModel @Inject constructor(
         }
         else if (userInfo.teacherId != null) {
             scheduleType = "TEACHER"
-            typeData = userInfo.teacherId.id
+            dataId = userInfo.teacherId.id
+            data = userInfo.teacherId.name
         }
         else if (userInfo.group != null) {
             scheduleType = "STUDENT"
-            typeData = userInfo.group.toString()
+            dataId = userInfo.group.toString()
         }
     }
 
@@ -57,15 +59,17 @@ class LoadingScreenViewModel @Inject constructor(
                     navController.navigate(
                         Screen.MainScreen.passScheduleInfo(
                             type = scheduleType,
-                            dataId = typeData
+                            dataId = dataId,
+                            data = data
                         )
                     )
                 }
                 else {
                     navController.navigate(
                         Screen.ChoiceScreen.passScheduleInfo(
-                            studentData = userData.group.toString(),
-                            teacherData = userData.teacherId.toString()
+                            studentData = userData.group!!.toString(),
+                            teacherId = userData.teacherId!!.id,
+                            teacherName = userData.teacherId.name
                         )
                     )
                 }

@@ -36,7 +36,10 @@ fun Navigation(navController: NavHostController) {
                 navArgument(STUDENT_DATA) {
                     type = NavType.StringType
                 },
-                navArgument(TEACHER_DATA) {
+                navArgument(TEACHER_ID) {
+                    type = NavType.StringType
+                },
+                navArgument(TEACHER_NAME) {
                     type = NavType.StringType
                 },
             )) {
@@ -52,11 +55,11 @@ fun Navigation(navController: NavHostController) {
                 navArgument(DATA_ID) {
                     type = NavType.StringType
                 },
-                /*navArgument(DATA) {
+                navArgument(DATA) {
                     nullable = true
                     type = NavType.StringType
                     defaultValue = null
-                },*/
+                }
             )
         ) {
             it.arguments?.let { it1 -> MainScreen(it1, navController) }
@@ -85,11 +88,11 @@ fun Navigation(navController: NavHostController) {
                 navArgument(DATA_ID) {
                     type = NavType.StringType
                 },
-                /*navArgument(DATA) {
+                navArgument(DATA) {
                     nullable = true
                     type = NavType.StringType
                     defaultValue = null
-                },*/
+                },
                 navArgument(LESSON_NAME) {
                     type = NavType.StringType
                 },

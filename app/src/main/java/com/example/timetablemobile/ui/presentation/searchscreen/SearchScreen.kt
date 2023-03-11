@@ -121,7 +121,7 @@ fun SearchScreen(
 
                 is SearchState.Content -> {
 
-                    when(header) {
+                    when (header) {
                         "Аудитории" -> {
                             val searchResult: List<Cabinet> by remember { viewModel.cabinetSearchResult }
                             if (searchResult.isEmpty()) {
@@ -135,7 +135,13 @@ fun SearchScreen(
                                     items(searchResult) { result ->
                                         SearchListItem(
                                             itemName = result.name
-                                        ) { viewModel.navigateToCabinetSchedule(navController, result.id) }
+                                        ) {
+                                            viewModel.navigateToCabinetSchedule(
+                                                navController,
+                                                result.id,
+                                                result.name
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -153,7 +159,12 @@ fun SearchScreen(
                                     items(searchResult) { result ->
                                         SearchListItem(
                                             itemName = result.toString()
-                                        ) { viewModel.navigateToGroupSchedule(navController, result) }
+                                        ) {
+                                            viewModel.navigateToGroupSchedule(
+                                                navController,
+                                                result
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -171,7 +182,13 @@ fun SearchScreen(
                                     items(searchResult) { result ->
                                         SearchListItem(
                                             itemName = result.name
-                                        ) { viewModel.navigateToTeacherSchedule(navController, result.id) }
+                                        ) {
+                                            viewModel.navigateToTeacherSchedule(
+                                                navController,
+                                                result.id,
+                                                result.name
+                                            )
+                                        }
                                     }
                                 }
                             }

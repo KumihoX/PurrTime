@@ -50,7 +50,8 @@ fun LessonDetailScreen(
                     onClick = {
                         navController.navigate(Screen.MainScreen.passScheduleInfo(
                             arguments.getString(SCHEDULE_TYPE).toString(),
-                            arguments.getString(DATA_ID).toString()
+                            arguments.getString(DATA_ID).toString(),
+                            arguments.getString(DATA).toString(),
                         )) {
                             popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                         }
@@ -112,10 +113,18 @@ fun LessonDetailScreen(
             )
 
             EnabledIconListElement(
+                navController = navController,
+                scheduleType = arguments.getString(SCHEDULE_TYPE).toString(),
+                dataId = arguments.getString(DATA_ID).toString(),
+                data = arguments.getString(DATA).toString(),
                 textValue = arguments.getString(LESSON_TEACHER).toString(),
                 icon = R.drawable.badge
             )
             EnabledIconListElement(
+                navController = navController,
+                scheduleType = arguments.getString(SCHEDULE_TYPE).toString(),
+                dataId = arguments.getString(DATA_ID).toString(),
+                data = arguments.getString(DATA).toString(),
                 textValue = arguments.getString(LESSON_CLASSROOM).toString(),
                 icon = R.drawable.meeting_room
             )
@@ -135,13 +144,29 @@ fun LessonDetailScreen(
 }
 
 @Composable
-fun EnabledIconListElement(textValue: String, icon: Int) {
+fun EnabledIconListElement(
+    navController: NavController,
+    scheduleType: String,
+    dataId: String,
+    data: String,
+    textValue: String,
+    icon: Int
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(bottom = 20.dp)
-            .clickable { }
+            .clickable {
+                when (scheduleType) {
+                    "TEACHER" -> {}
+                    "CABINET" -> navController.navigate(Screen.MainScreen.passScheduleInfo(
+                    type = scheduleType,
+                    dataId = dataId,
+                    data = data
+                ))
+                }
+            }
             .fillMaxWidth()
     ) {
         Row(

@@ -9,7 +9,7 @@ data class LessonListDto(
 
 fun LessonListDto.toWeeklySchedule(): WeeklySchedule {
 
-    val sortedLesson = lessons.
+    //val sortedLesson = lessons.
     val lessons = lessons.map { it.toLesson() }
     val weeklySchedule = WeeklySchedule()
 

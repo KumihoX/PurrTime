@@ -13,6 +13,7 @@ import com.example.timetablemobile.domain.model.Teacher
 import com.example.timetablemobile.domain.usecase.list.GetCabinetsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetGroupsListUseCase
 import com.example.timetablemobile.domain.usecase.list.GetTeachersListUseCase
+import com.example.timetablemobile.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -176,15 +177,26 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun navigateToCabinetSchedule(navController: NavController, id: Int) {
-        //navController.navigate()
+    fun navigateToCabinetSchedule(navController: NavController, id: Int, name: String) {
+        navController.navigate(Screen.MainScreen.passScheduleInfo(
+            type = "CABINET",
+            dataId = id.toString(),
+            data = name
+        ))
     }
 
-    fun navigateToTeacherSchedule(navController: NavController, id: String) {
-        //navController.navigate()
+    fun navigateToTeacherSchedule(navController: NavController, id: String, name: String) {
+        navController.navigate(Screen.MainScreen.passScheduleInfo(
+            type = "TEACHER",
+            dataId = id,
+            data = name
+        ))
     }
 
     fun navigateToGroupSchedule(navController: NavController, id: Int) {
-        //navController.navigate()
+        navController.navigate(Screen.MainScreen.passScheduleInfo(
+            type = "STUDENT",
+            dataId = id.toString()
+        ))
     }
 }

@@ -1,8 +1,12 @@
 package com.example.timetablemobile.ui.presentation.choicescreen
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.timetablemobile.navigation.STUDENT_DATA
 import com.example.timetablemobile.navigation.Screen
+import com.example.timetablemobile.navigation.TEACHER_ID
+import com.example.timetablemobile.navigation.TEACHER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -10,14 +14,18 @@ import javax.inject.Inject
 class ChoiceViewModel @Inject constructor(): ViewModel() {
 
     private var studentData = ""
-    private var teacherData = ""
+    private var teacherId = ""
+    private var teacherName = ""
 
     fun handOverData(
-        studentInfo: String,
-        teacherInfo: String
+        info: Bundle
     ) {
+        val studentInfo = info.getString(STUDENT_DATA).toString()
+        val teacherInfoId = info.getString(TEACHER_ID).toString()
+        val teacherInfoName = info.getString(TEACHER_NAME).toString()
         studentData = studentInfo
-        teacherData = teacherInfo
+        teacherId = teacherInfoId
+        teacherName = teacherInfoName
     }
 
     fun navigateToSearch(
@@ -37,7 +45,8 @@ class ChoiceViewModel @Inject constructor(): ViewModel() {
                 navController.navigate(
                     Screen.MainScreen.passScheduleInfo(
                         type = "TEACHER",
-                        dataId = teacherData
+                        dataId = teacherId,
+                        data = teacherName
                     )
                 )
             }

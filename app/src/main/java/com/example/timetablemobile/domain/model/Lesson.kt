@@ -5,7 +5,7 @@ import java.time.LocalDate
 data class Lesson(
     val type: LessonTypeEnum,
     val subject: String,
-    val cabinetName: String,
+    val cabinet: Cabinet,
     val teacher: String,
     val time: String,
     val groups: String,

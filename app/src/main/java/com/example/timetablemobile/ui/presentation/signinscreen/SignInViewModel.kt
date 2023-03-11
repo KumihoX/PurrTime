@@ -37,7 +37,8 @@ class SignInViewModel @Inject constructor(
     var fieldsState: State<Boolean> = _fieldsState
 
     private var scheduleType = ""
-    private var typeData = ""
+    private var dataId = ""
+    private var data = ""
 
     private var twoRoles = false
 
@@ -53,11 +54,12 @@ class SignInViewModel @Inject constructor(
         }
         else if (userInfo.teacherId != null) {
             scheduleType = "TEACHER"
-            typeData = userInfo.teacherId.id
+            dataId = userInfo.teacherId.id
+            data = userInfo.teacherId.name
         }
         else if (userInfo.group != null) {
             scheduleType = "STUDENT"
-            typeData = userInfo.group.toString()
+            dataId = userInfo.group.toString()
         }
     }
 
@@ -88,7 +90,8 @@ class SignInViewModel @Inject constructor(
                     navController.navigate(
                         Screen.MainScreen.passScheduleInfo(
                             type = scheduleType,
-                            dataId = typeData
+                            dataId = dataId,
+                            data = data
                         )
                     ) {
                         popUpTo(Screen.SignInScreen.route) { inclusive = true }
@@ -96,10 +99,11 @@ class SignInViewModel @Inject constructor(
                 }
                 else {
                     navController.navigate(
-                        Screen.ChoiceScreen.passScheduleInfo(
-                            studentData = userData.group.toString(),
-                            teacherData = userData.teacherId.toString()
-                        )
+                            Screen.ChoiceScreen.passScheduleInfo(
+                                studentData = userData.group!!.toString(),
+                                teacherId = userData.teacherId!!.id,
+                                teacherName = userData.teacherId.name
+                            )
                     )
                 }
             } catch (rethrow: CancellationException) {

@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
 import com.example.timetablemobile.domain.model.Lesson
+import com.example.timetablemobile.navigation.DATA
 import com.example.timetablemobile.navigation.DATA_ID
 import com.example.timetablemobile.navigation.SCHEDULE_TYPE
 import com.example.timetablemobile.ui.presentation.common.ErrorAlertDialog
@@ -53,7 +54,8 @@ fun MainScreen(
     {
         if (state == MainState.Initial) {
             viewModel.getScreenInfo(
-                typeData = scheduleType.getString(DATA_ID).toString(),
+                data = scheduleType.getString(DATA).toString(),
+                dataId = scheduleType.getString(DATA_ID).toString(),
                 scheduleType = scheduleType.getString(SCHEDULE_TYPE).toString()
             )
         }
@@ -80,12 +82,13 @@ fun MainScreen(
                                     navController = navController,
                                     scheduleType = scheduleType.getString(SCHEDULE_TYPE)
                                         .toString(),
-                                    scheduleData = scheduleType.getString(DATA_ID).toString(),
+                                    scheduleDataId = scheduleType.getString(DATA_ID).toString(),
+                                    scheduleData = scheduleType.getString(DATA).toString(),
                                     name = lesson.subject,
                                     type = lesson.type,
                                     time = lesson.time,
                                     teacher = lesson.teacher,
-                                    classroom = lesson.cabinetName,
+                                    classroom = lesson.cabinet.name,
                                     groups = lesson.groups
                                 )
                             }
