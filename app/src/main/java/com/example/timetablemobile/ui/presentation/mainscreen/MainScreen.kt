@@ -20,6 +20,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -260,13 +261,14 @@ fun Info(
     ) {
         Text(
             text = header,
-            style = MaterialTheme.typography.h5,
+            fontWeight = FontWeight.Normal,
+            style = MaterialTheme.typography.h6,
             color = Black,
             textAlign = TextAlign.Center
         )
         Text(
             text = "$monthName $yearName",
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.body2,
             color = Gray,
             textAlign = TextAlign.Center
         )
