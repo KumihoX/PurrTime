@@ -198,7 +198,7 @@ fun TopBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(top = 16.dp),
+                    .padding(top = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Exit(viewModel, navController)
@@ -328,7 +328,8 @@ fun WeekDays(
     Row(
         modifier
             .fillMaxWidth()
-            .padding(0.dp, 10.dp, 0.dp, 16.dp),
+            .wrapContentHeight()
+            .padding(0.dp, 10.dp, 0.dp, 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
@@ -356,7 +357,7 @@ fun WeekDays(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = getDay3LettersName(day).replaceFirstChar { it.uppercase() },
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.caption,
                     color = Gray,
                     textAlign = TextAlign.Center
                 )
@@ -364,18 +365,18 @@ fun WeekDays(
                 val color = if (selectedDate == day) MainGreen else Color.Transparent
                 Box(
                     Modifier
-                        .padding(top = 9.dp)
+                        .padding(top = 2.dp)
                         .wrapContentSize()
                         .clip(RoundedCornerShape(5.dp))
                         .background(color)
                 ) {
                     Text(
                         text = getDayNumber(day),
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.body2,
                         color = if (selectedDate == day) White else Black,
 
                         modifier = Modifier
-                            .padding(6.dp, 8.dp)
+                            .padding(4.dp, 6.dp)
                             .wrapContentHeight()
                             .width(18.dp)
                             .clickable(
