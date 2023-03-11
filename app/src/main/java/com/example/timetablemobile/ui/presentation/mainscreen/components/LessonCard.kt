@@ -76,7 +76,7 @@ fun LessonCard(
                     Modifier
                         .width(12.dp)
                         .fillMaxHeight()
-                        .background(IndividualLessonColor)
+                        .background(type.color)
                         .clip(RoundedCornerShape(8.dp, 0.dp, 0.dp, 8.dp))
                 )
 

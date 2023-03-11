@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.timetablemobile.R
+import com.example.timetablemobile.domain.model.LessonTypeEnum
 import com.example.timetablemobile.navigation.*
 import com.example.timetablemobile.ui.theme.Black
 import com.example.timetablemobile.ui.theme.IndividualLessonColor
@@ -36,6 +37,7 @@ fun LessonDetailScreen(
     arguments: Bundle,
     navController: NavController
 ) {
+    val lessonTypeString = arguments.getString(LESSON_TYPE).toString()
     Box(Modifier.fillMaxSize())
     {
         Column(
@@ -80,13 +82,13 @@ fun LessonDetailScreen(
                     .height(4.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
-                    .background(IndividualLessonColor)
+                    .background(LessonTypeEnum.valueOf(lessonTypeString).color)
             )
 
             Text(
                 text = arguments.getString(LESSON_TYPE).toString(),
                 style = MaterialTheme.typography.body2,
-                color = IndividualLessonColor,
+                color = LessonTypeEnum.valueOf(lessonTypeString).color,
                 modifier = Modifier
                     .align(Start)
                     .padding(top = 6.dp, bottom = 16.dp)
