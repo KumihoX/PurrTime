@@ -1,3 +1,31 @@
 <resources>
-    <string name="app_name">TimetableMobile</string>
+    <string name="which_schedule_want_to_see">Чьё расписание хотите просмотреть?</string>
+    <string name="which_your_schedule_want_to_see">Какое из ваших расписаний вы хотите просмотреть?</string>
+    <string name="group">Группы</string>
+    <string name="teacher">Преподавателя</string>
+    <string name="cabinet">Аудитории</string>
+    <string name="app_name">PurrTime</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="without_auth">Продолжить без входа</string>
+    <string name="invalidEmailMessage">Вы ввели неккоректный email</string>
+    <string name="lection">Лекция</string>
+    <string name="seminar">Семинар</string>
+    <string name="practice">Практическое занятие</string>
+    <string name="lab">Лабораторная</string>
+    <string name="individual_lesson">Индивидуальное занятие</string>
+    <string name="contact_work">Иная контактная работа (сопровождение работы в ЭУК)</string>
+    <string name="control_work">Контрольное мероприятие</string>
+    <string name="consultation">Консультация</string>
+    <string name="booking">Бронь</string>
+    <string name="what_do_the_colors_mean">Что означают цвета?</string>
+    <string name="nothing_here">Ой-ой! \n
+        По запросу ничего не найдено</string>
+    <string name="cabinet_number">Номер аудитории</string>
+    <string name="group_number">Номер группы</string>
+    <string name="teachers">Преподаватели</string>
+    <string name="teacher_name">Имя преподавателя</string>
+    <string name="no_lessons_this_day">В этот день занятий нет</string>
+    <string name="maybe_lessons_will_be_added_later">Возможно, они появятся позже...</string>
 </resources>

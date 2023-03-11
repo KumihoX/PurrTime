@@ -2,6 +2,14 @@
 <resources>
 
     <style name="Theme.TimetableMobile" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">@color/main_green</item>
     </style>
+
+    <style name="Theme.TimetableMobile.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_animation</item>
+        <item name="windowSplashScreenAnimationDuration">1500</item>
+        <item name="postSplashScreenTheme">@style/Theme.TimetableMobile</item>
+    </style>
+
 </resources>
