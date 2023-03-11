@@ -112,23 +112,19 @@ fun LessonDetailScreen(
                     .padding(bottom = 20.dp)
             )
 
-            EnabledIconListElement(
+            TeacherListElement(
                 navController = navController,
-                scheduleType = arguments.getString(SCHEDULE_TYPE).toString(),
-                dataId = arguments.getString(DATA_ID).toString(),
-                data = arguments.getString(DATA).toString(),
+                id = arguments.getString(LESSON_TEACHER_ID).toString(),
                 textValue = arguments.getString(LESSON_TEACHER).toString(),
                 icon = R.drawable.badge
             )
-            EnabledIconListElement(
+            CabinetListElement(
                 navController = navController,
-                scheduleType = arguments.getString(SCHEDULE_TYPE).toString(),
-                dataId = arguments.getString(DATA_ID).toString(),
-                data = arguments.getString(DATA).toString(),
+                id = arguments.getString(LESSON_CLASSROOM_ID).toString(),
                 textValue = arguments.getString(LESSON_CLASSROOM).toString(),
                 icon = R.drawable.meeting_room
             )
-            DisabledIconListElement(
+            GroupListElement(
                 textValue = arguments.getString(LESSON_GROUPS).toString(),
                 icon = R.drawable.group
             )
@@ -144,11 +140,9 @@ fun LessonDetailScreen(
 }
 
 @Composable
-fun EnabledIconListElement(
+fun TeacherListElement(
     navController: NavController,
-    scheduleType: String,
-    dataId: String,
-    data: String,
+    id: String,
     textValue: String,
     icon: Int
 ) {
@@ -158,13 +152,12 @@ fun EnabledIconListElement(
         modifier = Modifier
             .padding(bottom = 20.dp)
             .clickable {
-                when (scheduleType) {
-                    "TEACHER" -> {}
-                    "CABINET" -> navController.navigate(Screen.MainScreen.passScheduleInfo(
-                    type = scheduleType,
-                    dataId = dataId,
-                    data = data
-                ))
+                navController.navigate(Screen.MainScreen.passScheduleInfo(
+                    type = "TEACHER",
+                    dataId = id,
+                    data = textValue
+                )) {
+                    popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                 }
             }
             .fillMaxWidth()
@@ -202,7 +195,63 @@ fun EnabledIconListElement(
 }
 
 @Composable
-fun DisabledIconListElement(textValue: String, icon: Int) {
+fun CabinetListElement(
+    navController: NavController,
+    id: String,
+    textValue: String,
+    icon: Int
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(bottom = 20.dp)
+            .clickable {
+                navController.navigate(Screen.MainScreen.passScheduleInfo(
+                    type = "CABINET",
+                    dataId = id,
+                    data = textValue
+                ))
+                {
+                    popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
+                }
+            }
+            .fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        )
+        {
+            Icon(
+                imageVector = ImageVector.vectorResource(icon),
+                contentDescription = null,
+                Modifier
+                    .requiredSize(30.dp),
+                tint = Black
+            )
+
+            Text(
+                text = textValue,
+                modifier = Modifier
+                    .padding(start = 8.dp),
+                style = MaterialTheme.typography.body1,
+                color = Black,
+                textAlign = TextAlign.Start
+            )
+        }
+
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.arrow_forward_ios),
+            contentDescription = null,
+            Modifier
+                .requiredSize(20.dp),
+            tint = MainGreen
+        )
+    }
+}
+
+@Composable
+fun GroupListElement(textValue: String, icon: Int) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

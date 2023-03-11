@@ -7,7 +7,9 @@ const val LESSON_NAME = "lesson_name"
 const val LESSON_TYPE = "lesson_type"
 const val LESSON_TIME = "lesson_time"
 const val LESSON_TEACHER = "lesson_teacher"
+const val LESSON_TEACHER_ID = "lesson_teacher_id"
 const val LESSON_CLASSROOM = "lesson_classroom"
+const val LESSON_CLASSROOM_ID = "lesson_classroom_id"
 const val LESSON_GROUPS = "lesson_groups"
 
 const val SCHEDULE_TYPE = "schedule_type"
@@ -51,7 +53,8 @@ sealed class Screen(val route: String) {
     object LessonDetailScreen : Screen(
         "lesson_detail_screen/{$SCHEDULE_TYPE}/{$DATA_ID}?{$DATA}/" +
                 "{$LESSON_NAME}/{$LESSON_TYPE}/{$LESSON_TIME}/" +
-                "{$LESSON_TEACHER}/{$LESSON_CLASSROOM}/{$LESSON_GROUPS}"
+                "{$LESSON_TEACHER}/{$LESSON_TEACHER_ID}/{$LESSON_CLASSROOM}/" +
+                "{$LESSON_CLASSROOM_ID}/{$LESSON_GROUPS}"
     ) {
         fun passLessonInfo(
             typeSchedule: String,
@@ -61,9 +64,11 @@ sealed class Screen(val route: String) {
             type: LessonTypeEnum,
             time: String,
             teacher: String,
+            teacherId: String,
             classroom: String,
+            classroomId: String,
             groups: String
         ): String = "lesson_detail_screen/$typeSchedule/$dataIdSchedule?$dataSchedule" +
-                "/$name/$type/$time/$teacher/$classroom/$groups"
+                "/$name/$type/$time/$teacher/$teacherId/$classroom/$classroomId/$groups"
     }
 }

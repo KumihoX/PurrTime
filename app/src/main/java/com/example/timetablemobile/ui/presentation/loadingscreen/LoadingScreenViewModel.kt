@@ -62,7 +62,9 @@ class LoadingScreenViewModel @Inject constructor(
                             dataId = dataId,
                             data = data
                         )
-                    )
+                    ) {
+                        popUpTo(Screen.LoadingScreen.route) { inclusive = true }
+                    }
                 }
                 else {
                     navController.navigate(
@@ -71,7 +73,9 @@ class LoadingScreenViewModel @Inject constructor(
                             teacherId = userData.teacherId!!.id,
                             teacherName = userData.teacherId.name
                         )
-                    )
+                    ) {
+                        popUpTo(Screen.LoadingScreen.route) { inclusive = true }
+                    }
                 }
                 caughtException = true
             } catch (rethrow: CancellationException) {
@@ -80,7 +84,9 @@ class LoadingScreenViewModel @Inject constructor(
                 when (ex.message) {
                     "HTTP 401 Unauthorized" -> {
                         caughtException = true
-                        navController.navigate(Screen.SignInScreen.route)
+                        navController.navigate(Screen.SignInScreen.route) {
+                            popUpTo(Screen.LoadingScreen.route) { inclusive = true }
+                        }
                     }
                 }
             }

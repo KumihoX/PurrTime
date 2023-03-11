@@ -24,6 +24,9 @@ class UnsignedViewModel @Inject constructor(): ViewModel() {
                         placeholder = "Номер аудитории"
                     )
                 )
+                {
+                    popUpTo(Screen.UnsignedScreen.route) { inclusive = true }
+                }
             }
             "Группы" -> {
                 navController.navigate(
@@ -32,6 +35,9 @@ class UnsignedViewModel @Inject constructor(): ViewModel() {
                         placeholder = "Номер группы"
                     )
                 )
+                {
+                    popUpTo(Screen.UnsignedScreen.route) { inclusive = true }
+                }
             }
             "Преподавателя" -> {
                 navController.navigate(
@@ -40,6 +46,9 @@ class UnsignedViewModel @Inject constructor(): ViewModel() {
                         placeholder = "Имя преподавателя"
                     )
                 )
+                {
+                    popUpTo(Screen.UnsignedScreen.route) { inclusive = true }
+                }
             }
         }
     }

@@ -33,7 +33,9 @@ fun LessonCard(
     type: LessonTypeEnum,
     time: String,
     teacher: String,
-    classroom: String,
+    teacherId: String,
+    classroomName: String,
+    classroomId: String,
     groups: String
 ) {
     Box(
@@ -53,11 +55,16 @@ fun LessonCard(
                         type = type,
                         time = time,
                         teacher = teacher,
-                        classroom = classroom,
+                        teacherId = teacherId,
+                        classroom = classroomName,
+                        classroomId = classroomId,
                         groups = groups
                     )
                 ) {
-                    popUpTo(Screen.MainScreen.route) { inclusive = true }
+                    popUpTo(Screen.MainScreen.route) {
+                        inclusive = true
+                        saveState = true
+                    }
                 }
             },
             modifier = Modifier
@@ -98,7 +105,7 @@ fun LessonCard(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     IconListElement(textValue = teacher, icon = R.drawable.badge)
-                    IconListElement(textValue = classroom, icon = R.drawable.meeting_room)
+                    IconListElement(textValue = classroomName, icon = R.drawable.meeting_room)
                     IconListElement(textValue = groups, icon = R.drawable.group)
                 }
             }

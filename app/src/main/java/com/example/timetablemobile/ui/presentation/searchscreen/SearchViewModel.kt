@@ -182,7 +182,9 @@ class SearchViewModel @Inject constructor(
             type = "CABINET",
             dataId = id.toString(),
             data = name
-        ))
+        )) {
+            popUpTo(Screen.SearchScreen.route) { inclusive = true }
+        }
     }
 
     fun navigateToTeacherSchedule(navController: NavController, id: String, name: String) {
@@ -190,13 +192,17 @@ class SearchViewModel @Inject constructor(
             type = "TEACHER",
             dataId = id,
             data = name
-        ))
+        )) {
+            popUpTo(Screen.SearchScreen.route) { inclusive = true }
+        }
     }
 
     fun navigateToGroupSchedule(navController: NavController, id: Int) {
         navController.navigate(Screen.MainScreen.passScheduleInfo(
             type = "STUDENT",
             dataId = id.toString()
-        ))
+        )) {
+            popUpTo(Screen.SearchScreen.route) { inclusive = true }
+        }
     }
 }

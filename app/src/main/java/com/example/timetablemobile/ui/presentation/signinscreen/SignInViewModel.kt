@@ -104,7 +104,9 @@ class SignInViewModel @Inject constructor(
                                 teacherId = userData.teacherId!!.id,
                                 teacherName = userData.teacherId.name
                             )
-                    )
+                    ) {
+                        popUpTo(Screen.SignInScreen.route) { inclusive = true }
+                    }
                 }
             } catch (rethrow: CancellationException) {
                 throw rethrow

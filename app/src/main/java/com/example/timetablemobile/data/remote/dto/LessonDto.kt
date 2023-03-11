@@ -48,7 +48,7 @@ fun LessonDto.toLesson(): Lesson {
         type = lessonType,
         subject = lesson.subject,
         cabinet = lesson.cabinet.toCabinet(),
-        teacher = lesson.teacher,
+        teacher = lesson.teacher.toTeacher(),
         time = "$starts - $ends",
         groups = groups,
         date = parsedDate

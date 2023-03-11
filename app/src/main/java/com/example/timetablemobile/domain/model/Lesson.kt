@@ -6,7 +6,7 @@ data class Lesson(
     val type: LessonTypeEnum,
     val subject: String,
     val cabinet: Cabinet,
-    val teacher: String,
+    val teacher: Teacher,
     val time: String,
     val groups: String,
     val date: LocalDate

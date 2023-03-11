@@ -88,8 +88,10 @@ fun MainScreen(
                                     name = lesson.subject,
                                     type = lesson.type,
                                     time = lesson.time,
-                                    teacher = lesson.teacher,
-                                    classroom = lesson.cabinet.name,
+                                    teacher = lesson.teacher.name,
+                                    teacherId = lesson.teacher.id,
+                                    classroomName = lesson.cabinet.name,
+                                    classroomId = lesson.cabinet.id.toString(),
                                     groups = lesson.groups
                                 )
                             }

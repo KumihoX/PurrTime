@@ -198,7 +198,9 @@ fun LogIn(viewModel: SignInViewModel, navController: NavController) {
 fun WithoutAuth(navController: NavController) {
     TextButton(
         onClick = {
-            navController.navigate(Screen.UnsignedScreen.route)
+            navController.navigate(Screen.UnsignedScreen.route) {
+                popUpTo(Screen.SignInScreen.route) { inclusive = true }
+            }
         },
         modifier = Modifier
             .fillMaxWidth()

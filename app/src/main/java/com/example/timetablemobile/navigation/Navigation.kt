@@ -105,7 +105,13 @@ fun Navigation(navController: NavHostController) {
                 navArgument(LESSON_TEACHER) {
                     type = NavType.StringType
                 },
+                navArgument(LESSON_TEACHER_ID) {
+                    type = NavType.StringType
+                },
                 navArgument(LESSON_CLASSROOM) {
+                    type = NavType.StringType
+                },
+                navArgument(LESSON_CLASSROOM_ID) {
                     type = NavType.StringType
                 },
                 navArgument(LESSON_GROUPS) {
