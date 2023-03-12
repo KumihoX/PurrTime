@@ -199,7 +199,7 @@ fun WithoutAuth(navController: NavController) {
     TextButton(
         onClick = {
             navController.navigate(Screen.UnsignedScreen.route) {
-                popUpTo(Screen.SignInScreen.route) { inclusive = true }
+                launchSingleTop = true
             }
         },
         modifier = Modifier

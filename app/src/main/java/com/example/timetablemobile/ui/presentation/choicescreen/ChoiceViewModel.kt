@@ -48,7 +48,8 @@ class ChoiceViewModel @Inject constructor() : ViewModel() {
                         dataId = studentData
                     )
                 ) {
-                    popUpTo(Screen.ChoiceScreen.route) { inclusive = true }
+                    launchSingleTop = true
+                    //popUpTo(Screen.ChoiceScreen.route) { inclusive = true }
                 }
             }
             "Преподавателя" -> {
@@ -59,7 +60,8 @@ class ChoiceViewModel @Inject constructor() : ViewModel() {
                         data = teacherName
                     )
                 ) {
-                    popUpTo(Screen.ChoiceScreen.route) { inclusive = true }
+                    launchSingleTop = true
+                    //popUpTo(Screen.ChoiceScreen.route) { inclusive = true }
                 }
             }
         }

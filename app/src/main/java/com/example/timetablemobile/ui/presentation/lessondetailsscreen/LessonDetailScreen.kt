@@ -157,9 +157,10 @@ fun TeacherListElement(
                         dataId = id,
                         data = textValue
                     )
-                ) {
+                ) /*{
+                    launchSingleTop = true
                     popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
-                }
+                }*/
             }
             .fillMaxWidth()
     ) {
@@ -215,9 +216,10 @@ fun CabinetListElement(
                         data = textValue
                     )
                 )
-                {
+                /*{
+                    launchSingleTop = true
                     popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
-                }
+                }*/
             }
             .fillMaxWidth()
     ) {

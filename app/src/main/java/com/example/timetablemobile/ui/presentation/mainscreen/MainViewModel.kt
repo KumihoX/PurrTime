@@ -233,14 +233,14 @@ class MainViewModel @Inject constructor(
             try {
                 logoutUseCase(context = context)
                 navController.navigate(Screen.SignInScreen.route) {
-                    popUpTo(Screen.MainScreen.route) { inclusive = true }
+                    popUpTo(navController.graph.id) { inclusive = true }
                 }
             } catch (rethrow: CancellationException) {
                 throw rethrow
             } catch (ex: Exception) {
                 if (ex.message == "HTTP 401 Unauthorized") {
                     navController.navigate(Screen.SignInScreen.route) {
-                        popUpTo(Screen.MainScreen.route) { inclusive = true }
+                        popUpTo(navController.graph.id) { inclusive = true }
                     }
                 } else {
                     _state.value = MainState.Error("Что-то пошло не так")

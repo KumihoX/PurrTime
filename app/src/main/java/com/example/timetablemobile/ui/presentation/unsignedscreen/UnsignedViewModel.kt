@@ -13,7 +13,6 @@ class UnsignedViewModel @Inject constructor() : ViewModel() {
         navController: NavController,
         userChoice: String
     ) {
-        //надо что-то придумать со стрингами...
         when (userChoice) {
             "Аудитории" -> {
                 navController.navigate(
@@ -23,7 +22,7 @@ class UnsignedViewModel @Inject constructor() : ViewModel() {
                     )
                 )
                 {
-                    popUpTo(Screen.UnsignedScreen.route) { inclusive = true }
+                    launchSingleTop = true
                 }
             }
             "Группы" -> {
@@ -34,7 +33,7 @@ class UnsignedViewModel @Inject constructor() : ViewModel() {
                     )
                 )
                 {
-                    popUpTo(Screen.UnsignedScreen.route) { inclusive = true }
+                    launchSingleTop = true
                 }
             }
             "Преподавателя" -> {
@@ -45,7 +44,7 @@ class UnsignedViewModel @Inject constructor() : ViewModel() {
                     )
                 )
                 {
-                    popUpTo(Screen.UnsignedScreen.route) { inclusive = true }
+                    launchSingleTop = true
                 }
             }
         }

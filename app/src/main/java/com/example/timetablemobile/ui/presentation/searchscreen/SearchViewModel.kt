@@ -185,6 +185,7 @@ class SearchViewModel @Inject constructor(
                 data = name
             )
         ) {
+            launchSingleTop = true
             popUpTo(Screen.SearchScreen.route) { inclusive = true }
         }
     }
@@ -197,6 +198,7 @@ class SearchViewModel @Inject constructor(
                 data = name
             )
         ) {
+            launchSingleTop = true
             popUpTo(Screen.SearchScreen.route) { inclusive = true }
         }
     }
@@ -208,6 +210,7 @@ class SearchViewModel @Inject constructor(
                 dataId = id.toString()
             )
         ) {
+            launchSingleTop = true
             popUpTo(Screen.SearchScreen.route) { inclusive = true }
         }
     }
