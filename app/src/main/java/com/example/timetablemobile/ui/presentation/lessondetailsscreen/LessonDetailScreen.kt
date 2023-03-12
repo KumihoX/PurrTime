@@ -108,7 +108,7 @@ fun LessonDetailScreen(
                 color = Black,
                 modifier = Modifier
                     .align(CenterHorizontally)
-                    .padding(bottom = 20.dp)
+                    .padding(bottom = 10.dp)
             )
 
             TeacherListElement(
@@ -149,7 +149,6 @@ fun TeacherListElement(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(bottom = 20.dp)
             .clickable {
                 navController.navigate(
                     Screen.MainScreen.passScheduleInfo(
@@ -162,6 +161,7 @@ fun TeacherListElement(
                     popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                 }*/
             }
+            .padding(bottom = 10.dp, top = 10.dp)
             .fillMaxWidth()
     ) {
         Row(
@@ -207,7 +207,6 @@ fun CabinetListElement(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(bottom = 20.dp)
             .clickable {
                 navController.navigate(
                     Screen.MainScreen.passScheduleInfo(
@@ -221,6 +220,7 @@ fun CabinetListElement(
                     popUpTo(Screen.LessonDetailScreen.route) { inclusive = true }
                 }*/
             }
+            .padding(bottom = 10.dp, top = 10.dp)
             .fillMaxWidth()
     ) {
         Row(
