@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthApi {
 
@@ -15,6 +16,9 @@ interface AuthApi {
 
     @POST("auth/logout")
     suspend fun logout(@Header("Authorization") token: String)
+
+    @POST("auth/refresh")
+    suspend fun refreshToken(@Query("token") refreshToken: String): TokenResponse
 
     @GET("users/me")
     suspend fun getInfo(@Header("Authorization") token: String): UserInfoDto

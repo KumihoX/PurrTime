@@ -23,18 +23,27 @@ class SharedPreferencesStorage(context: Context) : TokenStorage {
 
 
     override fun saveToken(token: TokenResponse) {
-        sharedPreferences.edit().putString(TokenStorage.TOKEN_KEY, token.accessToken).apply()
+        sharedPreferences.edit()
+            .putString(TokenStorage.TOKEN_KEY, token.accessToken)
+            .putString(TokenStorage.REFRESH_TOKEN_KEY, token.refreshToken)
+            .apply()
     }
 
     override fun getToken(): TokenResponse {
         return TokenResponse(
             sharedPreferences.getString(
-                TokenStorage.TOKEN_KEY, TokenStorage.EMPTINESS_KEY
+                TokenStorage.TOKEN_KEY, ""
+            ).toString(),
+            sharedPreferences.getString(
+                TokenStorage.REFRESH_TOKEN_KEY, ""
             ).toString()
         )
     }
 
     override fun deleteToken() {
-        sharedPreferences.edit().remove(TokenStorage.TOKEN_KEY).apply()
+        sharedPreferences.edit()
+            .remove(TokenStorage.TOKEN_KEY)
+            .remove(TokenStorage.REFRESH_TOKEN_KEY)
+            .apply()
     }
 }
