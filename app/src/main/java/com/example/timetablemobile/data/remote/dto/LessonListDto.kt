@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 data class LessonListDto(
-    val lessons: List<LessonDto>
+    val lessons: List<LessonDto> = emptyList()
 )
 
 fun LessonListDto.toWeeklySchedule(): WeeklySchedule {
