@@ -8,8 +8,14 @@ data class TeacherDto(
 )
 
 fun TeacherDto.toTeacher(): Teacher {
-    return Teacher(
-        id = id,
-        name = name
-    )
+    return if (name.isNullOrBlank())
+        Teacher(
+            id = id,
+            name = "Unnamed"
+        )
+    else
+        Teacher(
+            id = id,
+            name = name
+        )
 }

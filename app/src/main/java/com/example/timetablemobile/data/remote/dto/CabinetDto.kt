@@ -8,8 +8,14 @@ data class CabinetDto(
 )
 
 fun CabinetDto.toCabinet(): Cabinet {
-    return Cabinet(
-        id = number,
-        name = "$number $name"
-    )
+    return if (name.isNullOrBlank())
+        Cabinet(
+            id = number,
+            name = number.toString()
+        )
+    else
+        Cabinet(
+            id = number,
+            name = "$number $name"
+        )
 }
